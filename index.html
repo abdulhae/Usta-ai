@@ -1,0 +1,3403 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USTA TOP AI — Ishonchli ustalar platformasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #080d18;
+  --card: #111b2d;
+  --text: #ffffff;
+  --muted: #9ca9bb;
+  --green: #b7ff35;
+  --border: rgba(255,255,255,.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button { cursor: pointer; }
+
+.container {
+  width: min(1180px, 92%);
+  margin: auto;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,13,24,.9);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  color: var(--green);
+  font-size: 25px;
+  font-weight: 900;
+  text-decoration: none;
+  letter-spacing: -1px;
+}
+
+.logo span { color: white; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+}
+
+.nav-links a {
+  color: #d2d9e5;
+  text-decoration: none;
+  font-size: 14px;
+  transition: .3s;
+}
+
+.nav-links a:hover { color: var(--green); }
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 13px 19px;
+  font-weight: 800;
+  background: var(--green);
+  color: #101510;
+  transition: .3s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px #b7ff3540;
+}
+
+.btn-outline {
+  background: transparent;
+  color: white;
+  border: 1px solid var(--border);
+}
+
+.hero {
+  position: relative;
+  padding: 100px 0 85px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 80% 30%, #b7ff3518, transparent 45%),
+    radial-gradient(ellipse at 10% 90%, #00d9ff12, transparent 40%);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--green);
+  border: 1px solid #b7ff3540;
+  background: #b7ff3510;
+  padding: 9px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 23px;
+}
+
+.hero h1 {
+  font-size: clamp(40px, 6vw, 70px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  margin-bottom: 22px;
+}
+
+.hero h1 span { color: var(--green); }
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.9;
+  max-width: 530px;
+  margin-bottom: 30px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-image {
+  position: relative;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 30px;
+  border: 1px solid #b7ff3540;
+  box-shadow: 0 25px 80px #0008;
+  animation: floating 5s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.floating-card {
+  position: absolute;
+  bottom: 25px;
+  left: -30px;
+  background: #142238;
+  border: 1px solid #b7ff3550;
+  border-radius: 15px;
+  padding: 16px 20px;
+  box-shadow: 0 15px 35px #0008;
+}
+
+.floating-card strong {
+  color: var(--green);
+  font-size: 23px;
+}
+
+section { padding: 75px 0; }
+
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  margin-bottom: 35px;
+  line-height: 1.8;
+}
+
+/* SEARCH */
+
+.search-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.search-box input,
+.search-box select {
+  width: 100%;
+  padding: 15px;
+  background: #080d18;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: white;
+  outline: none;
+}
+
+/* CATEGORIES */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 17px;
+}
+
+.category {
+  padding: 25px 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  transition: .35s;
+  cursor: pointer;
+}
+
+.category:hover {
+  transform: translateY(-9px);
+  border-color: var(--green);
+  box-shadow: 0 15px 35px #b7ff3515;
+}
+
+.category-icon {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.category h3 { font-size: 16px; margin-bottom: 7px; }
+.category p { color: var(--muted); font-size: 12px; }
+
+/* AI */
+
+.ai-section {
+  background: linear-gradient(130deg,#111d30,#0b1524);
+  border: 1px solid #b7ff3530;
+  border-radius: 28px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 35px;
+}
+
+.ai-section h2 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.ai-section h2 span { color: var(--green); }
+
+.ai-section p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.ai-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ai-form textarea,
+.ai-form select {
+  width: 100%;
+  padding: 15px;
+  background: #080d18;
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-height: 55px;
+  outline: none;
+}
+
+.ai-form textarea { min-height: 110px; resize: vertical; }
+
+.ai-result {
+  display: none;
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #b7ff3510;
+  border: 1px solid #b7ff3550;
+  color: white;
+  line-height: 1.7;
+}
+
+/* MASTERS */
+
+.master-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+
+.master-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 17px;
+  transition: .4s;
+  overflow: hidden;
+}
+
+.master-card:hover {
+  transform: translateY(-9px);
+  border-color: var(--green);
+  box-shadow: 0 20px 45px #0005;
+}
+
+.master-photo {
+  width: 100%;
+  height: 205px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 17px;
+}
+
+.master-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.verified {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.rating {
+  color: #ffd166;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.master-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.master-price {
+  color: var(--green);
+  font-size: 18px;
+  font-weight: 900;
+  margin: 15px 0;
+}
+
+.master-card .btn { width: 100%; }
+
+.no-results {
+  display: none;
+  padding: 30px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* HOW */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+
+.step {
+  background: var(--card);
+  padding: 27px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+}
+
+.step-number {
+  font-size: 35px;
+  color: var(--green);
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+.step p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-top: 10px;
+}
+
+/* CTA */
+
+.cta {
+  text-align: center;
+  background: linear-gradient(120deg,#b7ff35,#91d91d);
+  color: #101510;
+  padding: 55px 25px;
+  border-radius: 25px;
+}
+
+.cta h2 { font-size: 36px; margin-bottom: 12px; }
+.cta p { margin-bottom: 23px; }
+
+.cta .btn {
+  background: #101510;
+  color: white;
+}
+
+/* MODAL */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000c;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal.show { display: flex; }
+
+.modal-content {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  background: #111b2d;
+  border: 1px solid #b7ff3550;
+  border-radius: 20px;
+  animation: modalIn .35s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(30px) scale(.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-content h2 { margin-bottom: 20px; color: var(--green); }
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  background: #080d18;
+  color: white;
+  border-radius: 10px;
+  outline: none;
+}
+
+.modal-close {
+  float: right;
+  background: #ff5151;
+  color: white;
+  border: none;
+  padding: 7px 11px;
+  border-radius: 8px;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top: 80px;
+  padding: 45px 0;
+  background: #050912;
+  border-top: 1px solid var(--border);
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+footer p {
+  color: var(--muted);
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+/* ANIMATIONS */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: .8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media(max-width:850px) {
+  .hero-grid, .ai-section { grid-template-columns: 1fr; }
+  .category-grid { grid-template-columns: repeat(2,1fr); }
+  .master-grid { grid-template-columns: repeat(2,1fr); }
+  .nav-links { display: none; }
+}
+
+@media(max-width:550px) {
+  .hero { padding: 65px 0; }
+  .hero-image img { height: 280px; }
+  .floating-card { left: 8px; }
+  .search-box { grid-template-columns: 1fr; }
+  .master-grid, .steps { grid-template-columns: 1fr; }
+  .ai-section { padding: 24px; }
+  .ai-section h2 { font-size: 29px; }
+  .category-grid { gap: 10px; }
+  .category { padding: 17px 12px; }
+  .cta h2 { font-size: 27px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">USTA<span>TOP</span> AI.</a>
+
+    <nav class="nav-links">
+      <a href="#home">Bosh sahifa</a>
+      <a href="#categories">Xizmatlar</a>
+      <a href="#masters">Ustalar</a>
+      <a href="#how">Qanday ishlaydi?</a>
+    </nav>
+
+    <button class="btn" onclick="openMasterModal()">
+      Usta bo‘lish
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+  <div class="container hero-grid">
+
+    <div>
+      <div class="eyebrow">✦ SUN’IY INTELLEKT YORDAMIDA</div>
+
+      <h1>
+        Sizga kerakli <span>ustani</span> tez toping!
+      </h1>
+
+      <p>
+        Uyingizga yoki biznesingizga ishonchli usta kerakmi?
+        USTA TOP AI sizga mos mutaxassislarni topishga yordam beradi.
+        Vaqtingizni tejang va sifatli xizmatdan foydalaning.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#ai" class="btn" style="text-decoration:none">
+          🤖 AI bilan usta topish
+        </a>
+
+        <a href="#masters" class="btn btn-outline"
+           style="text-decoration:none">
+          Ustalarni ko‘rish
+        </a>
+      </div>
+
+      <div class="search-box">
+        <input id="mainSearch" placeholder="Qanday usta kerak?">
+
+        <select id="mainCity">
+          <option value="">Barcha shaharlar</option>
+          <option>Toshkent</option>
+          <option>Samarqand</option>
+          <option>Buxoro</option>
+          <option>Andijon</option>
+          <option>Farg‘ona</option>
+          <option>Namangan</option>
+        </select>
+
+        <button class="btn" onclick="searchMasters()">Qidirish</button>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img
+        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000"
+        alt="Qurilish va ta'mirlash ustasi">
+
+      <div class="floating-card">
+        <strong>⭐ 4.9/5</strong>
+        <p>Ustalar reytingi</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+
+<section id="categories">
+  <div class="container">
+    <h2 class="section-title reveal">Xizmat kategoriyalari</h2>
+    <p class="section-subtitle reveal">
+      O‘zingizga kerakli xizmat yo‘nalishini tanlang.
+    </p>
+
+    <div class="category-grid">
+      <div class="category reveal" onclick="chooseCategory('Santexnik')">
+        <div class="category-icon">🚰</div>
+        <h3>Santexnik</h3>
+        <p>Suv quvurlari va kranlar</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Elektrik')">
+        <div class="category-icon">⚡</div>
+        <h3>Elektrik</h3>
+        <p>Elektr va sim ishlari</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Quruvchi')">
+        <div class="category-icon">🏗️</div>
+        <h3>Quruvchi</h3>
+        <p>Qurilish va ta’mirlash</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Mebelchi')">
+        <div class="category-icon">🪑</div>
+        <h3>Mebelchi</h3>
+        <p>Mebel yasash va tuzatish</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Konditsioner')">
+        <div class="category-icon">❄️</div>
+        <h3>Konditsioner</h3>
+        <p>O‘rnatish va ta’mirlash</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Bo‘yoqchi')">
+        <div class="category-icon">🎨</div>
+        <h3>Bo‘yoqchi</h3>
+        <p>Bo‘yash va bezatish</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Usta')">
+        <div class="category-icon">🔧</div>
+        <h3>Avtomobil ustasi</h3>
+        <p>Avtomobil ta’miri</p>
+      </div>
+
+      <div class="category reveal" onclick="chooseCategory('Tozalash')">
+        <div class="category-icon">🧹</div>
+        <h3>Tozalash</h3>
+        <p>Uy va ofis tozalash</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+
+<section id="ai">
+  <div class="container">
+    <div class="ai-section reveal">
+
+      <div>
+        <div class="eyebrow">🤖 USTA TOP AI ASSISTANT</div>
+
+        <h2>Sun’iy intellekt orqali <span>usta toping</span></h2>
+
+        <p>
+          Muammoingizni oddiy tilda yozing.
+          Tizim so‘rovingizni tahlil qilib, mos xizmat turini
+          aniqlaydi va katalogdan mos ustalarni ko‘rsatadi.
+        </p>
+      </div>
+
+      <div>
+        <div class="ai-form">
+          <textarea id="aiProblem"
+            placeholder="Masalan: Uyimdagi suv krani buzildi, Toshkentdan santexnik kerak..."></textarea>
+
+          <select id="aiLocation">
+            <option value="">Shaharni tanlang</option>
+            <option>Toshkent</option>
+            <option>Samarqand</option>
+            <option>Buxoro</option>
+            <option>Andijon</option>
+            <option>Farg‘ona</option>
+            <option>Namangan</option>
+          </select>
+
+          <button class="btn" onclick="runAI()">
+            ✨ AI bilan tahlil qilish
+          </button>
+        </div>
+
+        <div class="ai-result" id="aiResult"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MASTERS -->
+
+<section id="masters">
+  <div class="container">
+
+    <h2 class="section-title reveal">⭐ Mashhur ustalar</h2>
+    <p class="section-subtitle reveal">
+      Mutaxassislarni ko‘ring va o‘zingizga mosini tanlang.
+    </p>
+
+    <div class="master-grid" id="masterGrid">
+
+      <article class="master-card reveal"
+        data-category="Santexnik" data-city="Toshkent"
+        data-search="santexnik suv kran quvur">
+
+        <img class="master-photo"
+          src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=700"
+          alt="Santexnik usta">
+
+        <div class="master-top">
+          <h3>Akmal Karimov</h3>
+          <span class="verified">✓ TASDIQLANGAN</span>
+        </div>
+
+        <div class="rating">★★★★★ 4.9 (128 sharh)</div>
+        <p>🚰 Santexnik • 8 yillik tajriba</p>
+        <p>📍 Toshkent</p>
+        <div class="master-price">100 000 so‘mdan</div>
+
+        <button class="btn"
+          onclick="openOrder('Akmal Karimov','Santexnik')">
+          Buyurtma berish
+        </button>
+      </article>
+
+      <article class="master-card reveal"
+        data-category="Elektrik" data-city="Toshkent"
+        data-search="elektrik sim elektr chiroq">
+
+        <img class="master-photo"
+          src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=700"
+          alt="Elektrik usta">
+
+        <div class="master-top">
+          <h3>Jasur Aliyev</h3>
+          <span class="verified">✓ TASDIQLANGAN</span>
+        </div>
+
+        <div class="rating">★★★★★ 4.8 (96 sharh)</div>
+        <p>⚡ Elektrik • 6 yillik tajriba</p>
+        <p>📍 Toshkent</p>
+        <div class="master-price">120 000 so‘mdan</div>
+
+        <button class="btn"
+          onclick="openOrder('Jasur Aliyev','Elektrik')">
+          Buyurtma berish
+        </button>
+      </article>
+
+      <article class="master-card reveal"
+        data-category="Quruvchi" data-city="Samarqand"
+        data-search="quruvchi qurilish remont">
+
+        <img class="master-photo"
+          src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700"
+          alt="Quruvchi">
+
+        <div class="master-top">
+          <h3>Bekzod Rahimov</h3>
+          <span class="verified">✓ TASDIQLANGAN</span>
+        </div>
+
+        <div class="rating">★★★★★ 5.0 (75 sharh)</div>
+        <p>🏗️ Quruvchi • 12 yillik tajriba</p>
+        <p>📍 Samarqand</p>
+        <div class="master-price">200 000 so‘mdan</div>
+
+        <button class="btn"
+          onclick="openOrder('Bekzod Rahimov','Quruvchi')">
+          Buyurtma berish
+        </button>
+      </article>
+
+      <article class="master-card reveal"
+        data-category="Mebelchi" data-city="Toshkent"
+        data-search="mebelchi shkaf stol mebel">
+
+        <img class="master-photo"
+          src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=700"
+          alt="Mebel ustasi">
+
+        <div class="master-top">
+          <h3>Shahzod Ismoilov</h3>
+          <span class="verified">✓ TASDIQLANGAN</span>
+        </div>
+
+        <div class="rating">★★★★★ 4.9 (84 sharh)</div>
+        <p>🪑 Mebelchi • 7 yillik tajriba</p>
+        <p>📍 Toshkent</p>
+        <div class="master-price">150 000 so‘mdan</div>
+
+        <button class="btn"
+          onclick="openOrder('Shahzod Ismoilov','Mebelchi')">
+          Buyurtma berish
+        </button>
+      </article>
+
+      <article class="master-card reveal"
+        data-category="Konditsioner" data-city="Buxoro"
+        data-search="konditsioner sovutish">
+
+        <img class="master-photo"
+          src="https://images.unsplash.com/photo-1631545806609-4b2e4a6f0a3c?w=700"
+          alt="Konditsioner ustasi">
+
+        <div class="master-top">
+          <h3>Oybek Xasanov</h3>
+          <span class="verified">✓ TASDIQLANGAN</span>
+        </div>
+
+        <div class="rating">★★★★★ 4.7 (61 sharh)</div>
+        <p>❄️ Konditsioner • 5 yillik tajriba</p>
+        <p>📍 Buxoro</p>
+        <div class="master-price">130 000 so‘mdan</div>
+
+        <button class="btn"
+          onclick="openOrder('Oybek Xasanov','Konditsioner')">
+          Buyurtma berish
+        </button>
+      </article>
+
+      <article class="master-card reveal"
+        data-category="Bo‘yoqchi" data-city="Farg‘ona"
+        data-search="boyoqchi bo‘yash devor">
+
+        <img class="master-photo"
+          src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=700"
+          alt="Bo‘yoqchi">
+
+        <div class="master-top">
+          <h3>Sanjar Tursunov</h3>
+          <span class="verified">✓ TASDIQLANGAN</span>
+        </div>
+
+        <div class="rating">★★★★★ 4.9 (52 sharh)</div>
+        <p>🎨 Bo‘yoqchi • 9 yillik tajriba</p>
+        <p>📍 Farg‘ona</p>
+        <div class="master-price">90 000 so‘mdan</div>
+
+        <button class="btn"
+          onclick="openOrder('Sanjar Tursunov','Bo‘yoqchi')">
+          Buyurtma berish
+        </button>
+      </article>
+
+    </div>
+
+    <div class="no-results" id="noResults">
+      Hozircha mos usta topilmadi. Boshqa so‘z bilan qidirib ko‘ring.
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section id="how">
+  <div class="container">
+    <h2 class="section-title reveal">Qanday ishlaydi?</h2>
+    <p class="section-subtitle reveal">
+      Uchta oddiy qadam bilan kerakli ustani toping.
+    </p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-number">01</div>
+        <h3>Muammoni yozing</h3>
+        <p>Qanday xizmat kerakligini yozing yoki kategoriyani tanlang.</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-number">02</div>
+        <h3>Ustani tanlang</h3>
+        <p>Reyting, tajriba va narxlarni solishtiring.</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-number">03</div>
+        <h3>Buyurtma yuboring</h3>
+        <p>Tanlagan ustangizga so‘rov yuboring va bog‘laning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+
+<section>
+  <div class="container">
+    <div class="cta reveal">
+      <h2>Siz ham usta bo‘ling!</h2>
+      <p>USTA TOP AI orqali yangi mijozlar toping va daromadingizni oshiring.</p>
+      <button class="btn" onclick="openMasterModal()">
+        Usta sifatida qo‘shilish →
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <a href="#" class="logo">USTA<span>TOP</span> AI.</a>
+      <p>Ishonchli ustalarni topishning aqlli usuli.</p>
+    </div>
+
+    <div>
+      <h3>Aloqa</h3>
+      <p>Telegram: @ustatop_ai</p>
+      <p>Email: info@ustatopai.uz</p>
+    </div>
+
+    <div>
+      <h3>Platforma</h3>
+      <p>Ustalar katalogi</p>
+      <p>AI yordamchi</p>
+      <p>Usta bo‘lish</p>
+    </div>
+  </div>
+  <div class="container">
+    <p style="margin-top:35px">© 2026 USTA TOP AI. Barcha huquqlar himoyalangan.</p>
+  </div>
+</footer>
+
+<!-- ORDER MODAL -->
+
+<div class="modal" id="orderModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('orderModal')">✕</button>
+    <h2>📋 Buyurtma yuborish</h2>
+
+    <form id="orderForm">
+      <input id="orderMaster" readonly>
+      <input id="orderCategory" readonly>
+      <input id="orderName" placeholder="Ismingiz" required>
+      <input id="orderPhone" type="tel" placeholder="+998 90 123 45 67" required>
+      <textarea id="orderDescription" placeholder="Ish haqida batafsil yozing..." required></textarea>
+      <button class="btn" type="submit" style="width:100%">
+        Buyurtmani yuborish
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- MASTER REGISTRATION MODAL -->
+
+<div class="modal" id="masterModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('masterModal')">✕</button>
+    <h2>👨‍🔧 Usta sifatida ro‘yxatdan o‘tish</h2>
+
+    <form id="masterForm">
+      <input id="newMasterName" placeholder="Ism va familiya" required>
+      <input id="newMasterPhone" type="tel" placeholder="Telefon raqam" required>
+
+      <select id="newMasterCategory" required>
+        <option value="">Xizmat turini tanlang</option>
+        <option>Santexnik</option>
+        <option>Elektrik</option>
+        <option>Quruvchi</option>
+        <option>Mebelchi</option>
+        <option>Konditsioner</option>
+        <option>Bo‘yoqchi</option>
+        <option>Avtomobil ustasi</option>
+        <option>Tozalash</option>
+      </select>
+
+      <select id="newMasterCity" required>
+        <option value="">Shaharni tanlang</option>
+        <option>Toshkent</option>
+        <option>Samarqand</option>
+        <option>Buxoro</option>
+        <option>Andijon</option>
+        <option>Farg‘ona</option>
+        <option>Namangan</option>
+      </select>
+
+      <textarea id="newMasterAbout" placeholder="Tajriba va xizmatlaringiz haqida" required></textarea>
+
+      <button class="btn" type="submit" style="width:100%">
+        Ariza yuborish
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+// SEARCH MASTERS
+
+function searchMasters() {
+  const query = document.getElementById("mainSearch").value.toLowerCase().trim();
+  const city = document.getElementById("mainCity").value;
+
+  let visible = 0;
+
+  document.querySelectorAll(".master-card").forEach(card => {
+    const text = (
+      card.innerText + " " + card.dataset.search
+    ).toLowerCase();
+
+    const matchesText = !query || text.includes(query);
+    const matchesCity = !city || card.dataset.city === city;
+
+    const show = matchesText && matchesCity;
+
+    card.style.display = show ? "block" : "none";
+    if (show) visible++;
+  });
+
+  document.getElementById("noResults").style.display =
+    visible ? "none" : "block";
+
+  document.getElementById("masters").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+// CATEGORY
+
+function chooseCategory(category) {
+  document.getElementById("mainSearch").value = category;
+  document.getElementById("mainCity").value = "";
+  searchMasters();
+}
+
+// AI DEMO
+
+function runAI() {
+  const problem = document.getElementById("aiProblem").value.toLowerCase();
+  const city = document.getElementById("aiLocation").value;
+  const result = document.getElementById("aiResult");
+
+  if (!problem.trim()) {
+    alert("Iltimos, muammoingizni yozing!");
+    return;
+  }
+
+  let category = "Santexnik";
+
+  if (/elektr|sim|chiroq|tok|rozetka/.test(problem)) {
+    category = "Elektrik";
+  } else if (/suv|kran|quvur|rakovina|vanna/.test(problem)) {
+    category = "Santexnik";
+  } else if (/uy qur|devor|g‘isht|g'isht|beton|remont/.test(problem)) {
+    category = "Quruvchi";
+  } else if (/mebel|shkaf|stol|eshik/.test(problem)) {
+    category = "Mebelchi";
+  } else if (/konditsioner|sovutgich|klimat/.test(problem)) {
+    category = "Konditsioner";
+  } else if (/bo‘yoq|boyoq|rang|devor bo/.test(problem)) {
+    category = "Bo‘yoqchi";
+  } else if (/mashina|avto|motor|shina/.test(problem)) {
+    category = "Usta";
+  } else if (/tozalash|kir|yuvish/.test(problem)) {
+    category = "Tozalash";
+  }
+
+  result.style.display = "block";
+
+  result.innerHTML =
+    "<strong>✨ Tahlil yakunlandi!</strong><br><br>" +
+    "Aniqlangan xizmat: <b>" + category + "</b><br>" +
+    "Hudud: <b>" + (city || "Barcha shaharlar") + "</b><br><br>" +
+    "Siz uchun mos ustalarni qidiryapmiz...";
+
+  document.getElementById("mainSearch").value = category;
+  document.getElementById("mainCity").value = city;
+
+  searchMasters();
+}
+
+// ORDER MODAL
+
+function openOrder(master, category) {
+  document.getElementById("orderMaster").value = "Usta: " + master;
+  document.getElementById("orderCategory").value = "Xizmat: " + category;
+
+  document.getElementById("orderModal").classList.add("show");
+}
+
+function openMasterModal() {
+  document.getElementById("masterModal").classList.add("show");
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("show");
+}
+
+// DEMO ORDER SUBMISSION
+
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const order = {
+    master: document.getElementById("orderMaster").value,
+    category: document.getElementById("orderCategory").value,
+    name: document.getElementById("orderName").value,
+    phone: document.getElementById("orderPhone").value,
+    description: document.getElementById("orderDescription").value,
+    date: new Date().toISOString()
+  };
+
+  const orders = JSON.parse(localStorage.getItem("ustaOrders") || "[]");
+  orders.push(order);
+  localStorage.setItem("ustaOrders", JSON.stringify(orders));
+
+  alert("✅ Buyurtma demo tarzida saqlandi! Haqiqiy yuborish uchun server kerak.");
+  this.reset();
+  closeModal("orderModal");
+});
+
+// MASTER REGISTRATION
+
+document.getElementById("masterForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const master = {
+    name: document.getElementById("newMasterName").value,
+    phone: document.getElementById("newMasterPhone").value,
+    category: document.getElementById("newMasterCategory").value,
+    city: document.getElementById("newMasterCity").value,
+    about: document.getElementById("newMasterAbout").value
+  };
+
+  const applications = JSON.parse(
+    localStorage.getItem("ustaApplications") || "[]"
+  );
+
+  applications.push(master);
+  localStorage.setItem("ustaApplications", JSON.stringify(applications));
+
+  alert("✅ Usta bo‘lish arizangiz demo tarzida saqlandi!");
+  this.reset();
+  closeModal("masterModal");
+});
+
+// REVEAL ANIMATIONS
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll(".reveal").forEach(element => {
+  revealObserver.observe(element);
+});
+
+// CLOSE MODAL WHEN CLICKING OUTSIDE
+
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", function(e) {
+    if (e.target === modal) modal.classList.remove("show");
+  });
+});
+
+console.log("USTA TOP AI IS READY!");
+</script>
+
+</body>
+</html>
+
+<!-- ===== USTA TOP AI CONTACT SECTION ===== -->
+
+<style>
+.contact-section {
+  padding: 65px 20px;
+  margin-top: 50px;
+  background:
+    radial-gradient(circle at top right, #b7ff3520, transparent 45%),
+    linear-gradient(135deg, #111b2d, #080d18);
+  border-top: 1px solid #b7ff3540;
+  text-align: center;
+}
+
+.contact-box {
+  max-width: 650px;
+  margin: auto;
+  padding: 35px 25px;
+  border: 1px solid #b7ff3560;
+  border-radius: 25px;
+  background: #ffffff08;
+  box-shadow: 0 0 35px #b7ff3515;
+  animation: contactFloat 4s ease-in-out infinite;
+}
+
+@keyframes contactFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.contact-box h2 {
+  font-size: 32px;
+  color: #b7ff35;
+  margin-bottom: 12px;
+}
+
+.contact-box > p {
+  color: #aab5c5;
+  margin-bottom: 25px;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 15px auto;
+  padding: 17px;
+  max-width: 400px;
+  border: 1px solid #ffffff20;
+  border-radius: 14px;
+  background: #ffffff08;
+  transition: .3s;
+}
+
+.contact-info:hover {
+  border-color: #b7ff35;
+  transform: scale(1.04);
+  box-shadow: 0 0 20px #b7ff3525;
+}
+
+.contact-icon {
+  font-size: 28px;
+}
+
+.contact-details {
+  text-align: left;
+}
+
+.contact-details small {
+  display: block;
+  color: #9ca9bb;
+  margin-bottom: 5px;
+}
+
+.contact-details strong {
+  color: white;
+  font-size: 18px;
+}
+
+.contact-call {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 25px;
+  background: #b7ff35;
+  color: #101510;
+  text-decoration: none;
+  font-weight: 900;
+  border-radius: 12px;
+  transition: .3s;
+}
+
+.contact-call:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px #b7ff3570;
+}
+
+.contact-copyright {
+  color: #78869b;
+  font-size: 12px;
+  margin-top: 35px;
+}
+
+@media(max-width:500px) {
+  .contact-box h2 {
+    font-size: 25px;
+  }
+
+  .contact-details strong {
+    font-size: 16px;
+  }
+}
+</style>
+
+<section class="contact-section" id="contact">
+  <div class="contact-box">
+
+    <h2>📞 Biz bilan bog‘laning</h2>
+
+    <p>
+      Savollaringiz bormi? Biz sizga yordam berishga tayyormiz!
+    </p>
+
+    <div class="contact-info">
+      <div class="contact-icon">👤</div>
+      <div class="contact-details">
+        <small>Mas'ul shaxs</small>
+        <strong>Alisher</strong>
+      </div>
+    </div>
+
+    <div class="contact-info">
+      <div class="contact-icon">📱</div>
+      <div class="contact-details">
+        <small>Telefon raqam</small>
+        <strong>+998 99 530 11 78</strong>
+      </div>
+    </div>
+
+    <a href="tel:+998995301178" class="contact-call">
+      ☎️ HOZIR QO‘NG‘IROQ QILISH
+    </a>
+
+    <div class="contact-copyright">
+      © 2026 USTA TOP AI — Barcha huquqlar himoyalangan.
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== END CONTACT SECTION ===== -->
+
+<!-- ===== USTA TOP AI: 5 TA PREMIUM ANIMATSIYA ===== -->
+
+<style>
+
+/* 1. ANIMATSIYALI NEON FON */
+body {
+  background-color: #080d18;
+  background-image:
+    radial-gradient(ellipse at 10% 20%, #b7ff3518, transparent 40%),
+    radial-gradient(ellipse at 90% 50%, #00c8ff15, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, #9747ff15, transparent 40%);
+  background-size: 200% 200%;
+  animation: neonBackground 12s ease infinite alternate;
+}
+
+@keyframes neonBackground {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* 2. NEON MATNLAR */
+h1, h2 {
+  animation: neonText 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonText {
+  from {
+    text-shadow: 0 0 5px #b7ff3520;
+  }
+  to {
+    text-shadow:
+      0 0 10px #b7ff35,
+      0 0 25px #b7ff3580,
+      0 0 40px #b7ff3530;
+  }
+}
+
+/* 3. USTA KARTALARI: 3D HOVER */
+.master-card,
+.service-card {
+  transform-style: preserve-3d;
+  transition:
+    transform .4s ease,
+    box-shadow .4s ease,
+    border-color .4s ease;
+}
+
+.master-card:hover,
+.service-card:hover {
+  transform: perspective(1000px) rotateX(3deg) rotateY(-3deg)
+             translateY(-12px) scale(1.02);
+  box-shadow:
+    0 20px 40px #0008,
+    0 0 20px #b7ff3530;
+  border-color: #b7ff35;
+}
+
+.master-card img,
+.service-card img {
+  transition: transform .6s ease;
+}
+
+.master-card:hover img,
+.service-card:hover img {
+  transform: scale(1.12);
+}
+
+/* 4. TUGMALAR: NEON RIPPLE */
+button,
+.service-order,
+.master-contact {
+  position: relative;
+  overflow: hidden;
+  transition: all .3s ease;
+}
+
+button:hover,
+.service-order:hover,
+.master-contact:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px #b7ff3550;
+}
+
+button:active,
+.service-order:active,
+.master-contact:active {
+  transform: scale(.94);
+}
+
+/* 5. SCROLL REVEAL */
+.usta-reveal {
+  opacity: 0;
+  transform: translateY(50px) scale(.97);
+  filter: blur(5px);
+  transition:
+    opacity .8s ease,
+    transform .8s cubic-bezier(.2,.8,.2,1),
+    filter .8s ease;
+}
+
+.usta-reveal.usta-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* QO‘SHIMCHA: FLOATING ANIMATSIYA */
+.masters-head span,
+.services-heading span {
+  display: inline-block;
+  animation: floatingBadge 3s ease-in-out infinite;
+}
+
+@keyframes floatingBadge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* QO‘SHIMCHA: RASM YORUG‘LIGI */
+.master-photo::after,
+.service-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    #ffffff35,
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left .7s ease;
+  pointer-events: none;
+}
+
+.master-card:hover .master-photo::after,
+.service-card:hover .service-image::after {
+  left: 150%;
+}
+
+/* TELEFONDA ANIMATSIYA HAM YENGIL ISHLASIN */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+</style>
+
+<script>
+/* SCROLL REVEAL ANIMATSIYASI */
+(function() {
+
+  const revealElements = document.querySelectorAll(
+    ".master-card, .service-card, " +
+    ".masters-head, .services-heading, " +
+    ".contact-box, section h2, section p"
+  );
+
+  revealElements.forEach((element, index) => {
+    element.classList.add("usta-reveal");
+
+    // Kartalar ketma-ket chiqadi
+    element.style.transitionDelay =
+      (index % 6) * 100 + "ms";
+  });
+
+  if ("IntersectionObserver" in window) {
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("usta-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+
+    revealElements.forEach(element => {
+      observer.observe(element);
+    });
+
+  } else {
+    revealElements.forEach(element => {
+      element.classList.add("usta-visible");
+    });
+  }
+
+})();
+</script>
+
+<!-- ===== 5 TA ANIMATSIYA TUGADI ===== -->
+
+<!-- ADMIN PANEL: KASBLARNI BOSHQARISH -->
+<style>
+#kasbAdmin {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  z-index: 999999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+#kasbAdminBox {
+  background: #101827;
+  color: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border: 1px solid #a3e635;
+}
+
+#kasbAdminBox h2 {
+  color: #a3e635;
+  margin-bottom: 15px;
+}
+
+#kasbAdminBox input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid #a3e635;
+  background: #1c2637;
+  color: white;
+  box-sizing: border-box;
+}
+
+.kasbBtn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 9px;
+  background: #a3e635;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px 3px;
+}
+
+.kasbDelete {
+  background: #ff4545;
+  color: white;
+}
+
+#kasbRoyxat div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #1c2637;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 7px 0;
+}
+</style>
+
+<div id="kasbAdmin">
+  <div id="kasbAdminBox">
+    <h2>⚙️ Kasblarni boshqarish</h2>
+
+    <input id="yangiKasb" placeholder="Yangi xizmat nomini yozing">
+
+    <button class="kasbBtn" onclick="kasbQosh()">
+      ➕ Kasb qo‘shish
+    </button>
+
+    <hr>
+
+    <h3>📋 Xizmatlar ro‘yxati</h3>
+    <div id="kasbRoyxat"></div>
+
+    <button class="kasbBtn kasbDelete" onclick="kasbAdminYop()">
+      ✖ Yopish
+    </button>
+  </div>
+</div>
+
+<script>
+/* Admin paroli */
+const KASB_ADMIN_PAROL = "1234";
+
+/* Adminni ochish */
+function kasbAdminOch() {
+  const parol = prompt("Admin parolini kiriting:");
+
+  if (parol !== KASB_ADMIN_PAROL) {
+    alert("❌ Parol noto‘g‘ri!");
+    return;
+  }
+
+  document.getElementById("kasbAdmin").style.display = "flex";
+  kasblarniChiqar();
+}
+
+/* Adminni yopish */
+function kasbAdminYop() {
+  document.getElementById("kasbAdmin").style.display = "none";
+}
+
+/* Keraksiz kasblarni o‘chirish */
+const olibTashlanadiganKasblar = [
+  "avto mexanik",
+  "avtomexanik",
+  "monekyurchi",
+  "manikyurchi",
+  "texnik usta"
+];
+
+/* Xizmatlar ro‘yxati */
+let adminKasblar = JSON.parse(
+  localStorage.getItem("ustaAdminKasblar")
+) || [
+  "Santexnik",
+  "Elektrik",
+  "Quruvchi",
+  "Bo‘yoqchi",
+  "Plitkachi",
+  "Mebelchi",
+  "Konditsioner ustasi",
+  "Payvandchi",
+  "Tom ustasi",
+  "Gipsokarton ustasi"
+];
+
+/* Ro‘yxatdan keraksiz kasblarni olib tashlash */
+adminKasblar = adminKasblar.filter(kasb =>
+  !olibTashlanadiganKasblar.some(nom =>
+    kasb.toLowerCase().includes(nom)
+  )
+);
+
+/* Kasblarni saqlash */
+function kasblarniSaqlash() {
+  localStorage.setItem(
+    "ustaAdminKasblar",
+    JSON.stringify(adminKasblar)
+  );
+}
+
+/* Kasblarni ekranga chiqarish */
+function kasblarniChiqar() {
+  const royxat = document.getElementById("kasbRoyxat");
+  royxat.innerHTML = "";
+
+  adminKasblar.forEach((kasb, index) => {
+    const qator = document.createElement("div");
+
+    const nom = document.createElement("span");
+    nom.textContent = kasb;
+
+    const ochirish = document.createElement("button");
+    ochirish.textContent = "🗑 O‘chirish";
+    ochirish.className = "kasbBtn kasbDelete";
+
+    ochirish.onclick = function() {
+      if (confirm(kasb + " xizmatini o‘chirasizmi?")) {
+        adminKasblar.splice(index, 1);
+        kasblarniSaqlash();
+        kasblarniChiqar();
+      }
+    };
+
+    qator.appendChild(nom);
+    qator.appendChild(ochirish);
+    royxat.appendChild(qator);
+  });
+}
+
+/* Yangi kasb qo‘shish */
+function kasbQosh() {
+  const input = document.getElementById("yangiKasb");
+  const nom = input.value.trim();
+
+  if (!nom) {
+    alert("Kasb nomini yozing!");
+    return;
+  }
+
+  if (adminKasblar.includes(nom)) {
+    alert("Bu kasb ro‘yxatda bor!");
+    return;
+  }
+
+  adminKasblar.push(nom);
+  kasblarniSaqlash();
+  kasblarniChiqar();
+
+  input.value = "";
+  alert("✅ Yangi xizmat qo‘shildi!");
+}
+</script>
+
+<!-- KO'RINADIGAN ADMIN TUGMASI -->
+<style>
+#visibleAdminBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 999998;
+
+  padding: 16px 24px;
+  border-radius: 50px;
+  border: 2px solid #a3e635;
+
+  background: linear-gradient(135deg, #a3e635, #d4ff72);
+  color: #101820;
+
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+
+  box-shadow: 0 0 20px rgba(163, 230, 53, 0.5);
+  transition: 0.3s;
+}
+
+#visibleAdminBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px #a3e635;
+}
+
+@media(max-width:600px) {
+  #visibleAdminBtn {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+}
+</style>
+
+<button id="visibleAdminBtn" onclick="kasbAdminOch()">
+  ⚙️ ADMIN PANEL
+</button>
+
+<script>
+/* USTA TOP AI — UY REMONTI VA QURILISH KASBLARI */
+
+const kerakliKasblar = [
+  "Quruvchi",
+  "Santexnik",
+  "Elektrik",
+  "Malyar (bo‘yoqchi)",
+  "Shpaklyovkachi",
+  "Shtukaturkachi",
+  "Plitkachi",
+  "Kafel ustasi",
+  "G‘isht teruvchi",
+  "Betonchi",
+  "Fundament ustasi",
+  "Tom yopuvchi",
+  "Payvandchi",
+  "Mebel yig‘uvchi",
+  "Eshik o‘rnatuvchi",
+  "Deraza o‘rnatuvchi",
+  "Gipsokarton ustasi",
+  "Pol ustasi",
+  "Laminat yotqizuvchi",
+  "Parket ustasi",
+  "Oboy yopishtiruvchi",
+  "Konditsioner o‘rnatuvchi",
+  "Isitish tizimi ustasi",
+  "Ventilyatsiya ustasi",
+  "Usta brigada",
+  "Uy remonti ustasi",
+  "Kalit topshirish remonti",
+  "Interyer dizayner",
+  "Arxitektor",
+  "Landshaft dizayner"
+];
+
+/* Kerakli kasblarni saqlash */
+localStorage.setItem(
+  "ustaTopKerakliKasblar",
+  JSON.stringify(kerakliKasblar)
+);
+
+/* Kerakli kasblarni konsolda ko‘rish */
+console.log("🏠 Uy remonti va qurilish kasblari:");
+console.log(kerakliKasblar);
+
+/* Keraksiz kasblarni yashirish */
+const keraksizKasblar = [
+  "avto",
+  "mashina",
+  "manikyur",
+  "pedikyur",
+  "sartarosh",
+  "kosmetolog",
+  "massaj",
+  "kuryer",
+  "haydovchi",
+  "telefon",
+  "kompyuter",
+  "fotograf",
+  "videograf",
+  "tikuvchi",
+  "oshpaz",
+  "qandolatchi",
+  "bog‘bon"
+];
+
+function kasbKerakmi(matn) {
+  const nom = matn.toLowerCase();
+
+  return !keraksizKasblar.some(kasb =>
+    nom.includes(kasb)
+  );
+}
+
+/* Saytdagi keraksiz kasb kartalarini olib tashlash */
+document.querySelectorAll(
+  ".master-card, .service-card, .category-card"
+).forEach(karta => {
+  if (!kasbKerakmi(karta.innerText)) {
+    karta.remove();
+  }
+});
+
+console.log("✅ Uy remonti va qurilish yo‘nalishi tayyor!");
+</script>
+
+<style>
+#homeRepairSection {
+  padding: 50px 20px;
+  background: #101827;
+  color: white;
+}
+
+#homeRepairSection h2 {
+  text-align: center;
+  color: #a3e635;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+#repairJobsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.repairJobCard {
+  background: #1c2637;
+  border: 1px solid #a3e63555;
+  padding: 22px;
+  border-radius: 16px;
+  text-align: center;
+  transition: .3s;
+}
+
+.repairJobCard:hover {
+  transform: translateY(-7px);
+  border-color: #a3e635;
+  box-shadow: 0 0 20px #a3e63533;
+}
+
+.repairJobCard .repairIcon {
+  font-size: 35px;
+  margin-bottom: 12px;
+}
+
+.repairJobCard h3 {
+  color: #a3e635;
+  margin: 10px 0;
+}
+
+.repairJobCard p {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.repairJobCard button {
+  background: #a3e635;
+  color: #101827;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+}
+</style>
+
+<section id="homeRepairSection">
+  <h2>🏠 Qurilish va uy remonti xizmatlari</h2>
+
+  <div id="repairJobsGrid">
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🏗️</div>
+      <h3>Uy quruvchi</h3>
+      <p>Uy qurish, bino ko‘tarish va qurilish ishlari</p>
+      <button onclick="repairOrder('Uy quruvchi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🔧</div>
+      <h3>Santexnik</h3>
+      <p>Suv quvurlari, kran, unitaz va kanalizatsiya</p>
+      <button onclick="repairOrder('Santexnik')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">⚡</div>
+      <h3>Elektrik</h3>
+      <p>Elektr simlari, rozetka, yoritish va montaj</p>
+      <button onclick="repairOrder('Elektrik')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🧱</div>
+      <h3>G‘isht teruvchi</h3>
+      <p>Devor, poydevor va g‘isht terish ishlari</p>
+      <button onclick="repairOrder('G‘isht teruvchi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🎨</div>
+      <h3>Bo‘yoqchi</h3>
+      <p>Devor, shift va xonalarni bo‘yash</p>
+      <button onclick="repairOrder('Bo‘yoqchi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🪣</div>
+      <h3>Shpaklyovkachi</h3>
+      <p>Devorlarni tekislash va pardozlash</p>
+      <button onclick="repairOrder('Shpaklyovkachi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🪨</div>
+      <h3>Shtukaturkachi</h3>
+      <p>Devor va shiftni suvoq qilish</p>
+      <button onclick="repairOrder('Shtukaturkachi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🛁</div>
+      <h3>Plitkachi</h3>
+      <p>Vanna, oshxona va polga kafel yotqizish</p>
+      <button onclick="repairOrder('Plitkachi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🏠</div>
+      <h3>Tom ustasi</h3>
+      <p>Tom yopish, ta’mirlash va izolyatsiya</p>
+      <button onclick="repairOrder('Tom ustasi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🪚</div>
+      <h3>Pol ustasi</h3>
+      <p>Laminat, parket va pol yotqizish</p>
+      <button onclick="repairOrder('Pol ustasi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🚪</div>
+      <h3>Eshik va deraza ustasi</h3>
+      <p>Eshik, rom va derazalarni o‘rnatish</p>
+      <button onclick="repairOrder('Eshik va deraza ustasi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🪵</div>
+      <h3>Mebelchi</h3>
+      <p>Mebel yasash, yig‘ish va ta’mirlash</p>
+      <button onclick="repairOrder('Mebelchi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">❄️</div>
+      <h3>Konditsioner ustasi</h3>
+      <p>Konditsioner o‘rnatish va ta’mirlash</p>
+      <button onclick="repairOrder('Konditsioner ustasi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🔥</div>
+      <h3>Isitish tizimi ustasi</h3>
+      <p>Isitish, radiator va issiq pol tizimlari</p>
+      <button onclick="repairOrder('Isitish tizimi ustasi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🛠️</div>
+      <h3>Payvandchi</h3>
+      <p>Metall konstruksiya va payvandlash</p>
+      <button onclick="repairOrder('Payvandchi')">Usta chaqirish</button>
+    </div>
+
+    <div class="repairJobCard">
+      <div class="repairIcon">🏡</div>
+      <h3>Kompleks remont</h3>
+      <p>Uyni boshidan oxirigacha ta’mirlash</p>
+      <button onclick="repairOrder('Kompleks uy remonti')">Usta chaqirish</button>
+    </div>
+
+  </div>
+</section>
+
+<script>
+function repairOrder(service) {
+  const phone = "998995301178";
+
+  const message =
+    "Assalomu alaykum! USTA TOP AI orqali " +
+    service +
+    " xizmatiga buyurtma bermoqchiman.";
+
+  const url =
+    "https://wa.me/" + phone +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+</script>
+
+<style>
+/* BARCHA TUGMALAR ANIMATSIYASI */
+button {
+  cursor: pointer !important;
+  transition: all .3s ease !important;
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 5px 20px #a3e63555;
+}
+
+button:active {
+  transform: scale(.95);
+}
+
+/* BUYURTMA SAHIFASI */
+#ustaOrderPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: #0b1120;
+  color: white;
+  overflow-y: auto;
+  padding: 25px;
+}
+
+.orderContainer {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #151f30;
+  border: 1px solid #a3e635;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #a3e63522;
+}
+
+.orderContainer h1 {
+  color: #a3e635;
+  text-align: center;
+}
+
+.orderContainer input,
+.orderContainer select,
+.orderContainer textarea {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  background: #0b1120;
+  color: white;
+  border: 1px solid #354258;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.orderContainer textarea {
+  min-height: 100px;
+}
+
+.orderAction {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #a3e635;
+  color: #101827;
+  font-weight: 900;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.orderBack {
+  background: #344155;
+  color: white;
+}
+
+</style>
+
+<!-- ALOHIDA BUYURTMA SAHIFASI -->
+<div id="ustaOrderPage">
+  <div class="orderContainer">
+
+    <h1>🏠 USTA TOP AI</h1>
+    <h2>📋 Buyurtma berish</h2>
+
+    <p>Kerakli ma’lumotlarni kiriting:</p>
+
+    <form id="ustaOrderForm">
+
+      <input
+        type="text"
+        id="orderName"
+        placeholder="Ismingiz"
+        required
+      >
+
+      <input
+        type="tel"
+        id="orderPhone"
+        placeholder="Telefon raqamingiz"
+        required
+      >
+
+      <input
+        type="text"
+        id="orderAddress"
+        placeholder="Manzilingiz (shahar, tuman)"
+        required
+      >
+
+      <select id="orderService" required>
+        <option value="">Xizmat turini tanlang</option>
+        <option>Uy quruvchi</option>
+        <option>Santexnik</option>
+        <option>Elektrik</option>
+        <option>Bo‘yoqchi</option>
+        <option>Shpaklyovkachi</option>
+        <option>Shtukaturkachi</option>
+        <option>Plitkachi</option>
+        <option>G‘isht teruvchi</option>
+        <option>Betonchi</option>
+        <option>Tom ustasi</option>
+        <option>Pol ustasi</option>
+        <option>Mebelchi</option>
+        <option>Eshik va deraza ustasi</option>
+        <option>Konditsioner ustasi</option>
+        <option>Payvandchi</option>
+        <option>Kompleks uy remonti</option>
+      </select>
+
+      <textarea
+        id="orderDetails"
+        placeholder="Buyurtma haqida qo‘shimcha ma’lumot..."
+      ></textarea>
+
+      <button type="submit" class="orderAction">
+        📲 BUYURTMA YUBORISH
+      </button>
+
+    </form>
+
+    <button class="orderAction orderBack" onclick="closeOrderPage()">
+      ← ORQAGA QAYTISH
+    </button>
+
+  </div>
+</div>
+
+<script>
+/* BUYURTMA SAHIFASINI OCHISH */
+function openOrderPage(serviceName = "") {
+  document.getElementById("ustaOrderPage").style.display = "block";
+
+  if (serviceName) {
+    document.getElementById("orderService").value = serviceName;
+  }
+
+  window.scrollTo(0, 0);
+}
+
+/* BUYURTMA SAHIFASINI YOPISH */
+function closeOrderPage() {
+  document.getElementById("ustaOrderPage").style.display = "none";
+}
+
+/* BARCHA ZAKAZ TUGMALARINI ISHLATISH */
+document.addEventListener("click", function(event) {
+  const btn = event.target.closest("button");
+
+  if (!btn) return;
+
+  const text = btn.innerText.toLowerCase();
+
+  if (
+    text.includes("usta chaqirish") ||
+    text.includes("zakaz qilish") ||
+    text.includes("buyurtma berish") ||
+    text.includes("buyurtma") ||
+    text.includes("order now")
+  ) {
+    event.preventDefault();
+
+    const card = btn.closest(
+      ".repairJobCard, .master-card, .service-card, .category-card"
+    );
+
+    let serviceName = "";
+
+    if (card) {
+      const heading = card.querySelector("h3, h2, h4");
+
+      if (heading) {
+        serviceName = heading.innerText.trim();
+      }
+    }
+
+    openOrderPage(serviceName);
+  }
+});
+
+/* BUYURTMA WHATSAPP ORQALI YUBORILADI */
+document.getElementById("ustaOrderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("orderName").value.trim();
+  const phone = document.getElementById("orderPhone").value.trim();
+  const address = document.getElementById("orderAddress").value.trim();
+  const service = document.getElementById("orderService").value;
+  const details = document.getElementById("orderDetails").value.trim();
+
+  const adminPhone = "998995301178";
+
+  const message =
+    "🏠 USTA TOP AI — YANGI BUYURTMA\n\n" +
+    "👤 Ism: " + name + "\n" +
+    "📞 Telefon: " + phone + "\n" +
+    "📍 Manzil: " + address + "\n" +
+    "🔧 Xizmat: " + service + "\n" +
+    "📝 Izoh: " + (details || "Izoh yo‘q");
+
+  const whatsapp =
+    "https://wa.me/" + adminPhone +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(whatsapp, "_blank");
+});
+</script>
+
+<style>
+#ustaAdminButton {
+  position: fixed;
+  right: 22px;
+  bottom: 90px;
+  z-index: 999990;
+  background: #a3e635;
+  color: #101827;
+  border: 0;
+  border-radius: 30px;
+  padding: 15px 22px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 0 20px #a3e63577;
+}
+
+#ustaAdminPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow-y: auto;
+  background: #0b1120;
+  color: white;
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.adminContent {
+  max-width: 950px;
+  margin: 35px auto;
+}
+
+.adminHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.adminHeader h1 {
+  color: #a3e635;
+}
+
+.adminCard {
+  background: #172338;
+  border: 1px solid #35445b;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+}
+
+.adminCard input,
+.adminCard select {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border-radius: 9px;
+  border: 1px solid #52627a;
+  background: #0b1120;
+  color: white;
+  box-sizing: border-box;
+}
+
+.adminAction {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 18px;
+  margin: 5px;
+  background: #a3e635;
+  color: #101827;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adminClose {
+  background: #e54848;
+  color: white;
+}
+
+.adminAction:hover,
+#ustaAdminButton:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+</style>
+
+
+<style>
+#ustaRegisterPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: #08111f;
+  color: white;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ustaRegisterBox {
+  max-width: 550px;
+  margin: 30px auto;
+  padding: 28px;
+  background: #152238;
+  border: 2px solid #a3e635;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #a3e63522;
+}
+
+.ustaRegisterBox h1 {
+  color: #a3e635;
+  text-align: center;
+}
+
+.ustaRegisterBox input,
+.ustaRegisterBox select,
+.ustaRegisterBox textarea {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  border: 1px solid #52627a;
+  background: #0b1120;
+  color: white;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.ustaRegisterBox textarea {
+  min-height: 100px;
+}
+
+.ustaRegisterBtn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #a3e635;
+  color: #101827;
+  font-weight: 900;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ustaRegisterBack {
+  background: #344155;
+  color: white;
+}
+</style>
+
+<!-- USTA BO'LISH ARIZA SAHIFASI -->
+<div id="ustaRegisterPage">
+  <div class="ustaRegisterBox">
+
+    <h1>🔧 USTA TOP AI</h1>
+    <h2>Usta bo‘lish uchun ariza</h2>
+    <p>Ma’lumotlaringizni to‘ldiring.</p>
+
+    <form id="ustaRegisterForm">
+
+      <input
+        id="regName"
+        type="text"
+        placeholder="Ism va familiyangiz"
+        required
+      >
+
+      <input
+        id="regPhone"
+        type="tel"
+        placeholder="Telefon raqamingiz"
+        required
+      >
+
+      <input
+        id="regCity"
+        type="text"
+        placeholder="Shahar yoki tuman"
+        required
+      >
+
+      <select id="regJob" required>
+        <option value="">Qaysi sohada ishlaysiz?</option>
+        <option>Uy quruvchi</option>
+        <option>Santexnik</option>
+        <option>Elektrik</option>
+        <option>Bo‘yoqchi</option>
+        <option>Shpaklyovkachi</option>
+        <option>Shtukaturkachi</option>
+        <option>Plitkachi</option>
+        <option>G‘isht teruvchi</option>
+        <option>Betonchi</option>
+        <option>Tom ustasi</option>
+        <option>Pol ustasi</option>
+        <option>Mebelchi</option>
+        <option>Eshik va deraza ustasi</option>
+        <option>Konditsioner ustasi</option>
+        <option>Payvandchi</option>
+        <option>Kompleks uy remonti</option>
+        <option>Boshqa qurilish xizmati</option>
+      </select>
+
+      <input
+        id="regExperience"
+        type="number"
+        min="0"
+        placeholder="Ish tajribangiz (yil)"
+        required
+      >
+
+      <textarea
+        id="regAbout"
+        placeholder="O‘zingiz va ishingiz haqida ma’lumot..."
+      ></textarea>
+
+      <button class="ustaRegisterBtn" type="submit">
+        📲 ARIZANI YUBORISH
+      </button>
+
+    </form>
+
+    <button class="ustaRegisterBtn ustaRegisterBack"
+      type="button" onclick="closeUstaRegister()">
+      ← ORQAGA QAYTISH
+    </button>
+
+  </div>
+</div>
+
+<script>
+/* USTA BO'LISH SAHIFASINI OCHISH */
+function openUstaRegister() {
+  document.getElementById("ustaRegisterPage").style.display = "block";
+}
+
+/* SAHIFANI YOPISH */
+function closeUstaRegister() {
+  document.getElementById("ustaRegisterPage").style.display = "none";
+}
+
+/* USTA BO'LISH TUGMASINI TOPISH VA ISHLATISH */
+document.addEventListener("click", function(event) {
+  const button = event.target.closest("button, a");
+
+  if (!button) return;
+
+  const buttonText = (
+    button.innerText ||
+    button.textContent ||
+    button.value ||
+    ""
+  ).toLowerCase().replace(/ʻ|’|‘|`/g, "'").trim();
+
+  if (
+    buttonText.includes("usta bo'lish") ||
+    buttonText.includes("usta bolish") ||
+    buttonText.includes("usta bo'ling") ||
+    buttonText.includes("master bo'lish")
+  ) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openUstaRegister();
+  }
+}, true);
+
+/* ARIZANI WHATSAPPGA YUBORISH */
+document.getElementById("ustaRegisterForm")
+.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("regName").value.trim();
+  const phone = document.getElementById("regPhone").value.trim();
+  const city = document.getElementById("regCity").value.trim();
+  const job = document.getElementById("regJob").value;
+  const experience = document.getElementById("regExperience").value;
+  const about = document.getElementById("regAbout").value.trim();
+
+  const adminPhone = "998995301178";
+
+  const message =
+    "🔧 USTA TOP AI — YANGI USTA ARIZASI\n\n" +
+    "👤 Ism: " + name + "\n" +
+    "📞 Telefon: " + phone + "\n" +
+    "📍 Shahar/tuman: " + city + "\n" +
+    "🛠 Kasbi: " + job + "\n" +
+    "📅 Tajribasi: " + experience + " yil\n" +
+    "📝 Ma'lumot: " + (about || "Ko‘rsatilmagan");
+
+  const whatsappUrl =
+    "https://wa.me/" + adminPhone +
+    "?text=" + encodeURIComponent(message);
+
+  window.location.href = whatsappUrl;
+});
+</script>
+
+<style>
+/* USTA TOP AI — MASHHUR USTALAR */
+#alisherMasters {
+  padding: 55px 20px;
+  background: #0b1120;
+  color: white;
+}
+
+#alisherMasters .alisherHeading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+#alisherMasters .alisherHeading h2 {
+  color: #a3e635;
+  font-size: 32px;
+}
+
+#alisherMasters .alisherHeading p {
+  color: #cbd5e1;
+}
+
+#alisherMastersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  gap: 22px;
+  max-width: 1250px;
+  margin: auto;
+}
+
+.alisherMasterCard {
+  overflow: hidden;
+  background: #172338;
+  border: 1px solid #35445b;
+  border-radius: 18px;
+  transition: .3s;
+}
+
+.alisherMasterCard:hover {
+  transform: translateY(-8px);
+  border-color: #a3e635;
+  box-shadow: 0 10px 30px #a3e63522;
+}
+
+.alisherMasterCard img {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+  display: block;
+}
+
+.alisherMasterInfo {
+  padding: 18px;
+}
+
+.alisherMasterInfo h3 {
+  color: #a3e635;
+  font-size: 20px;
+  margin: 5px 0 10px;
+}
+
+.alisherMasterInfo p {
+  color: #cbd5e1;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.alisherMasterName {
+  color: white;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.alisherMasterTag {
+  display: inline-block;
+  background: #a3e63522;
+  color: #a3e635;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.alisherMasterInfo button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #a3e635;
+  color: #101827;
+  font-weight: 900;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: .3s;
+}
+
+.alisherMasterInfo button:hover {
+  background: white;
+  transform: scale(1.03);
+}
+</style>
+
+<section id="alisherMasters">
+
+  <div class="alisherHeading">
+    <h2>🏆 Mashhur ustalar va xizmatlar</h2>
+    <p>Uy qurilishi va remonti uchun kerakli barcha xizmatlar</p>
+  </div>
+
+  <div id="alisherMastersGrid"></div>
+
+</section>
+
+<script>
+const alisherServices = [
+
+  {
+    job: "Uy quruvchi",
+    image: "photo-1504307651254-35680f356dfd",
+    description: "Uy qurish, bino ko‘tarish va qurilish ishlari."
+  },
+  {
+    job: "Santexnik",
+    image: "photo-1607472586893-edb57bdc0e39",
+    description: "Suv quvurlari, kran, unitaz va kanalizatsiya."
+  },
+  {
+    job: "Elektrik",
+    image: "photo-1621905251918-48416bd8575a",
+    description: "Elektr simlari, rozetka va yoritish tizimlari."
+  },
+  {
+    job: "Bo‘yoqchi",
+    image: "photo-1562259949-e8e7689d7828",
+    description: "Devor va shiftlarni sifatli bo‘yash."
+  },
+  {
+    job: "Plitkachi",
+    image: "photo-1620626011761-996317b8d101",
+    description: "Pol va devorlarga kafel hamda plitka yotqizish."
+  },
+  {
+    job: "G‘isht teruvchi",
+    image: "photo-1590725121839-892b458a74fe",
+    description: "G‘isht terish, devor qurish va pardevor ishlari."
+  },
+  {
+    job: "Tom ustasi",
+    image: "photo-1635424710928-8a7d6f4b2c7c",
+    description: "Tom yopish, ta’mirlash va suv o‘tkazmaslik."
+  },
+  {
+    job: "Pol ustasi",
+    image: "photo- flooring",
+    description: "Laminat, parket va boshqa pol qoplamalarini yotqizish."
+  },
+  {
+    job: "Gipsokarton ustasi",
+    image: "photo-1600607687939-ce8a6c25118c",
+    description: "Gipsokarton devor, shift va dekorativ dizayn."
+  },
+  {
+    job: "Mebelchi",
+    image: "photo-1600210492486-724fe5c67fb0",
+    description: "Mebel yasash, yig‘ish va o‘rnatish."
+  },
+  {
+    job: "Eshik va deraza ustasi",
+    image: "photo-1501183638710-841dd1904471",
+    description: "Eshik, rom va derazalarni o‘rnatish."
+  },
+  {
+    job: "Payvandchi",
+    image: "photo-1504917595217-d4dc5ebe6122",
+    description: "Metall konstruksiya, panjara va payvandlash."
+  },
+  {
+    job: "Konditsioner ustasi",
+    image: "photo-1631545806609-2d6e3f3c4b0d",
+    description: "Konditsioner o‘rnatish va texnik xizmat."
+  },
+  {
+    job: "Betonchi",
+    image: "photo-1517089596392-fb9a9033e05b",
+    description: "Beton quyish, poydevor va pol ishlari."
+  },
+  {
+    job: "Interyer dizayner",
+    image: "photo-1600210492486-724fe5c67fb0",
+    description: "Uy va xonalar uchun zamonaviy interyer loyihasi."
+  },
+  {
+    job: "Kompleks uy remonti",
+    image: "photo-1600607687920-4e2a09cf159d",
+    description: "Uyni boshidan oxirigacha ta’mirlash."
+  }
+];
+
+const alisherGrid =
+  document.getElementById("alisherMastersGrid");
+
+alisherServices.forEach(service => {
+
+  const card = document.createElement("div");
+  card.className = "alisherMasterCard";
+
+  const image = document.createElement("img");
+  image.src = "https://images.unsplash.com/" +
+    service.image +
+    "?auto=format&fit=crop&w=700&q=80";
+  image.alt = service.job;
+  image.loading = "lazy";
+
+  const info = document.createElement("div");
+  info.className = "alisherMasterInfo";
+
+  const tag = document.createElement("span");
+  tag.className = "alisherMasterTag";
+  tag.textContent = "🏆 Usta xizmati";
+
+  const heading = document.createElement("h3");
+  heading.textContent = service.job;
+
+  const name = document.createElement("div");
+  name.className = "alisherMasterName";
+  name.textContent = "👤 Axmetov Alisher";
+
+  const description = document.createElement("p");
+  description.textContent = service.description;
+
+  const button = document.createElement("button");
+  button.textContent = "📲 USTA CHAQIRISH";
+
+  button.addEventListener("click", function() {
+    const message =
+      "Assalomu alaykum! USTA TOP AI orqali buyurtma.\n\n" +
+      "Usta: Axmetov Alisher\n" +
+      "Xizmat: " + service.job + "\n" +
+      "Xizmat haqida: " + service.description;
+
+    const url =
+      "https://wa.me/998995301178?text=" +
+      encodeURIComponent(message);
+
+    window.open(url, "_blank");
+  });
+
+  info.appendChild(tag);
+  info.appendChild(heading);
+  info.appendChild(name);
+  info.appendChild(description);
+  info.appendChild(button);
+
+  card.appendChild(image);
+  card.appendChild(info);
+
+  alisherGrid.appendChild(card);
+
+});
+
+/* MASHHUR USTALAR BO'LIMIGA JOYLASHTIRISH */
+const allHeadings = document.querySelectorAll("h1, h2, h3");
+
+allHeadings.forEach(heading => {
+  if (
+    heading.textContent.toLowerCase().includes("mashhur ustalar") &&
+    !heading.closest("#alisherMasters")
+  ) {
+    const oldSection = heading.closest("section");
+
+    if (oldSection && oldSection !== document.getElementById("alisherMasters")) {
+      oldSection.after(document.getElementById("alisherMasters"));
+    }
+  }
+});
+</script>
+
+<!-- BUYURTMA SAHIFASI -->
+<style>
+#alisherOrderPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #07111f;
+  color: white;
+  padding: 25px 15px;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+}
+
+.alisher-order-box {
+  max-width: 480px;
+  margin: 35px auto;
+  padding: 28px;
+  border-radius: 20px;
+  background: #111f32;
+  border: 1px solid #31445e;
+  box-shadow: 0 0 30px #00e5a033;
+}
+
+.alisher-order-box h2 {
+  text-align: center;
+  color: #00e5a0;
+  margin-bottom: 10px;
+}
+
+.alisher-order-box p {
+  text-align: center;
+  color: #b9c7d8;
+  margin-bottom: 22px;
+}
+
+.alisher-order-box label {
+  display: block;
+  margin: 14px 0 7px;
+  color: #dce8f5;
+}
+
+.alisher-order-box input,
+.alisher-order-box textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid #40536c;
+  border-radius: 10px;
+  background: #07111f;
+  color: white;
+  outline: none;
+  font-size: 15px;
+}
+
+.alisher-order-box input:focus,
+.alisher-order-box textarea:focus {
+  border-color: #00e5a0;
+}
+
+.alisher-order-box textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.alisher-order-box button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #00e5a0;
+  color: #07111f;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.alisher-order-box .back-btn {
+  background: #29394e;
+  color: white;
+  margin-top: 10px;
+}
+</style>
+
+<div id="alisherOrderPage">
+  <div class="alisher-order-box">
+    <h2>🛠 USTAGA BUYURTMA</h2>
+    <p>Ma’lumotlaringizni kiriting</p>
+
+    <form id="alisherOrderForm">
+
+      <label>Usta ismi</label>
+      <input type="text" value="Axmetov Alisher" readonly>
+
+      <label>Ismingiz</label>
+      <input id="customerName" type="text"
+        placeholder="Ismingizni yozing" required>
+
+      <label>Telefon raqamingiz</label>
+      <input id="customerPhone" type="tel"
+        placeholder="+998 90 123 45 67" required>
+
+      <label>Qayerda turasiz? (Manzil)</label>
+      <input id="customerAddress" type="text"
+        placeholder="Masalan: Toshkent, Chilonzor" required>
+
+      <label>Qanday xizmat kerak?</label>
+      <input id="customerService" type="text"
+        placeholder="Masalan: Santexnik" required>
+
+      <label>Buyurtma haqida qo‘shimcha ma’lumot</label>
+      <textarea id="customerDetails"
+        placeholder="Qanday ish bajarilishi kerak?"></textarea>
+
+      <button type="submit">📲 BUYURTMANI YUBORISH</button>
+      <button type="button" class="back-btn"
+        onclick="closeAlisherOrder()">⬅ ORQAGA QAYTISH</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Buyurtma sahifasini ochish
+function openAlisherOrder(serviceName) {
+  document.getElementById("customerService").value =
+    serviceName || "Usta xizmati";
+
+  document.getElementById("alisherOrderPage").style.display = "block";
+}
+
+// Orqaga qaytish
+function closeAlisherOrder() {
+  document.getElementById("alisherOrderPage").style.display = "none";
+}
+
+// Zakaz tugmalarini ushlash
+document.addEventListener("click", function(e) {
+  const button = e.target.closest("button, a");
+  if (!button) return;
+
+  const buttonText = (button.innerText || button.textContent || "")
+    .toLowerCase();
+
+  if (
+    buttonText.includes("zakaz") ||
+    buttonText.includes("buyurtma") ||
+    buttonText.includes("usta chaqirish")
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    openAlisherOrder("Usta xizmati");
+  }
+}, true);
+
+// Buyurtmani WhatsAppga yuborish
+document.getElementById("alisherOrderForm")
+  .addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("customerName").value;
+    const phone = document.getElementById("customerPhone").value;
+    const address = document.getElementById("customerAddress").value;
+    const service = document.getElementById("customerService").value;
+    const details = document.getElementById("customerDetails").value;
+
+    const message =
+      "YANGI BUYURTMA%0A%0A" +
+      "Usta: Axmetov Alisher%0A" +
+      "Mijoz: " + encodeURIComponent(name) + "%0A" +
+      "Telefon: " + encodeURIComponent(phone) + "%0A" +
+      "Manzil: " + encodeURIComponent(address) + "%0A" +
+      "Xizmat: " + encodeURIComponent(service) + "%0A" +
+      "Izoh: " + encodeURIComponent(details);
+
+    const whatsappURL =
+      "https://wa.me/998995301178?text=" + message;
+
+    window.open(whatsappURL, "_blank");
+  });
+</script>
+
+<!-- USTA TOP AI QIDIRUVINI ISHLATISH -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // AI qidiruv maydonini topish
+  const searchInputs = [
+    ...document.querySelectorAll("input, textarea")
+  ];
+
+  const aiInput = searchInputs.find(el => {
+    const text = (
+      (el.placeholder || "") + " " +
+      (el.id || "") + " " +
+      (el.name || "")
+    ).toLowerCase();
+
+    return text.includes("ai") ||
+           text.includes("qidir") ||
+           text.includes("usta") ||
+           text.includes("xizmat");
+  });
+
+  // AI qidiruv tugmasini topish
+  const aiButton = [...document.querySelectorAll("button")]
+    .find(btn => {
+      const t = btn.innerText.toLowerCase();
+      return t.includes("ai bilan qidir") ||
+             t.includes("ai qidir") ||
+             t.includes("qidirish");
+    });
+
+  if (!aiInput || !aiButton) {
+    console.warn("AI qidiruv maydoni yoki tugmasi topilmadi.");
+    return;
+  }
+
+  function searchMasters() {
+    const query = aiInput.value.trim().toLowerCase();
+
+    if (!query) {
+      alert("Qanday usta kerakligini yozing!");
+      aiInput.focus();
+      return;
+    }
+
+    // Qidiruv so'zlarini ajratish
+    const words = query
+      .replace(/[.,!?]/g, " ")
+      .split(/\s+/)
+      .filter(word => word.length > 1);
+
+    // Usta kartalarini topish
+    const cards = [
+      ...document.querySelectorAll(
+        ".master-card, .service-card, .category-card, .usta-card"
+      )
+    ];
+
+    if (cards.length === 0) {
+      alert("Ustalar ro‘yxati topilmadi. Sayt kodini tekshirish kerak.");
+      return;
+    }
+
+    let found = 0;
+
+    cards.forEach(card => {
+      const cardText = card.innerText.toLowerCase();
+
+      const matched = words.some(word =>
+        cardText.includes(word)
+      );
+
+      card.style.display = matched ? "" : "none";
+
+      if (matched) found++;
+    });
+
+    // Natijalar joyiga o'tish
+    const firstCard = cards.find(card => card.style.display !== "none");
+
+    if (firstCard) {
+      firstCard.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+
+    if (found === 0) {
+      alert("Bu xizmat bo‘yicha usta topilmadi. Boshqa so‘z bilan qidiring.");
+    }
+  }
+
+  aiButton.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    searchMasters();
+  }, true);
+
+  aiInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchMasters();
+    }
+  });
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const headings = [...document.querySelectorAll("h1, h2, h3, h4")];
+
+  const famousHeading = headings.find(h =>
+    h.textContent.toLowerCase().includes("mashhur ustalar")
+  );
+
+  if (!famousHeading) {
+    console.log("Mashhur ustalar bo‘limi topilmadi.");
+    return;
+  }
+
+  const section = famousHeading.closest("section") ||
+                  famousHeading.parentElement;
+
+  const cards = section.querySelectorAll(
+    ".master-card, .usta-card, .alisher-master-card"
+  );
+
+  cards.forEach(card => {
+    const name = card.textContent.toLowerCase();
+
+    if (
+      !name.includes("axmetov alisher") &&
+      !name.includes("ahmetov alisher")
+    ) {
+      card.remove();
+    }
+  });
+
+});
+</script>
+
+<style>
+.usta-comments {
+  margin-top: 15px;
+  padding: 15px;
+  background: #102238;
+  border: 1px solid #29445f;
+  border-radius: 12px;
+  color: white;
+}
+
+.usta-comments h3 {
+  color: #00e5a0;
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+
+.usta-comments input,
+.usta-comments textarea,
+.usta-comments select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid #40536c;
+  background: #07111f;
+  color: white;
+}
+
+.usta-comments textarea {
+  min-height: 65px;
+}
+
+.usta-comments button {
+  width: 100%;
+  padding: 11px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #00e5a0;
+  color: #07111f;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comment-item {
+  background: #1b3048;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 9px;
+  overflow-wrap: anywhere;
+}
+
+.comment-item strong {
+  color: #00e5a0;
+}
+
+.comment-item p {
+  margin: 6px 0 0;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const masterCards = document.querySelectorAll(
+    ".master-card, .usta-card, .alisher-master-card"
+  );
+
+  masterCards.forEach((card, index) => {
+
+    if (card.querySelector(".usta-comments")) return;
+
+    const commentBox = document.createElement("div");
+    commentBox.className = "usta-comments";
+
+    commentBox.innerHTML = `
+      <h3>💬 Mijozlar izohlari</h3>
+
+      <div class="comments-list"></div>
+
+      <form class="comment-form">
+        <input class="comment-name"
+          type="text" placeholder="Ismingiz" required>
+
+        <select class="comment-rating">
+          <option value="5">⭐⭐⭐⭐⭐ 5 baho</option>
+          <option value="4">⭐⭐⭐⭐ 4 baho</option>
+          <option value="3">⭐⭐⭐ 3 baho</option>
+          <option value="2">⭐⭐ 2 baho</option>
+          <option value="1">⭐ 1 baho</option>
+        </select>
+
+        <textarea class="comment-text"
+          placeholder="Usta haqida fikringizni yozing..."
+          required></textarea>
+
+        <button type="submit">Izoh qoldirish</button>
+      </form>
+    `;
+
+    card.appendChild(commentBox);
+
+    const storageKey = "usta_comments_" + index;
+    const list = commentBox.querySelector(".comments-list");
+    const form = commentBox.querySelector(".comment-form");
+
+    function showComments() {
+      const comments = JSON.parse(
+        localStorage.getItem(storageKey) || "[]"
+      );
+
+      list.innerHTML = "";
+
+      comments.forEach(comment => {
+        const item = document.createElement("div");
+        item.className = "comment-item";
+
+        const title = document.createElement("strong");
+        title.textContent =
+          comment.name + " — " + "⭐".repeat(comment.rating);
+
+        const message = document.createElement("p");
+        message.textContent = comment.text;
+
+        item.appendChild(title);
+        item.appendChild(message);
+        list.appendChild(item);
+      });
+    }
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = form.querySelector(".comment-name").value.trim();
+      const rating = form.querySelector(".comment-rating").value;
+      const message = form.querySelector(".comment-text").value.trim();
+
+      if (!name || !message) return;
+
+      const comments = JSON.parse(
+        localStorage.getItem(storageKey) || "[]"
+      );
+
+      comments.push({
+        name: name,
+        rating: Number(rating),
+        text: message
+      });
+
+      localStorage.setItem(storageKey, JSON.stringify(comments));
+
+      form.reset();
+      showComments();
+
+      alert("Izohingiz qo‘shildi! Rahmat 😊");
+    });
+
+    showComments();
+  });
+
+});
+</script>
