@@ -1,0 +1,288 @@
+
+#realFootball3D {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: #081321;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+#stadium3D {
+  position: absolute;
+  inset: 52px 0 0;
+  width: 100%;
+  height: calc(100% - 52px);
+}
+
+#stadium3D canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.game-top {
+  height: 52px;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: rgba(4,12,24,.92);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.game-top button {
+  border: 0;
+  border-radius: 8px;
+  background: #e53945;
+  color: white;
+  padding: 10px 13px;
+  font-weight: bold;
+}
+
+#gameScore {
+  font-size: 22px;
+  color: #ffe36a;
+}
+
+.game-hud {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+  font-weight: bold;
+  text-shadow: 0 2px 5px black;
+}
+
+#gameMessage {
+  color: #ffe36a;
+}
+
+.game-controls {
+  position: absolute;
+  z-index: 8;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding: 0 15px;
+  pointer-events: none;
+}
+
+.game-joystick {
+  display: grid;
+  grid-template-columns: repeat(3, 48px);
+  grid-template-rows: repeat(2, 48px);
+  gap: 5px;
+  pointer-events: auto;
+}
+
+.game-joystick button,
+.game-actions button {
+  color: white;
+  background: rgba(9,22,40,.85);
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  font-weight: bold;
+  touch-action: none;
+}
+
+.game-joystick button:active,
+.game-actions button:active {
+  background: #1687ff;
+}
+
+.game-joystick button:nth-child(1) {
+  grid-column: 2;
+}
+
+.game-joystick button:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.game-joystick button:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.game-joystick button:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.game-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 62px);
+  gap: 9px;
+  pointer-events: auto;
+}
+
+.game-actions button {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  font-size: 10px;
+  background: rgba(13,37,61,.92);
+}
+
+#shootBtn {
+  background: #df303d;
+}
+
+#skillBtn {
+  background: #9b50d0;
+}
+
+@media(max-width:600px) {
+  .game-top {
+    font-size: 11px;
+  }
+
+  .game-joystick {
+    grid-template-columns: repeat(3,40px);
+    grid-template-rows: repeat(2,40px);
+  }
+
+  .game-actions {
+    grid-template-columns: repeat(2,55px);
+  }
+
+  .game-actions button {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+#ufGame {
+  position:fixed;
+  inset:0;
+  z-index:9999999;
+  background:#071522;
+  color:white;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+  text-align:center;
+}
+
+.ufHeader {
+  height:52px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#101e30;
+  position:relative;
+  z-index:2;
+}
+
+.ufHeader button {
+  background:#e63946;
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:9px 15px;
+}
+
+#ufScore {
+  font-size:23px;
+  color:#ffe36a;
+}
+
+.ufStatus {
+  height:30px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  font-weight:bold;
+  font-size:13px;
+}
+
+#ufMessage {
+  color:#ffe36a;
+}
+
+#ufCanvas {
+  display:block;
+  width:100%;
+  height:calc(100% - 185px);
+  min-height:250px;
+  touch-action:none;
+}
+
+.ufGameControls {
+  height:100px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#0b1726;
+  padding:5px;
+}
+
+.ufDirections {
+  display:grid;
+  grid-template-columns:repeat(3,38px);
+  gap:4px;
+}
+
+.ufDirections button,
+.ufActions button {
+  background:#243b56;
+  color:white;
+  border:1px solid #60748b;
+  border-radius:10px;
+  padding:10px;
+  font-weight:bold;
+  touch-action:none;
+}
+
+.ufDirections button:first-child {
+  grid-column:2;
+}
+
+.ufDirections button:nth-child(2) {
+  grid-column:1;
+}
+
+.ufDirections button:nth-child(3) {
+  grid-column:2;
+}
+
+.ufDirections button:nth-child(4) {
+  grid-column:3;
+  grid-row:2;
+}
+
+.ufActions {
+  display:flex;
+  gap:5px;
+}
+
+.ufActions button {
+  font-size:10px;
+  padding:12px 7px;
+}
+
+#ufShoot {
+  background:#d92f3d;
+}
+
+@media(max-width:420px) {
+  .ufActions button {
+    padding:10px 5px;
+    font-size:9px;
+  }
+}

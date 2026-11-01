@@ -1,3403 +1,4221 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>USTA TOP AI — Ishonchli ustalar platformasi</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>ULTIMATE FOOTBALL</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-:root {
-  --bg: #080d18;
-  --card: #111b2d;
-  --text: #ffffff;
-  --muted: #9ca9bb;
-  --green: #b7ff35;
-  --border: rgba(255,255,255,.1);
-}
-
-html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Manrope', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
+    background: #05080d;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
-button, input, select, textarea {
-  font: inherit;
+/* ================= BACKGROUND ================= */
+
+.stadium {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background:
+        radial-gradient(ellipse at 50% 25%, #283c4b 0%, transparent 45%),
+        linear-gradient(180deg, #101c2c, #02050a 85%);
+    overflow: hidden;
 }
 
-button { cursor: pointer; }
-
-.container {
-  width: min(1180px, 92%);
-  margin: auto;
+.stadium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 70px,
+            #ffffff04 71px,
+            transparent 72px
+        );
+    transform: perspective(400px) rotateX(20deg) scale(1.5);
+    opacity: 0.5;
 }
 
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(8,13,24,.9);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
+.lights {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background:
+        radial-gradient(ellipse at 15% 20%, #d7f4ff 0%, transparent 12%),
+        radial-gradient(ellipse at 85% 20%, #d7f4ff 0%, transparent 12%),
+        radial-gradient(ellipse at 50% 0%, #ffffff 0%, transparent 15%);
+    filter: blur(15px);
+    opacity: 0.5;
 }
 
-.nav {
-  min-height: 78px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+.pitch {
+    position: absolute;
+    bottom: -10%;
+    left: -20%;
+    width: 140%;
+    height: 55%;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #0b281c 0px,
+            #0b281c 100px,
+            #123725 100px,
+            #123725 200px
+        );
+    transform: perspective(400px) rotateX(35deg);
+    opacity: 0.6;
 }
 
-.logo {
-  color: var(--green);
-  font-size: 25px;
-  font-weight: 900;
-  text-decoration: none;
-  letter-spacing: -1px;
+.darkness {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(
+            180deg,
+            #02050a50,
+            #02050a40 40%,
+            #02050a 100%
+        );
+    z-index: -2;
 }
 
-.logo span { color: white; }
+/* ================= INTRO ================= */
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 27px;
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav-links a {
-  color: #d2d9e5;
-  text-decoration: none;
-  font-size: 14px;
-  transition: .3s;
+.intro-logo {
+    text-align: center;
+    animation: introZoom 1s ease;
 }
 
-.nav-links a:hover { color: var(--green); }
-
-.btn {
-  border: none;
-  border-radius: 12px;
-  padding: 13px 19px;
-  font-weight: 800;
-  background: var(--green);
-  color: #101510;
-  transition: .3s;
+.ea {
+    font-family: Arial, sans-serif;
+    font-size: clamp(80px, 18vw, 160px);
+    font-weight: 1000;
+    font-style: italic;
+    letter-spacing: -12px;
 }
 
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px #b7ff3540;
+.sports {
+    font-family: Arial, sans-serif;
+    font-size: clamp(30px, 5vw, 55px);
+    font-weight: 1000;
+    letter-spacing: 5px;
 }
 
-.btn-outline {
-  background: transparent;
-  color: white;
-  border: 1px solid var(--border);
+@keyframes introZoom {
+    from {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ================= LOADING ================= */
+
+#loading {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #02050a;
+}
+
+.loading-bg {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 40%, #1a3545, transparent 60%),
+        linear-gradient(#0a1420, #02050a);
+    animation: backgroundPulse 4s infinite alternate;
+}
+
+.loading-dark {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        0deg,
+        #000 0%,
+        #0008 50%,
+        #0009 100%
+    );
+}
+
+.loading-content {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(650px, 85%);
+    text-align: center;
+}
+
+.loading-logo {
+    font-family: Orbitron, sans-serif;
+    font-weight: 900;
+    font-size: clamp(25px, 6vw, 55px);
+    letter-spacing: 3px;
+}
+
+.loading-logo span {
+    color: #a5ff00;
+}
+
+.loading-subtitle {
+    margin-top: 12px;
+    color: #aeb8c5;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+
+.loading-line {
+    width: 100%;
+    height: 5px;
+    background: #ffffff20;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+#loadingBar {
+    width: 0%;
+    height: 100%;
+    background: #a5ff00;
+    box-shadow: 0 0 20px #a5ff00;
+    transition: width 0.12s linear;
+}
+
+.loading-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-family: Orbitron, sans-serif;
+    font-size: 12px;
+}
+
+#loadingPercent {
+    color: #a5ff00;
+}
+
+.loading-footer {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    color: #ffffff60;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+@keyframes backgroundPulse {
+    from {
+        transform: scale(1);
+        filter: brightness(0.8);
+    }
+    to {
+        transform: scale(1.08);
+        filter: brightness(1.2);
+    }
+}
+
+/* ================= MAIN MENU ================= */
+
+#menu {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    animation: menuAppear 1s forwards;
+}
+
+@keyframes menuAppear {
+    to {
+        opacity: 1;
+    }
+}
+
+/* TOP HEADER */
+
+.header {
+    width: 100%;
+    height: 75px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    background: #050910e8;
+    border-bottom: 1px solid #ffffff20;
+    backdrop-filter: blur(15px);
+}
+
+.game-brand {
+    font-family: Orbitron, sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.game-brand span {
+    color: #a5ff00;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-icon {
+    width: 42px;
+    height: 42px;
+    background: #202d3c;
+    border: 1px solid #ffffff30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+
+.profile-name {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.profile-level {
+    color: #a5ff00;
+    font-size: 12px;
+}
+
+.resources {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.resource {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 12px;
+    background: #111c2b;
+    border: 1px solid #ffffff20;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.plus {
+    color: #a5ff00;
+    font-weight: 900;
+}
+
+/* MAIN LAYOUT */
+
+.menu-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    gap: 15px;
+    padding: 18px;
+}
+
+/* LEFT BUTTONS */
+.left-menu {
+    width: 95px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.square-btn {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background: #08111de8;
+    border: 1px solid #ffffff20;
+    color: #dbe4ef;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.square-btn:hover {
+    border-color: #a5ff00;
+    background: #182532;
+    transform: scale(1.03);
+}
+
+.square-btn.active {
+    background: #a5ff0018;
+    border: 1px solid #a5ff00;
+    color: #a5ff00;
+}
+
+.btn-icon {
+    font-size: 27px;
+}
+
+.btn-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* CENTER CONTENT */
+
+.center-menu {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .hero {
-  position: relative;
-  padding: 100px 0 85px;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 80% 30%, #b7ff3518, transparent 45%),
-    radial-gradient(ellipse at 10% 90%, #00d9ff12, transparent 40%);
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid #ffffff20;
+    background:
+        linear-gradient(90deg, #030710e8, #03071040 75%),
+        radial-gradient(ellipse at 75% 50%, #3b5365, #07101a);
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 50px;
-  align-items: center;
+.hero-decoration {
+    position: absolute;
+    right: 5%;
+    bottom: -20%;
+    font-size: clamp(150px, 25vw, 350px);
+    opacity: 0.14;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--green);
-  border: 1px solid #b7ff3540;
-  background: #b7ff3510;
-  padding: 9px 14px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 800;
-  margin-bottom: 23px;
+.hero-content {
+    position: absolute;
+    top: 15%;
+    left: 6%;
+    z-index: 2;
 }
 
-.hero h1 {
-  font-size: clamp(40px, 6vw, 70px);
-  line-height: 1.08;
-  letter-spacing: -3px;
-  margin-bottom: 22px;
+.hero-tag {
+    color: #a5ff00;
+    font-family: Orbitron, sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
 }
 
-.hero h1 span { color: var(--green); }
-
-.hero p {
-  color: var(--muted);
-  line-height: 1.9;
-  max-width: 530px;
-  margin-bottom: 30px;
+.hero-title {
+    font-family: Orbitron, sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(35px, 6vw, 85px);
+    line-height: 1.1;
+    margin-top: 15px;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+.hero-description {
+    font-size: 18px;
+    color: #c2cbd5;
+    margin-top: 10px;
 }
 
-.hero-image {
-  position: relative;
+.play-button {
+    width: 190px;
+    height: 55px;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #a5ff00;
+    border: none;
+    color: #030710;
+    font-family: Orbitron, sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
 }
 
-.hero-image img {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  border-radius: 30px;
-  border: 1px solid #b7ff3540;
-  box-shadow: 0 25px 80px #0008;
-  animation: floating 5s ease-in-out infinite;
+/* BOTTOM SQUARE CARDS */
+
+.bottom-cards {
+    height: 115px;
+    flex-shrink: 0;
+    display: flex;
+    gap: 12px;
 }
 
-@keyframes floating {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+.feature-card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: #08111de8;
+    border: 1px solid #ffffff20;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.floating-card {
-  position: absolute;
-  bottom: 25px;
-  left: -30px;
-  background: #142238;
-  border: 1px solid #b7ff3550;
-  border-radius: 15px;
-  padding: 16px 20px;
-  box-shadow: 0 15px 35px #0008;
+.feature-card:hover {
+    border-color: #a5ff00;
+    background: #111e2c;
 }
 
-.floating-card strong {
-  color: var(--green);
-  font-size: 23px;
+.feature-title {
+    font-family: Orbitron, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
 }
 
-section { padding: 75px 0; }
-
-.section-title {
-  font-size: clamp(28px, 4vw, 42px);
-  letter-spacing: -1.5px;
-  margin-bottom: 12px;
+.feature-subtitle {
+    color: #aab5c4;
+    font-size: 12px;
+    margin-top: 6px;
 }
 
-.section-subtitle {
-  color: var(--muted);
-  margin-bottom: 35px;
-  line-height: 1.8;
+.feature-icon {
+    font-size: 32px;
 }
 
-/* SEARCH */
+/* BOTTOM NAVIGATION */
 
-.search-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 15px;
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 12px;
-  margin-top: 35px;
+.footer-nav {
+    height: 65px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #050910ed;
+    border-top: 1px solid #ffffff20;
 }
 
-.search-box input,
-.search-box select {
-  width: 100%;
-  padding: 15px;
-  background: #080d18;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: white;
-  outline: none;
+.footer-btn {
+    height: 48px;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #aeb8c7;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-/* CATEGORIES */
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 17px;
+.footer-btn.active {
+    background: #a5ff0015;
+    border: 1px solid #a5ff0060;
+    color: #a5ff00;
 }
 
-.category {
-  padding: 25px 18px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  transition: .35s;
-  cursor: pointer;
+/* ================= MOBILE ================= */
+
+@media (max-width: 650px) {
+
+    .header {
+        height: 58px;
+        padding: 0 8px;
+        gap: 5px;
+    }
+
+    .game-brand {
+        font-size: 11px;
+    }
+
+    .profile-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+    }
+
+    .profile {
+        gap: 5px;
+    }
+
+    .profile-name {
+        font-size: 10px;
+    }
+
+    .profile-level {
+        font-size: 8px;
+    }
+
+    .resources {
+        gap: 4px;
+    }
+
+    .resource {
+        height: 27px;
+        padding: 0 5px;
+        gap: 3px;
+        font-size: 9px;
+    }
+
+    .menu-body {
+        padding: 7px;
+        gap: 7px;
+    }
+
+    .left-menu {
+        width: 53px;
+        gap: 6px;
+    }
+
+    .square-btn {
+        gap: 3px;
+    }
+
+    .btn-icon {
+        font-size: 18px;
+    }
+
+    .btn-label {
+        font-size: 8px;
+    }
+
+    .center-menu {
+        gap: 7px;
+    }
+
+    .hero-content {
+        top: 12%;
+        left: 5%;
+    }
+
+    .hero-tag {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .hero-title {
+        font-size: clamp(25px, 8vw, 45px);
+        margin-top: 8px;
+    }
+
+    .hero-description {
+        font-size: 12px;
+    }
+
+    .play-button {
+        width: 115px;
+        height: 35px;
+        margin-top: 12px;
+        padding: 0 8px;
+        font-size: 9px;
+    }
+
+    .bottom-cards {
+        height: 75px;
+        gap: 5px;
+    }
+
+    .feature-card {
+        padding: 6px;
+    }
+
+    .feature-title {
+        font-size: 8px;
+    }
+
+    .feature-subtitle {
+        font-size: 8px;
+        margin-top: 3px;
+    }
+
+    .feature-icon {
+        font-size: 18px;
+    }
+
+    .footer-nav {
+        height: 48px;
+        gap: 2px;
+    }
+
+    .footer-btn {
+        min-width: 0;
+        flex: 1;
+        height: 38px;
+        font-size: 9px;
+        gap: 3px;
+    }
 }
 
-.category:hover {
-  transform: translateY(-9px);
-  border-color: var(--green);
-  box-shadow: 0 15px 35px #b7ff3515;
+/* SAHIFALAR: mavjud menyu dizaynini o'zgartirmaydi */
+
+.game-section-page {
+    position: fixed;
+    inset: 75px 0 65px 0;
+    z-index: 50;
+    display: none;
+    overflow-y: auto;
+    padding: 35px;
+    background: linear-gradient(135deg, #07111f, #14283b);
 }
 
-.category-icon {
-  font-size: 35px;
-  margin-bottom: 15px;
+.game-section-page h1 {
+    color: #a5ff00;
+    font-family: Orbitron, sans-serif;
+    font-size: clamp(28px, 5vw, 55px);
+    margin-bottom: 18px;
 }
 
-.category h3 { font-size: 16px; margin-bottom: 7px; }
-.category p { color: var(--muted); font-size: 12px; }
-
-/* AI */
-
-.ai-section {
-  background: linear-gradient(130deg,#111d30,#0b1524);
-  border: 1px solid #b7ff3530;
-  border-radius: 28px;
-  padding: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 35px;
+.game-section-page p {
+    color: #d5deea;
+    font-size: 20px;
 }
 
-.ai-section h2 {
-  font-size: 36px;
-  margin-bottom: 15px;
+.game-section-page .section-back {
+    margin-top: 28px;
+    padding: 13px 22px;
+    background: #a5ff00;
+    border: 0;
+    color: #030710;
+    font-weight: 900;
+    cursor: pointer;
 }
 
-.ai-section h2 span { color: var(--green); }
+@media (max-width: 650px) {
+    .game-section-page {
+        inset: 58px 0 48px 0;
+        padding: 18px;
+    }
 
-.ai-section p {
-  color: var(--muted);
-  line-height: 1.8;
+    .game-section-page p {
+        font-size: 15px;
+    }
 }
 
-.ai-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.ai-form textarea,
-.ai-form select {
-  width: 100%;
-  padding: 15px;
-  background: #080d18;
-  color: white;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  min-height: 55px;
-  outline: none;
-}
-
-.ai-form textarea { min-height: 110px; resize: vertical; }
-
-.ai-result {
-  display: none;
-  margin-top: 20px;
-  padding: 18px;
-  border-radius: 14px;
-  background: #b7ff3510;
-  border: 1px solid #b7ff3550;
-  color: white;
-  line-height: 1.7;
-}
-
-/* MASTERS */
-
-.master-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-}
-
-.master-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 17px;
-  transition: .4s;
-  overflow: hidden;
-}
-
-.master-card:hover {
-  transform: translateY(-9px);
-  border-color: var(--green);
-  box-shadow: 0 20px 45px #0005;
-}
-
-.master-photo {
-  width: 100%;
-  height: 205px;
-  object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 17px;
-}
-
-.master-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.verified {
-  color: var(--green);
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.rating {
-  color: #ffd166;
-  font-size: 13px;
-  margin: 10px 0;
-}
-
-.master-card p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.master-price {
-  color: var(--green);
-  font-size: 18px;
-  font-weight: 900;
-  margin: 15px 0;
-}
-
-.master-card .btn { width: 100%; }
-
-.no-results {
-  display: none;
-  padding: 30px;
-  color: var(--muted);
-  text-align: center;
-}
-
-/* HOW */
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-}
-
-.step {
-  background: var(--card);
-  padding: 27px;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-}
-
-.step-number {
-  font-size: 35px;
-  color: var(--green);
-  font-weight: 900;
-  margin-bottom: 15px;
-}
-
-.step p {
-  color: var(--muted);
-  line-height: 1.8;
-  margin-top: 10px;
-}
-
-/* CTA */
-
-.cta {
-  text-align: center;
-  background: linear-gradient(120deg,#b7ff35,#91d91d);
-  color: #101510;
-  padding: 55px 25px;
-  border-radius: 25px;
-}
-
-.cta h2 { font-size: 36px; margin-bottom: 12px; }
-.cta p { margin-bottom: 23px; }
-
-.cta .btn {
-  background: #101510;
-  color: white;
-}
-
-/* MODAL */
-
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #000c;
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-}
-
-.modal.show { display: flex; }
-
-.modal-content {
-  width: 100%;
-  max-width: 480px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 28px;
-  background: #111b2d;
-  border: 1px solid #b7ff3550;
-  border-radius: 20px;
-  animation: modalIn .35s ease;
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(30px) scale(.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.modal-content h2 { margin-bottom: 20px; color: var(--green); }
-
-.modal-content input,
-.modal-content textarea,
-.modal-content select {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border: 1px solid var(--border);
-  background: #080d18;
-  color: white;
-  border-radius: 10px;
-  outline: none;
-}
-
-.modal-close {
-  float: right;
-  background: #ff5151;
-  color: white;
-  border: none;
-  padding: 7px 11px;
-  border-radius: 8px;
-}
-
-/* FOOTER */
-
-footer {
-  margin-top: 80px;
-  padding: 45px 0;
-  background: #050912;
-  border-top: 1px solid var(--border);
-}
-
-.footer-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-footer p {
-  color: var(--muted);
-  margin-top: 12px;
-  font-size: 13px;
-}
-
-/* ANIMATIONS */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(35px);
-  transition: .8s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media(max-width:850px) {
-  .hero-grid, .ai-section { grid-template-columns: 1fr; }
-  .category-grid { grid-template-columns: repeat(2,1fr); }
-  .master-grid { grid-template-columns: repeat(2,1fr); }
-  .nav-links { display: none; }
-}
-
-@media(max-width:550px) {
-  .hero { padding: 65px 0; }
-  .hero-image img { height: 280px; }
-  .floating-card { left: 8px; }
-  .search-box { grid-template-columns: 1fr; }
-  .master-grid, .steps { grid-template-columns: 1fr; }
-  .ai-section { padding: 24px; }
-  .ai-section h2 { font-size: 29px; }
-  .category-grid { gap: 10px; }
-  .category { padding: 17px 12px; }
-  .cta h2 { font-size: 27px; }
-}
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <a href="#" class="logo">USTA<span>TOP</span> AI.</a>
-
-    <nav class="nav-links">
-      <a href="#home">Bosh sahifa</a>
-      <a href="#categories">Xizmatlar</a>
-      <a href="#masters">Ustalar</a>
-      <a href="#how">Qanday ishlaydi?</a>
-    </nav>
-
-    <button class="btn" onclick="openMasterModal()">
-      Usta bo‘lish
-    </button>
-  </div>
-</header>
-
-<!-- HERO -->
-
-<section class="hero" id="home">
-  <div class="container hero-grid">
-
-    <div>
-      <div class="eyebrow">✦ SUN’IY INTELLEKT YORDAMIDA</div>
-
-      <h1>
-        Sizga kerakli <span>ustani</span> tez toping!
-      </h1>
-
-      <p>
-        Uyingizga yoki biznesingizga ishonchli usta kerakmi?
-        USTA TOP AI sizga mos mutaxassislarni topishga yordam beradi.
-        Vaqtingizni tejang va sifatli xizmatdan foydalaning.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#ai" class="btn" style="text-decoration:none">
-          🤖 AI bilan usta topish
-        </a>
-
-        <a href="#masters" class="btn btn-outline"
-           style="text-decoration:none">
-          Ustalarni ko‘rish
-        </a>
-      </div>
-
-      <div class="search-box">
-        <input id="mainSearch" placeholder="Qanday usta kerak?">
-
-        <select id="mainCity">
-          <option value="">Barcha shaharlar</option>
-          <option>Toshkent</option>
-          <option>Samarqand</option>
-          <option>Buxoro</option>
-          <option>Andijon</option>
-          <option>Farg‘ona</option>
-          <option>Namangan</option>
-        </select>
-
-        <button class="btn" onclick="searchMasters()">Qidirish</button>
-      </div>
-    </div>
-
-    <div class="hero-image">
-      <img
-        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000"
-        alt="Qurilish va ta'mirlash ustasi">
-
-      <div class="floating-card">
-        <strong>⭐ 4.9/5</strong>
-        <p>Ustalar reytingi</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CATEGORIES -->
-
-<section id="categories">
-  <div class="container">
-    <h2 class="section-title reveal">Xizmat kategoriyalari</h2>
-    <p class="section-subtitle reveal">
-      O‘zingizga kerakli xizmat yo‘nalishini tanlang.
-    </p>
-
-    <div class="category-grid">
-      <div class="category reveal" onclick="chooseCategory('Santexnik')">
-        <div class="category-icon">🚰</div>
-        <h3>Santexnik</h3>
-        <p>Suv quvurlari va kranlar</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Elektrik')">
-        <div class="category-icon">⚡</div>
-        <h3>Elektrik</h3>
-        <p>Elektr va sim ishlari</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Quruvchi')">
-        <div class="category-icon">🏗️</div>
-        <h3>Quruvchi</h3>
-        <p>Qurilish va ta’mirlash</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Mebelchi')">
-        <div class="category-icon">🪑</div>
-        <h3>Mebelchi</h3>
-        <p>Mebel yasash va tuzatish</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Konditsioner')">
-        <div class="category-icon">❄️</div>
-        <h3>Konditsioner</h3>
-        <p>O‘rnatish va ta’mirlash</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Bo‘yoqchi')">
-        <div class="category-icon">🎨</div>
-        <h3>Bo‘yoqchi</h3>
-        <p>Bo‘yash va bezatish</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Usta')">
-        <div class="category-icon">🔧</div>
-        <h3>Avtomobil ustasi</h3>
-        <p>Avtomobil ta’miri</p>
-      </div>
-
-      <div class="category reveal" onclick="chooseCategory('Tozalash')">
-        <div class="category-icon">🧹</div>
-        <h3>Tozalash</h3>
-        <p>Uy va ofis tozalash</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AI SECTION -->
-
-<section id="ai">
-  <div class="container">
-    <div class="ai-section reveal">
-
-      <div>
-        <div class="eyebrow">🤖 USTA TOP AI ASSISTANT</div>
-
-        <h2>Sun’iy intellekt orqali <span>usta toping</span></h2>
-
-        <p>
-          Muammoingizni oddiy tilda yozing.
-          Tizim so‘rovingizni tahlil qilib, mos xizmat turini
-          aniqlaydi va katalogdan mos ustalarni ko‘rsatadi.
-        </p>
-      </div>
-
-      <div>
-        <div class="ai-form">
-          <textarea id="aiProblem"
-            placeholder="Masalan: Uyimdagi suv krani buzildi, Toshkentdan santexnik kerak..."></textarea>
-
-          <select id="aiLocation">
-            <option value="">Shaharni tanlang</option>
-            <option>Toshkent</option>
-            <option>Samarqand</option>
-            <option>Buxoro</option>
-            <option>Andijon</option>
-            <option>Farg‘ona</option>
-            <option>Namangan</option>
-          </select>
-
-          <button class="btn" onclick="runAI()">
-            ✨ AI bilan tahlil qilish
-          </button>
-        </div>
-
-        <div class="ai-result" id="aiResult"></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- MASTERS -->
-
-<section id="masters">
-  <div class="container">
-
-    <h2 class="section-title reveal">⭐ Mashhur ustalar</h2>
-    <p class="section-subtitle reveal">
-      Mutaxassislarni ko‘ring va o‘zingizga mosini tanlang.
-    </p>
-
-    <div class="master-grid" id="masterGrid">
-
-      <article class="master-card reveal"
-        data-category="Santexnik" data-city="Toshkent"
-        data-search="santexnik suv kran quvur">
-
-        <img class="master-photo"
-          src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=700"
-          alt="Santexnik usta">
-
-        <div class="master-top">
-          <h3>Akmal Karimov</h3>
-          <span class="verified">✓ TASDIQLANGAN</span>
-        </div>
-
-        <div class="rating">★★★★★ 4.9 (128 sharh)</div>
-        <p>🚰 Santexnik • 8 yillik tajriba</p>
-        <p>📍 Toshkent</p>
-        <div class="master-price">100 000 so‘mdan</div>
-
-        <button class="btn"
-          onclick="openOrder('Akmal Karimov','Santexnik')">
-          Buyurtma berish
-        </button>
-      </article>
-
-      <article class="master-card reveal"
-        data-category="Elektrik" data-city="Toshkent"
-        data-search="elektrik sim elektr chiroq">
-
-        <img class="master-photo"
-          src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=700"
-          alt="Elektrik usta">
-
-        <div class="master-top">
-          <h3>Jasur Aliyev</h3>
-          <span class="verified">✓ TASDIQLANGAN</span>
-        </div>
-
-        <div class="rating">★★★★★ 4.8 (96 sharh)</div>
-        <p>⚡ Elektrik • 6 yillik tajriba</p>
-        <p>📍 Toshkent</p>
-        <div class="master-price">120 000 so‘mdan</div>
-
-        <button class="btn"
-          onclick="openOrder('Jasur Aliyev','Elektrik')">
-          Buyurtma berish
-        </button>
-      </article>
-
-      <article class="master-card reveal"
-        data-category="Quruvchi" data-city="Samarqand"
-        data-search="quruvchi qurilish remont">
-
-        <img class="master-photo"
-          src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700"
-          alt="Quruvchi">
-
-        <div class="master-top">
-          <h3>Bekzod Rahimov</h3>
-          <span class="verified">✓ TASDIQLANGAN</span>
-        </div>
-
-        <div class="rating">★★★★★ 5.0 (75 sharh)</div>
-        <p>🏗️ Quruvchi • 12 yillik tajriba</p>
-        <p>📍 Samarqand</p>
-        <div class="master-price">200 000 so‘mdan</div>
-
-        <button class="btn"
-          onclick="openOrder('Bekzod Rahimov','Quruvchi')">
-          Buyurtma berish
-        </button>
-      </article>
-
-      <article class="master-card reveal"
-        data-category="Mebelchi" data-city="Toshkent"
-        data-search="mebelchi shkaf stol mebel">
-
-        <img class="master-photo"
-          src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=700"
-          alt="Mebel ustasi">
-
-        <div class="master-top">
-          <h3>Shahzod Ismoilov</h3>
-          <span class="verified">✓ TASDIQLANGAN</span>
-        </div>
-
-        <div class="rating">★★★★★ 4.9 (84 sharh)</div>
-        <p>🪑 Mebelchi • 7 yillik tajriba</p>
-        <p>📍 Toshkent</p>
-        <div class="master-price">150 000 so‘mdan</div>
-
-        <button class="btn"
-          onclick="openOrder('Shahzod Ismoilov','Mebelchi')">
-          Buyurtma berish
-        </button>
-      </article>
-
-      <article class="master-card reveal"
-        data-category="Konditsioner" data-city="Buxoro"
-        data-search="konditsioner sovutish">
-
-        <img class="master-photo"
-          src="https://images.unsplash.com/photo-1631545806609-4b2e4a6f0a3c?w=700"
-          alt="Konditsioner ustasi">
-
-        <div class="master-top">
-          <h3>Oybek Xasanov</h3>
-          <span class="verified">✓ TASDIQLANGAN</span>
-        </div>
-
-        <div class="rating">★★★★★ 4.7 (61 sharh)</div>
-        <p>❄️ Konditsioner • 5 yillik tajriba</p>
-        <p>📍 Buxoro</p>
-        <div class="master-price">130 000 so‘mdan</div>
-
-        <button class="btn"
-          onclick="openOrder('Oybek Xasanov','Konditsioner')">
-          Buyurtma berish
-        </button>
-      </article>
-
-      <article class="master-card reveal"
-        data-category="Bo‘yoqchi" data-city="Farg‘ona"
-        data-search="boyoqchi bo‘yash devor">
-
-        <img class="master-photo"
-          src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=700"
-          alt="Bo‘yoqchi">
-
-        <div class="master-top">
-          <h3>Sanjar Tursunov</h3>
-          <span class="verified">✓ TASDIQLANGAN</span>
-        </div>
-
-        <div class="rating">★★★★★ 4.9 (52 sharh)</div>
-        <p>🎨 Bo‘yoqchi • 9 yillik tajriba</p>
-        <p>📍 Farg‘ona</p>
-        <div class="master-price">90 000 so‘mdan</div>
-
-        <button class="btn"
-          onclick="openOrder('Sanjar Tursunov','Bo‘yoqchi')">
-          Buyurtma berish
-        </button>
-      </article>
-
-    </div>
-
-    <div class="no-results" id="noResults">
-      Hozircha mos usta topilmadi. Boshqa so‘z bilan qidirib ko‘ring.
-    </div>
-
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-
-<section id="how">
-  <div class="container">
-    <h2 class="section-title reveal">Qanday ishlaydi?</h2>
-    <p class="section-subtitle reveal">
-      Uchta oddiy qadam bilan kerakli ustani toping.
-    </p>
-
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-number">01</div>
-        <h3>Muammoni yozing</h3>
-        <p>Qanday xizmat kerakligini yozing yoki kategoriyani tanlang.</p>
-      </div>
-
-      <div class="step reveal">
-        <div class="step-number">02</div>
-        <h3>Ustani tanlang</h3>
-        <p>Reyting, tajriba va narxlarni solishtiring.</p>
-      </div>
-
-      <div class="step reveal">
-        <div class="step-number">03</div>
-        <h3>Buyurtma yuboring</h3>
-        <p>Tanlagan ustangizga so‘rov yuboring va bog‘laning.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-
-<section>
-  <div class="container">
-    <div class="cta reveal">
-      <h2>Siz ham usta bo‘ling!</h2>
-      <p>USTA TOP AI orqali yangi mijozlar toping va daromadingizni oshiring.</p>
-      <button class="btn" onclick="openMasterModal()">
-        Usta sifatida qo‘shilish →
-      </button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container footer-row">
-    <div>
-      <a href="#" class="logo">USTA<span>TOP</span> AI.</a>
-      <p>Ishonchli ustalarni topishning aqlli usuli.</p>
-    </div>
-
-    <div>
-      <h3>Aloqa</h3>
-      <p>Telegram: @ustatop_ai</p>
-      <p>Email: info@ustatopai.uz</p>
-    </div>
-
-    <div>
-      <h3>Platforma</h3>
-      <p>Ustalar katalogi</p>
-      <p>AI yordamchi</p>
-      <p>Usta bo‘lish</p>
-    </div>
-  </div>
-  <div class="container">
-    <p style="margin-top:35px">© 2026 USTA TOP AI. Barcha huquqlar himoyalangan.</p>
-  </div>
-</footer>
-
-<!-- ORDER MODAL -->
-
-<div class="modal" id="orderModal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal('orderModal')">✕</button>
-    <h2>📋 Buyurtma yuborish</h2>
-
-    <form id="orderForm">
-      <input id="orderMaster" readonly>
-      <input id="orderCategory" readonly>
-      <input id="orderName" placeholder="Ismingiz" required>
-      <input id="orderPhone" type="tel" placeholder="+998 90 123 45 67" required>
-      <textarea id="orderDescription" placeholder="Ish haqida batafsil yozing..." required></textarea>
-      <button class="btn" type="submit" style="width:100%">
-        Buyurtmani yuborish
-      </button>
-    </form>
-  </div>
+<!-- STADIUM BACKGROUND -->
+
+<div class="stadium">
+    <div class="lights"></div>
+    <div class="pitch"></div>
 </div>
 
-<!-- MASTER REGISTRATION MODAL -->
+<div class="darkness"></div>
 
-<div class="modal" id="masterModal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal('masterModal')">✕</button>
-    <h2>👨‍🔧 Usta sifatida ro‘yxatdan o‘tish</h2>
 
-    <form id="masterForm">
-      <input id="newMasterName" placeholder="Ism va familiya" required>
-      <input id="newMasterPhone" type="tel" placeholder="Telefon raqam" required>
+<!-- EA SPORTS INTRO -->
 
-      <select id="newMasterCategory" required>
-        <option value="">Xizmat turini tanlang</option>
-        <option>Santexnik</option>
-        <option>Elektrik</option>
-        <option>Quruvchi</option>
-        <option>Mebelchi</option>
-        <option>Konditsioner</option>
-        <option>Bo‘yoqchi</option>
-        <option>Avtomobil ustasi</option>
-        <option>Tozalash</option>
-      </select>
-
-      <select id="newMasterCity" required>
-        <option value="">Shaharni tanlang</option>
-        <option>Toshkent</option>
-        <option>Samarqand</option>
-        <option>Buxoro</option>
-        <option>Andijon</option>
-        <option>Farg‘ona</option>
-        <option>Namangan</option>
-      </select>
-
-      <textarea id="newMasterAbout" placeholder="Tajriba va xizmatlaringiz haqida" required></textarea>
-
-      <button class="btn" type="submit" style="width:100%">
-        Ariza yuborish
-      </button>
-    </form>
-  </div>
+<div id="intro">
+    <div class="intro-logo">
+        <div class="ea">EA</div>
+        <div class="sports">SPORTS</div>
+    </div>
 </div>
+
+
+<!-- LOADING SCREEN -->
+
+<div id="loading">
+
+    <div class="loading-bg"></div>
+    <div class="loading-dark"></div>
+
+    <div class="loading-content">
+
+        <div class="loading-logo">
+            ULTIMATE <span>FOOTBALL</span>
+        </div>
+
+        <div class="loading-subtitle">
+            PREPARING YOUR EXPERIENCE
+        </div>
+
+        <div class="loading-line">
+            <div id="loadingBar"></div>
+        </div>
+
+        <div class="loading-details">
+            <span>LOADING GAME...</span>
+            <span id="loadingPercent">0%</span>
+        </div>
+
+    </div>
+
+    <div class="loading-footer">
+        ULTIMATE FOOTBALL STUDIO © 2026
+    </div>
+
+</div>
+<!-- MAIN MENU -->
+
+<div id="menu">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="game-brand">
+            ULTIMATE <span>FOOTBALL</span>
+        </div>
+
+        <div class="profile">
+
+            <div class="profile-icon">👤</div>
+
+            <div>
+                <div class="profile-name">Footballer</div>
+                <div class="profile-level">LEVEL 1</div>
+            </div>
+
+        </div>
+
+        <div class="resources">
+
+            <div class="resource">
+                🪙 <span>1,000</span>
+                <span class="plus">+</span>
+            </div>
+
+            <div class="resource">
+                💎 <span>100</span>
+                <span class="plus">+</span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <div class="menu-body">
+
+        <!-- LEFT MENU -->
+
+        <aside class="left-menu">
+
+            <button class="square-btn active">
+                <span class="btn-icon">⌂</span>
+                <span class="btn-label">HOME</span>
+            </button>
+
+            <button class="square-btn">
+                <span class="btn-icon">♛</span>
+                <span class="btn-label">MY TEAM</span>
+            </button>
+
+            <button class="square-btn">
+                <span class="btn-icon">⚽</span>
+                <span class="btn-label">PLAY</span>
+            </button>
+
+            <button class="square-btn">
+                <span class="btn-icon">♙</span>
+                <span class="btn-label">PLAYERS</span>
+            </button>
+
+            <button class="square-btn">
+                <span class="btn-icon">▣</span>
+                <span class="btn-label">EVENTS</span>
+            </button>
+
+        </aside>
+
+
+        <!-- CENTER -->
+
+        <main class="center-menu">
+
+            <section class="hero">
+
+                <div class="hero-decoration">⚽</div>
+
+                <div class="hero-content">
+
+                    <div class="hero-tag">
+                        WELCOME TO THE PITCH
+                    </div>
+
+                    <h1 class="hero-title">
+                        ULTIMATE<br>FOOTBALL
+                    </h1>
+
+                    <p class="hero-description">
+                        Build your team. Become a legend.
+                    </p>
+
+                    <button class="play-button">
+                        PLAY MATCH <span>➜</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- BOTTOM CARDS -->
+
+            <section class="bottom-cards">
+
+                <button class="feature-card">
+
+                    <div>
+                        <div class="feature-title">ULTIMATE TEAM</div>
+                        <div class="feature-subtitle">Build your squad</div>
+                    </div>
+
+                    <div class="feature-icon">🏆</div>
+
+                </button>
+
+
+                <button class="feature-card">
+
+                    <div>
+                        <div class="feature-title">PLAYER MARKET</div>
+                        <div class="feature-subtitle">Discover players</div>
+                    </div>
+
+                    <div class="feature-icon">♙</div>
+
+                </button>
+
+
+                <button class="feature-card">
+
+                    <div>
+                        <div class="feature-title">DAILY REWARDS</div>
+                        <div class="feature-subtitle">Claim your gifts</div>
+                    </div>
+
+                    <div class="feature-icon">🎁</div>
+
+                </button>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <footer class="footer-nav">
+
+        <button class="footer-btn active">⌂ HOME</button>
+        <button class="footer-btn">♧ QUESTS</button>
+        <button class="footer-btn">★ SEASON</button>
+        <button class="footer-btn">♜ CLUB</button>
+        <button class="footer-btn">☰ MORE</button>
+
+    </footer>
+
+</div>
+
+<section class="game-section-page" id="gameSectionPage" aria-live="polite">
+    <h1 id="gameSectionTitle"></h1>
+    <p id="gameSectionText"></p>
+    <button class="section-back" id="gameSectionBack">← BACK TO HOME</button>
+</section>
+
 
 <script>
-// SEARCH MASTERS
 
-function searchMasters() {
-  const query = document.getElementById("mainSearch").value.toLowerCase().trim();
-  const city = document.getElementById("mainCity").value;
+// ====================================
+// 1. INTRO
+// ====================================
 
-  let visible = 0;
+const intro = document.getElementById("intro");
+const loadingScreen = document.getElementById("loading");
+const mainMenu = document.getElementById("menu");
 
-  document.querySelectorAll(".master-card").forEach(card => {
-    const text = (
-      card.innerText + " " + card.dataset.search
-    ).toLowerCase();
+const loadingBar = document.getElementById("loadingBar");
+const loadingPercent = document.getElementById("loadingPercent");
 
-    const matchesText = !query || text.includes(query);
-    const matchesCity = !city || card.dataset.city === city;
 
-    const show = matchesText && matchesCity;
+// ====================================
+// 2. INTRO -> LOADING
+// ====================================
 
-    card.style.display = show ? "block" : "none";
-    if (show) visible++;
-  });
+setTimeout(() => {
 
-  document.getElementById("noResults").style.display =
-    visible ? "none" : "block";
+    intro.style.display = "none";
 
-  document.getElementById("masters").scrollIntoView({
-    behavior: "smooth"
-  });
+    loadingScreen.style.display = "flex";
+
+    startLoading();
+
+}, 3000);
+
+
+// ====================================
+// 3. LOADING 0% -> 100%
+// ====================================
+
+function startLoading() {
+
+    let progress = 0;
+
+    const interval = setInterval(() => {
+
+        let increment;
+
+        if (progress < 40) {
+            increment = Math.random() * 1.2 + 0.4;
+        }
+
+        else if (progress < 75) {
+            increment = Math.random() * 0.7 + 0.2;
+        }
+
+        else if (progress < 95) {
+            increment = Math.random() * 0.35 + 0.1;
+        }
+
+        else {
+            increment = 0.15;
+        }
+
+        progress += increment;
+
+        if (progress >= 100) {
+
+            progress = 100;
+
+            clearInterval(interval);
+
+            loadingBar.style.width = "100%";
+            loadingPercent.textContent = "100%";
+
+            // 100% bo'lgandan keyin 1 sekund kutish
+
+            setTimeout(() => {
+
+                loadingScreen.style.display = "none";
+
+                mainMenu.style.display = "flex";
+
+            }, 1000);
+
+        } else {
+
+            loadingBar.style.width = progress + "%";
+
+            loadingPercent.textContent =
+                Math.floor(progress) + "%";
+
+        }
+
+    }, 70);
+
 }
 
-// CATEGORY
 
-function chooseCategory(category) {
-  document.getElementById("mainSearch").value = category;
-  document.getElementById("mainCity").value = "";
-  searchMasters();
-}
 
-// AI DEMO
+// MENYU TUGMALARI: har bir bo'lim alohida sahifada ochiladi.
 
-function runAI() {
-  const problem = document.getElementById("aiProblem").value.toLowerCase();
-  const city = document.getElementById("aiLocation").value;
-  const result = document.getElementById("aiResult");
+(function () {
 
-  if (!problem.trim()) {
-    alert("Iltimos, muammoingizni yozing!");
-    return;
-  }
+    const page = document.getElementById("gameSectionPage");
+    const pageTitle = document.getElementById("gameSectionTitle");
+    const pageText = document.getElementById("gameSectionText");
+    const menu = document.getElementById("menu");
+    const footer = document.querySelector(".footer-nav");
 
-  let category = "Santexnik";
+    const descriptions = {
 
-  if (/elektr|sim|chiroq|tok|rozetka/.test(problem)) {
-    category = "Elektrik";
-  } else if (/suv|kran|quvur|rakovina|vanna/.test(problem)) {
-    category = "Santexnik";
-  } else if (/uy qur|devor|g‘isht|g'isht|beton|remont/.test(problem)) {
-    category = "Quruvchi";
-  } else if (/mebel|shkaf|stol|eshik/.test(problem)) {
-    category = "Mebelchi";
-  } else if (/konditsioner|sovutgich|klimat/.test(problem)) {
-    category = "Konditsioner";
-  } else if (/bo‘yoq|boyoq|rang|devor bo/.test(problem)) {
-    category = "Bo‘yoqchi";
-  } else if (/mashina|avto|motor|shina/.test(problem)) {
-    category = "Usta";
-  } else if (/tozalash|kir|yuvish/.test(problem)) {
-    category = "Tozalash";
-  }
+        "MY TEAM": "Bu yerda o'z futbol jamoangni ko'rasan va boshqarasan.",
 
-  result.style.display = "block";
+        "PLAY": "Bu bo'limda futbol uchrashuvini boshlashing mumkin.",
 
-  result.innerHTML =
-    "<strong>✨ Tahlil yakunlandi!</strong><br><br>" +
-    "Aniqlangan xizmat: <b>" + category + "</b><br>" +
-    "Hudud: <b>" + (city || "Barcha shaharlar") + "</b><br><br>" +
-    "Siz uchun mos ustalarni qidiryapmiz...";
+        "PLAYERS": "Bu yerda futbolchilar ro'yxati joylashadi.",
 
-  document.getElementById("mainSearch").value = category;
-  document.getElementById("mainCity").value = city;
+        "EVENTS": "Bu yerda maxsus futbol tadbirlari bo'ladi.",
 
-  searchMasters();
-}
+        "PLAY MATCH": "Uchrashuvni boshlash bo'limi.",
 
-// ORDER MODAL
+        "ULTIMATE TEAM": "Bu yerda o'z tarkibingni tuzasan.",
 
-function openOrder(master, category) {
-  document.getElementById("orderMaster").value = "Usta: " + master;
-  document.getElementById("orderCategory").value = "Xizmat: " + category;
+        "PLAYER MARKET": "Bu yerda futbolchilar bozorini ko'rasan.",
 
-  document.getElementById("orderModal").classList.add("show");
-}
+        "DAILY REWARDS": "Bu yerda kunlik sovg'alaring bo'ladi.",
 
-function openMasterModal() {
-  document.getElementById("masterModal").classList.add("show");
-}
+        "QUESTS": "Bu yerda topshiriqlar joylashadi.",
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove("show");
-}
+        "SEASON": "Bu yerda mavsum bo'limi bo'ladi.",
 
-// DEMO ORDER SUBMISSION
+        "CLUB": "Bu yerda klub ma'lumotlari bo'ladi.",
 
-document.getElementById("orderForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+        "MORE": "Qo'shimcha bo'limlar shu yerda joylashadi."
 
-  const order = {
-    master: document.getElementById("orderMaster").value,
-    category: document.getElementById("orderCategory").value,
-    name: document.getElementById("orderName").value,
-    phone: document.getElementById("orderPhone").value,
-    description: document.getElementById("orderDescription").value,
-    date: new Date().toISOString()
-  };
+    };
 
-  const orders = JSON.parse(localStorage.getItem("ustaOrders") || "[]");
-  orders.push(order);
-  localStorage.setItem("ustaOrders", JSON.stringify(orders));
 
-  alert("✅ Buyurtma demo tarzida saqlandi! Haqiqiy yuborish uchun server kerak.");
-  this.reset();
-  closeModal("orderModal");
-});
+    function openSection(name) {
 
-// MASTER REGISTRATION
+        if (name === "HOME") {
 
-document.getElementById("masterForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+            page.style.display = "none";
+            footer.style.display = "flex";
 
-  const master = {
-    name: document.getElementById("newMasterName").value,
-    phone: document.getElementById("newMasterPhone").value,
-    category: document.getElementById("newMasterCategory").value,
-    city: document.getElementById("newMasterCity").value,
-    about: document.getElementById("newMasterAbout").value
-  };
+            return;
 
-  const applications = JSON.parse(
-    localStorage.getItem("ustaApplications") || "[]"
-  );
+        }
 
-  applications.push(master);
-  localStorage.setItem("ustaApplications", JSON.stringify(applications));
+        pageTitle.textContent = name;
 
-  alert("✅ Usta bo‘lish arizangiz demo tarzida saqlandi!");
-  this.reset();
-  closeModal("masterModal");
-});
+        pageText.textContent =
+            descriptions[name] || "Bu bo'lim tez orada tayyor bo'ladi.";
 
-// REVEAL ANIMATIONS
+        page.style.display = "block";
 
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      revealObserver.unobserve(entry.target);
+        footer.style.display = "none";
+
     }
-  });
-}, { threshold: 0.12 });
 
-document.querySelectorAll(".reveal").forEach(element => {
-  revealObserver.observe(element);
-});
 
-// CLOSE MODAL WHEN CLICKING OUTSIDE
+    const leftButtons = document.querySelectorAll(".square-btn");
 
-document.querySelectorAll(".modal").forEach(modal => {
-  modal.addEventListener("click", function(e) {
-    if (e.target === modal) modal.classList.remove("show");
-  });
-});
+    leftButtons.forEach((button) => {
 
-console.log("USTA TOP AI IS READY!");
+        button.addEventListener("click", () => {
+
+            const label = button.querySelector(".btn-label");
+
+            if (label) openSection(label.textContent.trim());
+
+        });
+
+    });
+
+
+    document.querySelector(".play-button").addEventListener("click", () => {
+
+        openSection("PLAY MATCH");
+
+    });
+
+
+    const cardNames = [
+        "ULTIMATE TEAM",
+        "PLAYER MARKET",
+        "DAILY REWARDS"
+    ];
+
+    document.querySelectorAll(".feature-card").forEach((button, index) => {
+
+        button.addEventListener("click", () => {
+
+            openSection(cardNames[index]);
+
+        });
+
+    });
+
+
+    document.querySelectorAll(".footer-btn").forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+            const name = button.textContent.replace(/^[^A-Z]+/, "").trim();
+
+            openSection(name);
+
+        });
+
+    });
+
+
+    document.getElementById("gameSectionBack").addEventListener("click", () => {
+
+        openSection("HOME");
+
+    });
+
+})();
+
 </script>
 
 </body>
 </html>
-
-<!-- ===== USTA TOP AI CONTACT SECTION ===== -->
-
 <style>
-.contact-section {
-  padding: 65px 20px;
-  margin-top: 50px;
-  background:
-    radial-gradient(circle at top right, #b7ff3520, transparent 45%),
-    linear-gradient(135deg, #111b2d, #080d18);
-  border-top: 1px solid #b7ff3540;
-  text-align: center;
+/* PLAYERS MARKET */
+
+#playersMarket {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    overflow-y: auto;
+    padding: 25px;
+    background:
+        linear-gradient(#06101bea,#071321f5),
+        url("https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1800&q=85") center/cover fixed;
+    color: white;
 }
 
-.contact-box {
-  max-width: 650px;
-  margin: auto;
-  padding: 35px 25px;
-  border: 1px solid #b7ff3560;
-  border-radius: 25px;
-  background: #ffffff08;
-  box-shadow: 0 0 35px #b7ff3515;
-  animation: contactFloat 4s ease-in-out infinite;
+.players-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
-@keyframes contactFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
+.players-heading {
+    font-family: Orbitron, sans-serif;
+    color: #a5ff00;
+    font-size: clamp(25px,4vw,42px);
 }
 
-.contact-box h2 {
-  font-size: 32px;
-  color: #b7ff35;
-  margin-bottom: 12px;
+.players-back {
+    padding: 12px 20px;
+    border: 1px solid #a5ff00;
+    background: #a5ff0018;
+    color: #a5ff00;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.contact-box > p {
-  color: #aab5c5;
-  margin-bottom: 25px;
+.players-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
 }
 
-.contact-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin: 15px auto;
-  padding: 17px;
-  max-width: 400px;
-  border: 1px solid #ffffff20;
-  border-radius: 14px;
-  background: #ffffff08;
-  transition: .3s;
+.players-tools input,
+.players-tools select {
+    padding: 12px;
+    background: #101e2d;
+    color: white;
+    border: 1px solid #526477;
+    outline: none;
 }
 
-.contact-info:hover {
-  border-color: #b7ff35;
-  transform: scale(1.04);
-  box-shadow: 0 0 20px #b7ff3525;
+.players-tools input {
+    flex: 1;
+    min-width: 180px;
 }
 
-.contact-icon {
-  font-size: 28px;
+.players-tools select {
+    min-width: 150px;
 }
 
-.contact-details {
-  text-align: left;
+.players-balance {
+    color: #a5ff00;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-.contact-details small {
-  display: block;
-  color: #9ca9bb;
-  margin-bottom: 5px;
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(190px,1fr));
+    gap: 17px;
 }
 
-.contact-details strong {
-  color: white;
-  font-size: 18px;
+.player-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg,#203247,#09111d);
+    border: 1px solid #60718466;
+    border-radius: 9px;
+    padding: 12px;
+    text-align: center;
+    transition: .2s;
 }
 
-.contact-call {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 15px 25px;
-  background: #b7ff35;
-  color: #101510;
-  text-decoration: none;
-  font-weight: 900;
-  border-radius: 12px;
-  transition: .3s;
+.player-card:hover {
+    transform: translateY(-5px);
+    border-color: #a5ff00;
+    box-shadow: 0 0 18px #a5ff0033;
 }
 
-.contact-call:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px #b7ff3570;
+.player-photo {
+    width: 100%;
+    height: 145px;
+    object-fit: contain;
+    object-position: center;
+    background: linear-gradient(135deg,#30465b,#101b29);
+    border-radius: 6px;
 }
 
-.contact-copyright {
-  color: #78869b;
-  font-size: 12px;
-  margin-top: 35px;
+.player-rating {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #a5ff00;
+    color: #07101a;
+    padding: 7px 10px;
+    font-family: Orbitron;
+    font-weight: 900;
+    font-size: 20px;
 }
 
-@media(max-width:500px) {
-  .contact-box h2 {
-    font-size: 25px;
-  }
+.player-position {
+    position: absolute;
+    top: 55px;
+    left: 24px;
+    color: #dce8f5;
+    font-weight: bold;
+    font-size: 12px;
+}
 
-  .contact-details strong {
+.player-name {
+    margin-top: 10px;
+    font-family: Orbitron;
+    font-size: 14px;
+    min-height: 35px;
+}
+
+.player-club {
+    color: #aab8c8;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.player-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 7px;
+    margin: 13px 0;
+    padding: 10px 4px;
+    background: #050b14aa;
+    border-radius: 5px;
+}
+
+.player-stat {
+    font-size: 11px;
+    color: #aab8c8;
+}
+
+.player-stat strong {
+    display: block;
+    color: white;
     font-size: 16px;
-  }
+}
+
+.player-price {
+    color: #a5ff00;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.player-buy {
+    width: 100%;
+    padding: 11px;
+    background: #a5ff00;
+    color: #061008;
+    border: none;
+    font-weight: 900;
+    cursor: pointer;
+    font-family: Orbitron;
+    font-size: 11px;
+}
+
+.player-buy:hover {
+    background: white;
+}
+
+.player-buy:disabled {
+    background: #344153;
+    color: #aab8c8;
+    cursor: default;
+}
+
+#playersMessage {
+    color: #a5ff00;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+@media(max-width:600px) {
+    #playersMarket {
+        padding: 12px;
+    }
+
+    .players-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 9px;
+    }
+
+    .player-photo {
+        height: 115px;
+    }
+
+    .player-name {
+        font-size: 11px;
+    }
+
+    .player-stats {
+        gap: 3px;
+    }
 }
 </style>
 
-<section class="contact-section" id="contact">
-  <div class="contact-box">
+<!-- PLAYERS MARKET PAGE -->
 
-    <h2>📞 Biz bilan bog‘laning</h2>
+<section id="playersMarket">
 
-    <p>
-      Savollaringiz bormi? Biz sizga yordam berishga tayyormiz!
-    </p>
+    <div class="players-top">
+        <div>
+            <div class="players-heading">PLAYER MARKET</div>
+            <div style="color:#aab8c8;margin-top:7px">
+                BUILD YOUR ULTIMATE TEAM
+            </div>
+        </div>
 
-    <div class="contact-info">
-      <div class="contact-icon">👤</div>
-      <div class="contact-details">
-        <small>Mas'ul shaxs</small>
-        <strong>Alisher</strong>
-      </div>
+        <button class="players-back" id="playersBack">
+            ← BACK
+        </button>
     </div>
 
-    <div class="contact-info">
-      <div class="contact-icon">📱</div>
-      <div class="contact-details">
-        <small>Telefon raqam</small>
-        <strong>+998 99 530 11 78</strong>
-      </div>
+    <div class="players-top">
+        <div class="players-balance">
+            🪙 COINS: <span id="playersCoins">1,000</span>
+        </div>
+        <div style="color:#cbd5e1">
+            FOOTBALL PLAYERS: 50
+        </div>
     </div>
 
-    <a href="tel:+998995301178" class="contact-call">
-      ☎️ HOZIR QO‘NG‘IROQ QILISH
-    </a>
+    <div class="players-tools">
+        <input
+            type="text"
+            id="playerSearch"
+            placeholder="Search player..."
+        >
 
-    <div class="contact-copyright">
-      © 2026 USTA TOP AI — Barcha huquqlar himoyalangan.
+        <select id="playerPosition">
+            <option value="ALL">ALL POSITIONS</option>
+            <option value="ST">STRIKERS</option>
+            <option value="LW">LEFT WING</option>
+            <option value="RW">RIGHT WING</option>
+            <option value="CAM">CAM</option>
+            <option value="CM">MIDFIELDERS</option>
+            <option value="CDM">CDM</option>
+            <option value="CB">DEFENDERS</option>
+            <option value="LB">LEFT BACK</option>
+            <option value="RB">RIGHT BACK</option>
+            <option value="GK">GOALKEEPERS</option>
+        </select>
     </div>
 
-  </div>
+    <div id="playersMessage"></div>
+
+    <div class="players-grid" id="playersGrid"></div>
+
 </section>
 
-<!-- ===== END CONTACT SECTION ===== -->
+<script>
+/* ==================================
+   PLAYERS DATABASE - 50 FOOTBALLERS
+================================== */
 
-<!-- ===== USTA TOP AI: 5 TA PREMIUM ANIMATSIYA ===== -->
+const footballPlayers = [
 
+    {name:"Kylian Mbappe",pos:"ST",ovr:97,club:"Real Madrid",price:950, pac:99,sho:96,pas:85,dri:96,def:39,phy:82},
+    {name:"Erling Haaland",pos:"ST",ovr:96,club:"Manchester City",price:900,pac:94,sho:99,pas:78,dri:88,def:45,phy:96},
+    {name:"Vinicius Junior",pos:"LW",ovr:95,club:"Real Madrid",price:850,pac:98,sho:91,pas:85,dri:97,def:30,phy:75},
+    {name:"Mohamed Salah",pos:"RW",ovr:94,club:"Liverpool",price:800,pac:91,sho:94,pas:88,dri:92,def:45,phy:78},
+    {name:"Jude Bellingham",pos:"CAM",ovr:94,club:"Real Madrid",price:850,pac:85,sho:91,pas:90,dri:93,def:82,phy:88},
+    {name:"Harry Kane",pos:"ST",ovr:94,club:"Bayern Munich",price:800,pac:75,sho:97,pas:91,dri:88,def:48,phy:85},
+    {name:"Lamine Yamal",pos:"RW",ovr:93,club:"Barcelona",price:780,pac:93,sho:87,pas:91,dri:97,def:35,phy:65},
+    {name:"Rodri",pos:"CDM",ovr:94,club:"Manchester City",price:800,pac:66,sho:80,pas:92,dri:85,def:91,phy:87},
+    {name:"Kevin De Bruyne",pos:"CM",ovr:94,club:"Manchester City",price:780,pac:75,sho:88,pas:98,dri:90,def:65,phy:78},
+    {name:"Robert Lewandowski",pos:"ST",ovr:93,club:"Barcelona",price:750,pac:78,sho:96,pas:82,dri:88,def:44,phy:85},
+
+    {name:"Lionel Messi",pos:"RW",ovr:98,club:"Inter Miami",price:1000,pac:85,sho:97,pas:99,dri:99,def:35,phy:68},
+    {name:"Cristiano Ronaldo",pos:"ST",ovr:97,club:"Al Nassr",price:980,pac:88,sho:98,pas:83,dri:92,def:40,phy:90},
+    {name:"Neymar Jr",pos:"LW",ovr:95,club:"Santos",price:850,pac:91,sho:90,pas:92,dri:98,def:35,phy:65},
+    {name:"Luka Modric",pos:"CM",ovr:93,club:"Real Madrid",price:720,pac:74,sho:82,pas:96,dri:93,def:72,phy:65},
+    {name:"Virgil van Dijk",pos:"CB",ovr:94,club:"Liverpool",price:820,pac:82,sho:60,pas:75,dri:72,def:96,phy:93},
+    {name:"Bukayo Saka",pos:"RW",ovr:92,club:"Arsenal",price:700,pac:90,sho:88,pas:86,dri:93,def:65,phy:75},
+    {name:"Phil Foden",pos:"CAM",ovr:92,club:"Manchester City",price:700,pac:87,sho:88,pas:89,dri:94,def:55,phy:65},
+    {name:"Florian Wirtz",pos:"CAM",ovr:92,club:"Bayer Leverkusen",price:700,pac:85,sho:87,pas:92,dri:94,def:55,phy:70},
+    {name:"Pedri",pos:"CM",ovr:91,club:"Barcelona",price:680,pac:78,sho:75,pas:93,dri:94,def:70,phy:65},
+    {name:"Federico Valverde",pos:"CM",ovr:92,club:"Real Madrid",price:720,pac:89,sho:85,pas:88,dri:87,def:83,phy:88},
+
+    {name:"Antoine Griezmann",pos:"CAM",ovr:91,club:"Atletico Madrid",price:650,pac:82,sho:89,pas:90,dri:91,def:60,phy:75},
+    {name:"Lautaro Martinez",pos:"ST",ovr:92,club:"Inter Milan",price:700,pac:86,sho:93,pas:80,dri:90,def:45,phy:85},
+    {name:"Son Heung-min",pos:"LW",ovr:92,club:"Tottenham",price:700,pac:90,sho:92,pas:84,dri:90,def:45,phy:75},
+    {name:"Rafael Leao",pos:"LW",ovr:91,club:"AC Milan",price:680,pac:95,sho:87,pas:80,dri:93,def:35,phy:82},
+    {name:"Ousmane Dembele",pos:"RW",ovr:91,club:"PSG",price:680,pac:96,sho:84,pas:86,dri:94,def:40,phy:65},
+    {name:"Bruno Fernandes",pos:"CAM",ovr:91,club:"Manchester United",price:670,pac:75,sho:88,pas:94,dri:87,def:70,phy:75},
+    {name:"Declan Rice",pos:"CDM",ovr:91,club:"Arsenal",price:680,pac:75,sho:75,pas:86,dri:82,def:90,phy:88},
+    {name:"Bernardo Silva",pos:"CM",ovr:91,club:"Manchester City",price:680,pac:72,sho:78,pas:92,dri:95,def:70,phy:65},
+    {name:"Martin Odegaard",pos:"CAM",ovr:91,club:"Arsenal",price:680,pac:75,sho:84,pas:94,dri:92,def:65,phy:65},
+    {name:"Joshua Kimmich",pos:"CDM",ovr:90,club:"Bayern Munich",price:650,pac:70,sho:75,pas:91,dri:85,def:88,phy:78},
+
+    {name:"Alisson Becker",pos:"GK",ovr:91,club:"Liverpool",price:680,pac:85,sho:20,pas:75,dri:45,def:35,phy:88},
+    {name:"Thibaut Courtois",pos:"GK",ovr:92,club:"Real Madrid",price:720,pac:84,sho:18,pas:70,dri:40,def:30,phy:90},
+    {name:"Ederson",pos:"GK",ovr:90,club:"Manchester City",price:650,pac:87,sho:20,pas:85,dri:50,def:35,phy:82},
+    {name:"Manuel Neuer",pos:"GK",ovr:90,club:"Bayern Munich",price:650,pac:85,sho:20,pas:80,dri:48,def:35,phy:85},
+    {name:"Jan Oblak",pos:"GK",ovr:91,club:"Atletico Madrid",price:680,pac:80,sho:15,pas:65,dri:35,def:30,phy:88},
+    {name:"Emiliano Martinez",pos:"GK",ovr:89,club:"Aston Villa",price:600,pac:80,sho:18,pas:68,dri:38,def:32,phy:85},
+    {name:"Gianluigi Donnarumma",pos:"GK",ovr:90,club:"PSG",price:650,pac:82,sho:18,pas:68,dri:40,def:32,phy:88},
+
+    {name:"Ruben Dias",pos:"CB",ovr:90,club:"Manchester City",price:650,pac:65,sho:55,pas:75,dri:70,def:92,phy:88},
+    {name:"Antonio Rudiger",pos:"CB",ovr:90,club:"Real Madrid",price:650,pac:82,sho:55,pas:70,dri:70,def:90,phy:91},
+    {name:"William Saliba",pos:"CB",ovr:90,club:"Arsenal",price:650,pac:82,sho:50,pas:75,dri:78,def:91,phy:85},
+    {name:"Trent Alexander-Arnold",pos:"RB",ovr:90,club:"Liverpool",price:650,pac:75,sho:70,pas:95,dri:82,def:80,phy:72},
+    {name:"Achraf Hakimi",pos:"RB",ovr:90,club:"PSG",price:650,pac:95,sho:75,pas:82,dri:85,def:82,phy:80},
+    {name:"Theo Hernandez",pos:"LB",ovr:90,club:"AC Milan",price:650,pac:94,sho:78,pas:80,dri:88,def:82,phy:85},
+    {name:"Alphonso Davies",pos:"LB",ovr:89,club:"Bayern Munich",price:600,pac:96,sho:70,pas:80,dri:90,def:80,phy:78},
+    {name:"Marquinhos",pos:"CB",ovr:89,club:"PSG",price:600,pac:78,sho:55,pas:78,dri:78,def:90,phy:82},
+    {name:"John Stones",pos:"CB",ovr:88,club:"Manchester City",price:570,pac:72,sho:60,pas:85,dri:82,def:88,phy:78},
+    {name:"Nicolas Otamendi",pos:"CB",ovr:87,club:"Benfica",price:520,pac:60,sho:60,pas:70,dri:68,def:87,phy:85},
+    {name:"Sergio Ramos",pos:"CB",ovr:90,club:"Monterrey",price:650,pac:70,sho:75,pas:72,dri:70,def:92,phy:90},
+    {name:"Karim Benzema",pos:"ST",ovr:92,club:"Al-Ittihad",price:700,pac:75,sho:94,pas:88,dri:91,def:40,phy:80},
+    {name:"Sadio Mane",pos:"LW",ovr:90,club:"Al Nassr",price:630,pac:90,sho:88,pas:82,dri:88,def:45,phy:78},
+    {name:"Jack Grealish",pos:"LW",ovr:88,club:"Manchester City",price:550,pac:80,sho:75,pas:85,dri:92,def:45,phy:70}
+
+];
+
+/* ==================================
+   MARKET LOGIC
+================================== */
+
+let marketCoins = 1000;
+let boughtPlayers = [];
+
+const market = document.getElementById("playersMarket");
+const grid = document.getElementById("playersGrid");
+const searchInput = document.getElementById("playerSearch");
+const positionSelect = document.getElementById("playerPosition");
+const message = document.getElementById("playersMessage");
+const coinsText = document.getElementById("playersCoins");
+
+/* PLAYER IMAGE AVATARS */
+
+function playerImage(player) {
+    const name = encodeURIComponent(player.name);
+    return "https://ui-avatars.com/api/?name=" + name +
+        "&background=24394d&color=a5ff00&size=300&bold=true";
+}
+
+/* DISPLAY PLAYERS */
+
+function showPlayers() {
+    const search = searchInput.value.toLowerCase();
+    const position = positionSelect.value;
+
+    const filtered = footballPlayers.filter(player => {
+        const nameMatch = player.name.toLowerCase().includes(search);
+        const positionMatch = position === "ALL" || player.pos === position;
+        return nameMatch && positionMatch;
+    });
+
+    grid.innerHTML = "";
+
+    if (filtered.length === 0) {
+        grid.innerHTML = "<p>No players found.</p>";
+        return;
+    }
+
+    filtered.forEach(player => {
+        const isBought = boughtPlayers.includes(player.name);
+
+        const card = document.createElement("article");
+        card.className = "player-card";
+
+        card.innerHTML = `
+            <div class="player-rating">${player.ovr}</div>
+            <div class="player-position">${player.pos}</div>
+
+            <img
+                class="player-photo"
+                src="${playerImage(player)}"
+                alt="${player.name}"
+            >
+
+            <div class="player-name">${player.name}</div>
+            <div class="player-club">${player.club}</div>
+
+            <div class="player-stats">
+                <div class="player-stat"><strong>${player.pac}</strong>PAC</div>
+                <div class="player-stat"><strong>${player.sho}</strong>SHO</div>
+                <div class="player-stat"><strong>${player.pas}</strong>PAS</div>
+                <div class="player-stat"><strong>${player.dri}</strong>DRI</div>
+                <div class="player-stat"><strong>${player.def}</strong>DEF</div>
+                <div class="player-stat"><strong>${player.phy}</strong>PHY</div>
+            </div>
+
+            <div class="player-price">🪙 ${player.price} COINS</div>
+
+            <button
+                class="player-buy"
+                ${isBought ? "disabled" : ""}
+            >
+                ${isBought ? "OWNED ✓" : "BUY PLAYER"}
+            </button>
+        `;
+
+        const buyButton = card.querySelector(".player-buy");
+
+        buyButton.addEventListener("click", () => {
+            buyPlayer(player);
+        });
+
+        grid.appendChild(card);
+    });
+}
+
+/* BUY PLAYER */
+
+function buyPlayer(player) {
+
+    if (boughtPlayers.includes(player.name)) {
+        message.textContent = "You already own this player!";
+        return;
+    }
+
+    if (marketCoins < player.price) {
+        message.textContent = "Not enough coins! You need more coins.";
+        return;
+    }
+
+    marketCoins -= player.price;
+    boughtPlayers.push(player.name);
+
+    coinsText.textContent = marketCoins.toLocaleString();
+
+    /* UPDATE HEADER COINS */
+
+    const headerCoin = document.querySelector(".resource span");
+
+    if (headerCoin) {
+        headerCoin.textContent = marketCoins.toLocaleString();
+    }
+
+    message.textContent = player.name + " successfully purchased!";
+
+    showPlayers();
+}
+
+/* OPEN PLAYERS PAGE */
+
+function openPlayersMarket() {
+    market.style.display = "block";
+
+    const oldPage = document.getElementById("gameSectionPage");
+    if (oldPage) oldPage.style.display = "none";
+
+    const footer = document.querySelector(".footer-nav");
+    if (footer) footer.style.display = "none";
+
+    coinsText.textContent = marketCoins.toLocaleString();
+
+    showPlayers();
+}
+
+/* PLAYERS BUTTON */
+
+document.querySelectorAll(".square-btn").forEach(button => {
+    const label = button.querySelector(".btn-label");
+
+    if (label && label.textContent.trim() === "PLAYERS") {
+        button.addEventListener("click", openPlayersMarket);
+    }
+});
+
+/* BACK BUTTON */
+
+document.getElementById("playersBack").addEventListener("click", () => {
+    market.style.display = "none";
+
+    const oldPage = document.getElementById("gameSectionPage");
+    if (oldPage) oldPage.style.display = "none";
+
+    const footer = document.querySelector(".footer-nav");
+    if (footer) footer.style.display = "flex";
+
+    const homeButton = document.querySelector(".square-btn");
+    if (homeButton) homeButton.classList.add("active");
+});
+
+/* FILTERS */
+
+searchInput.addEventListener("input", showPlayers);
+positionSelect.addEventListener("change", showPlayers);
+
+</script>
+<img
+    class="haaland"
+    src="https://commons.wikimedia.org/wiki/Special:FilePath/Erling_Haaland_2023.jpg"
+    alt="Erling Haaland"
+><!-- MY TEAM - ULTIMATE FOOTBALL -->
 <style>
-
-/* 1. ANIMATSIYALI NEON FON */
-body {
-  background-color: #080d18;
-  background-image:
-    radial-gradient(ellipse at 10% 20%, #b7ff3518, transparent 40%),
-    radial-gradient(ellipse at 90% 50%, #00c8ff15, transparent 40%),
-    radial-gradient(ellipse at 50% 100%, #9747ff15, transparent 40%);
-  background-size: 200% 200%;
-  animation: neonBackground 12s ease infinite alternate;
+#gameSectionPage.myteam-page {
+    background: radial-gradient(ellipse at top, #173b35, #07111b 75%);
+    padding: 20px;
+    color: white;
 }
-
-@keyframes neonBackground {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 100%; }
+.myteam-top {
+    display:flex; justify-content:space-between; align-items:center;
+    gap:12px; flex-wrap:wrap; margin-bottom:18px;
 }
-
-/* 2. NEON MATNLAR */
-h1, h2 {
-  animation: neonText 3s ease-in-out infinite alternate;
+.myteam-top h1 { margin:0!important; font-size:clamp(25px,4vw,42px)!important; }
+.team-rating {
+    background:#a5ff00; color:#07111b; padding:10px 18px;
+    font-family:Orbitron,sans-serif; font-weight:900; border-radius:5px;
 }
-
-@keyframes neonText {
-  from {
-    text-shadow: 0 0 5px #b7ff3520;
-  }
-  to {
-    text-shadow:
-      0 0 10px #b7ff35,
-      0 0 25px #b7ff3580,
-      0 0 40px #b7ff3530;
-  }
+.team-layout {
+    display:grid; grid-template-columns:minmax(0,1.5fr) minmax(220px,.8fr);
+    gap:18px; align-items:start;
 }
-
-/* 3. USTA KARTALARI: 3D HOVER */
-.master-card,
-.service-card {
-  transform-style: preserve-3d;
-  transition:
-    transform .4s ease,
-    box-shadow .4s ease,
-    border-color .4s ease;
+.football-pitch {
+    position:relative; min-height:510px; overflow:hidden;
+    border:2px solid #ffffff70; border-radius:8px;
+    background:
+      repeating-linear-gradient(0deg,transparent 0 70px,#ffffff0c 71px 140px),
+      repeating-linear-gradient(90deg,#17633c,#17633c 50%,#1b7044 50%,#1b7044 100%);
+    background-size:100% 140px,100% 100%;
+    box-shadow:inset 0 0 50px #001b10;
 }
-
-.master-card:hover,
-.service-card:hover {
-  transform: perspective(1000px) rotateX(3deg) rotateY(-3deg)
-             translateY(-12px) scale(1.02);
-  box-shadow:
-    0 20px 40px #0008,
-    0 0 20px #b7ff3530;
-  border-color: #b7ff35;
+.football-pitch:before {
+    content:""; position:absolute; left:0;right:0;top:50%;
+    border-top:2px solid #ffffff90;
 }
-
-.master-card img,
-.service-card img {
-  transition: transform .6s ease;
+.football-pitch:after {
+    content:""; position:absolute; width:110px;height:110px;
+    border:2px solid #ffffff90;border-radius:50%;
+    left:50%;top:50%;transform:translate(-50%,-50%);
 }
-
-.master-card:hover img,
-.service-card:hover img {
-  transform: scale(1.12);
+.pitch-box {
+    position:absolute;left:25%;width:50%;height:75px;
+    border:2px solid #ffffff80;
 }
-
-/* 4. TUGMALAR: NEON RIPPLE */
-button,
-.service-order,
-.master-contact {
-  position: relative;
-  overflow: hidden;
-  transition: all .3s ease;
+.pitch-box.top {top:0;border-top:0}
+.pitch-box.bottom {bottom:0;border-bottom:0}
+.player-slot {
+    position:absolute; transform:translate(-50%,-50%);
+    z-index:2; width:76px; text-align:center; cursor:pointer;
+    background:#07111be8; border:1px solid #a5ff00;
+    border-radius:7px; padding:5px 3px; color:white;
+    transition:.2s;
 }
-
-button:hover,
-.service-order:hover,
-.master-contact:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px #b7ff3550;
+.player-slot:hover,.player-slot.selected {
+    transform:translate(-50%,-50%) scale(1.12);
+    box-shadow:0 0 18px #a5ff00;
 }
-
-button:active,
-.service-order:active,
-.master-contact:active {
-  transform: scale(.94);
+.player-slot .ovr {
+    color:#a5ff00;font-family:Orbitron,sans-serif;font-weight:900;font-size:17px;
 }
-
-/* 5. SCROLL REVEAL */
-.usta-reveal {
-  opacity: 0;
-  transform: translateY(50px) scale(.97);
-  filter: blur(5px);
-  transition:
-    opacity .8s ease,
-    transform .8s cubic-bezier(.2,.8,.2,1),
-    filter .8s ease;
+.player-slot .position {font-size:9px;color:#cbd5df}
+.player-slot .player-name {font-size:11px;font-weight:800;white-space:nowrap}
+.team-side {
+    background:#091522eF;border:1px solid #ffffff25;
+    padding:15px;border-radius:8px;
 }
-
-.usta-reveal.usta-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+.team-side h2 {
+    font-family:Orbitron,sans-serif;font-size:16px;
+    color:#a5ff00;margin-bottom:13px;
 }
-
-/* QO‘SHIMCHA: FLOATING ANIMATSIYA */
-.masters-head span,
-.services-heading span {
-  display: inline-block;
-  animation: floatingBadge 3s ease-in-out infinite;
+.team-stat {
+    display:flex;justify-content:space-between;
+    border-bottom:1px solid #ffffff18;padding:10px 0;
 }
-
-@keyframes floatingBadge {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+.team-stat span:last-child {color:#a5ff00;font-weight:900}
+.team-select {
+    width:100%;padding:11px;margin:8px 0;
+    background:#14283a;color:white;border:1px solid #ffffff35;
 }
-
-/* QO‘SHIMCHA: RASM YORUG‘LIGI */
-.master-photo::after,
-.service-image::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    100deg,
-    transparent,
-    #ffffff35,
-    transparent
-  );
-  transform: skewX(-20deg);
-  transition: left .7s ease;
-  pointer-events: none;
+.team-action {
+    width:100%;padding:12px;margin-top:8px;
+    background:#a5ff00;color:#07111b;border:0;
+    font-weight:900;cursor:pointer;
 }
-
-.master-card:hover .master-photo::after,
-.service-card:hover .service-image::after {
-  left: 150%;
+.team-action.secondary {background:#203344;color:white;border:1px solid #ffffff30}
+.bench-title {
+    margin:22px 0 12px;color:#a5ff00;
+    font-family:Orbitron,sans-serif;font-size:16px;
 }
-
-/* TELEFONDA ANIMATSIYA HAM YENGIL ISHLASIN */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-    scroll-behavior: auto !important;
-  }
+.bench-list {
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px;
 }
-
+.bench-card {
+    background:#0b1928;border:1px solid #ffffff25;
+    padding:12px;border-radius:6px;cursor:pointer;color:white;
+}
+.bench-card:hover {border-color:#a5ff00}
+.bench-card b {color:#a5ff00;font-family:Orbitron,sans-serif}
+.bench-card small {display:block;color:#aebdca;margin-top:5px}
+.team-hint {color:#aebdca;font-size:13px;margin-top:10px}
+@media(max-width:700px) {
+    .team-layout {grid-template-columns:1fr}
+    .football-pitch {min-height:470px}
+    .player-slot {width:65px}
+    .player-slot .player-name {font-size:9px}
+    #gameSectionPage.myteam-page {padding:12px}
+}
 </style>
 
 <script>
-/* SCROLL REVEAL ANIMATSIYASI */
-(function() {
+(function () {
+    const page = document.getElementById("gameSectionPage");
+    const menu = document.getElementById("menu");
+    const footer = document.querySelector(".footer-nav");
 
-  const revealElements = document.querySelectorAll(
-    ".master-card, .service-card, " +
-    ".masters-head, .services-heading, " +
-    ".contact-box, section h2, section p"
-  );
+    if (!page || !menu) return;
 
-  revealElements.forEach((element, index) => {
-    element.classList.add("usta-reveal");
+    const originalPage = page.innerHTML;
 
-    // Kartalar ketma-ket chiqadi
-    element.style.transitionDelay =
-      (index % 6) * 100 + "ms";
-  });
+    const squad = [
+        {name:"Haaland",pos:"ST",ovr:91,x:50,y:12},
+        {name:"Mbappe",pos:"LW",ovr:92,x:22,y:29},
+        {name:"Vinicius",pos:"RW",ovr:90,x:78,y:29},
+        {name:"Bellingham",pos:"CAM",ovr:90,x:50,y:39},
+        {name:"De Bruyne",pos:"CM",ovr:91,x:28,y:57},
+        {name:"Rodri",pos:"CDM",ovr:90,x:72,y:57},
+        {name:"Theo",pos:"LB",ovr:87,x:15,y:78},
+        {name:"Van Dijk",pos:"CB",ovr:90,x:38,y:83},
+        {name:"Rudiger",pos:"CB",ovr:88,x:62,y:83},
+        {name:"Hakimi",pos:"RB",ovr:88,x:85,y:78},
+        {name:"Courtois",pos:"GK",ovr:90,x:50,y:96}
+    ];
 
-  if ("IntersectionObserver" in window) {
+    const bench = [
+        {name:"Messi",pos:"RW",ovr:90},
+        {name:"Ronaldo",pos:"ST",ovr:89},
+        {name:"Salah",pos:"RW",ovr:89},
+        {name:"Kane",pos:"ST",ovr:90},
+        {name:"Pedri",pos:"CM",ovr:88},
+        {name:"Saka",pos:"RW",ovr:88},
+        {name:"Musiala",pos:"CAM",ovr:88},
+        {name:"Alisson",pos:"GK",ovr:89}
+    ];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("usta-visible");
-            observer.unobserve(entry.target);
-          }
+    let selectedSlot = 0;
+    let formation = "4-3-3";
+
+    function averageRating() {
+        return Math.round(squad.reduce((sum,p)=>sum+p.ovr,0)/squad.length);
+    }
+
+    function renderTeam() {
+        page.classList.add("myteam-page");
+        page.innerHTML = `
+          <div class="myteam-top">
+            <h1>MY TEAM</h1>
+            <div class="team-rating">OVR ${averageRating()}</div>
+          </div>
+
+          <div class="team-layout">
+            <div>
+              <div class="football-pitch" id="teamPitch">
+                <div class="pitch-box top"></div>
+                <div class="pitch-box bottom"></div>
+                ${squad.map((p,i)=>`
+                  <button class="player-slot ${selectedSlot===i?'selected':''}"
+                    style="left:${p.x}%;top:${p.y}%"
+                    data-slot="${i}">
+                    <div class="ovr">${p.ovr}</div>
+                    <div class="position">${p.pos}</div>
+                    <div class="player-name">${p.name}</div>
+                  </button>
+                `).join("")}
+              </div>
+              <p class="team-hint">Maydondagi futbolchini tanla, keyin zaxiradan boshqa futbolchi bilan almashtir.</p>
+            </div>
+
+            <div class="team-side">
+              <h2>TEAM MANAGEMENT</h2>
+              <div class="team-stat"><span>Team Rating</span><span>${averageRating()}</span></div>
+              <div class="team-stat"><span>Players</span><span>11 / 11</span></div>
+              <div class="team-stat"><span>Formation</span><span>${formation}</span></div>
+              <div class="team-stat"><span>Selected</span><span>${squad[selectedSlot].name}</span></div>
+
+              <label for="formationSelect">FORMATION</label>
+              <select class="team-select" id="formationSelect">
+                <option ${formation==="4-3-3"?"selected":""}>4-3-3</option>
+                <option ${formation==="4-2-3-1"?"selected":""}>4-2-3-1</option>
+                <option ${formation==="4-4-2"?"selected":""}>4-4-2</option>
+                <option ${formation==="3-5-2"?"selected":""}>3-5-2</option>
+              </select>
+
+              <button class="team-action" id="autoTeam">AUTO BUILD</button>
+              <button class="team-action secondary" id="resetTeam">RESET SQUAD</button>
+            </div>
+          </div>
+
+          <h2 class="bench-title">SUBSTITUTES — ZAXIRA</h2>
+          <div class="bench-list">
+            ${bench.map((p,i)=>`
+              <button class="bench-card" data-bench="${i}">
+                <b>${p.ovr} OVR</b>
+                <strong>${p.name}</strong>
+                <small>${p.pos} · Zaxira futbolchisi</small>
+              </button>
+            `).join("")}
+          </div>
+          <button class="section-back" id="myTeamBack">← BACK TO HOME</button>
+        `;
+
+        page.querySelectorAll("[data-slot]").forEach(btn=>{
+            btn.addEventListener("click",()=>{
+                selectedSlot = Number(btn.dataset.slot);
+                renderTeam();
+            });
         });
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px"
-      }
-    );
 
-    revealElements.forEach(element => {
-      observer.observe(element);
-    });
+        page.querySelectorAll("[data-bench]").forEach(btn=>{
+            btn.addEventListener("click",()=>{
+                const index = Number(btn.dataset.bench);
+                const oldPlayer = {...squad[selectedSlot]};
+                const newPlayer = bench[index];
 
-  } else {
-    revealElements.forEach(element => {
-      element.classList.add("usta-visible");
-    });
-  }
+                squad[selectedSlot] = {
+                    ...newPlayer,
+                    x:oldPlayer.x,
+                    y:oldPlayer.y
+                };
+                bench[index] = {
+                    name:oldPlayer.name,
+                    pos:oldPlayer.pos,
+                    ovr:oldPlayer.ovr
+                };
+                renderTeam();
+            });
+        });
+
+        page.querySelector("#formationSelect").addEventListener("change",e=>{
+            formation = e.target.value;
+            renderTeam();
+        });
+
+        page.querySelector("#autoTeam").addEventListener("click",()=>{
+            squad.sort((a,b)=>b.ovr-a.ovr);
+            renderTeam();
+        });
+
+        page.querySelector("#resetTeam").addEventListener("click",()=>{
+            location.reload();
+        });
+
+        page.querySelector("#myTeamBack").addEventListener("click",goHome);
+    }
+
+    function goHome() {
+        page.classList.remove("myteam-page");
+        page.innerHTML = originalPage;
+        page.style.display = "none";
+        menu.style.display = "flex";
+        if (footer) footer.style.display = "flex";
+    }
+
+    // Faqat MY TEAM tugmasini ushlaydi.
+    document.addEventListener("click",function(e){
+        const button = e.target.closest(".square-btn");
+        if (!button) return;
+
+        const label = button.querySelector(".btn-label");
+        if (!label || label.textContent.trim() !== "MY TEAM") return;
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        menu.style.display = "flex";
+        if (footer) footer.style.display = "none";
+        page.style.display = "block";
+        selectedSlot = 0;
+        renderTeam();
+    },true);
+
+    // MY TEAM ichidagi BACK tugmasi.
+    document.addEventListener("click",function(e){
+        if (e.target.id === "myTeamBack") {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            goHome();
+        }
+    },true);
 
 })();
 </script>
 
-<!-- ===== 5 TA ANIMATSIYA TUGADI ===== -->
-
-<!-- ADMIN PANEL: KASBLARNI BOSHQARISH -->
 <style>
-#kasbAdmin {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  z-index: 999999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
+/* FUTBOLCHI RASMLARI */
+.player-slot,
+.bench-card,
+.player-card,
+.market-card,
+.player-item,
+.player-market-card {
+    position: relative;
+    overflow: hidden;
 }
 
-#kasbAdminBox {
-  background: #101827;
-  color: white;
-  padding: 25px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 500px;
-  max-height: 85vh;
-  overflow-y: auto;
-  border: 1px solid #a3e635;
+.uf-player-photo {
+    width: 100%;
+    height: 105px;
+    display: block;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 5px;
+    background: linear-gradient(135deg,#20394a,#07111b);
 }
 
-#kasbAdminBox h2 {
-  color: #a3e635;
-  margin-bottom: 15px;
+.player-slot .uf-player-photo {
+    height: 45px;
+    width: 48px;
+    margin: 0 auto 3px;
+    object-fit: cover;
+    border-radius: 4px;
 }
 
-#kasbAdminBox input {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 10px;
-  border: 1px solid #a3e635;
-  background: #1c2637;
-  color: white;
-  box-sizing: border-box;
+.bench-card .uf-player-photo {
+    height: 85px;
+    margin-bottom: 8px;
 }
 
-.kasbBtn {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 9px;
-  background: #a3e635;
-  color: #111;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 5px 3px;
+.player-card .uf-player-photo,
+.market-card .uf-player-photo,
+.player-item .uf-player-photo,
+.player-market-card .uf-player-photo {
+    height: 150px;
+    margin-bottom: 8px;
 }
 
-.kasbDelete {
-  background: #ff4545;
-  color: white;
-}
-
-#kasbRoyxat div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  background: #1c2637;
-  padding: 10px;
-  border-radius: 8px;
-  margin: 7px 0;
+.uf-photo-loading {
+    opacity: .65;
 }
 </style>
 
-<div id="kasbAdmin">
-  <div id="kasbAdminBox">
-    <h2>⚙️ Kasblarni boshqarish</h2>
-
-    <input id="yangiKasb" placeholder="Yangi xizmat nomini yozing">
-
-    <button class="kasbBtn" onclick="kasbQosh()">
-      ➕ Kasb qo‘shish
-    </button>
-
-    <hr>
-
-    <h3>📋 Xizmatlar ro‘yxati</h3>
-    <div id="kasbRoyxat"></div>
-
-    <button class="kasbBtn kasbDelete" onclick="kasbAdminYop()">
-      ✖ Yopish
-    </button>
-  </div>
-</div>
-
 <script>
-/* Admin paroli */
-const KASB_ADMIN_PAROL = "1234";
-
-/* Adminni ochish */
-function kasbAdminOch() {
-  const parol = prompt("Admin parolini kiriting:");
-
-  if (parol !== KASB_ADMIN_PAROL) {
-    alert("❌ Parol noto‘g‘ri!");
-    return;
-  }
-
-  document.getElementById("kasbAdmin").style.display = "flex";
-  kasblarniChiqar();
-}
-
-/* Adminni yopish */
-function kasbAdminYop() {
-  document.getElementById("kasbAdmin").style.display = "none";
-}
-
-/* Keraksiz kasblarni o‘chirish */
-const olibTashlanadiganKasblar = [
-  "avto mexanik",
-  "avtomexanik",
-  "monekyurchi",
-  "manikyurchi",
-  "texnik usta"
-];
-
-/* Xizmatlar ro‘yxati */
-let adminKasblar = JSON.parse(
-  localStorage.getItem("ustaAdminKasblar")
-) || [
-  "Santexnik",
-  "Elektrik",
-  "Quruvchi",
-  "Bo‘yoqchi",
-  "Plitkachi",
-  "Mebelchi",
-  "Konditsioner ustasi",
-  "Payvandchi",
-  "Tom ustasi",
-  "Gipsokarton ustasi"
-];
-
-/* Ro‘yxatdan keraksiz kasblarni olib tashlash */
-adminKasblar = adminKasblar.filter(kasb =>
-  !olibTashlanadiganKasblar.some(nom =>
-    kasb.toLowerCase().includes(nom)
-  )
-);
-
-/* Kasblarni saqlash */
-function kasblarniSaqlash() {
-  localStorage.setItem(
-    "ustaAdminKasblar",
-    JSON.stringify(adminKasblar)
-  );
-}
-
-/* Kasblarni ekranga chiqarish */
-function kasblarniChiqar() {
-  const royxat = document.getElementById("kasbRoyxat");
-  royxat.innerHTML = "";
-
-  adminKasblar.forEach((kasb, index) => {
-    const qator = document.createElement("div");
-
-    const nom = document.createElement("span");
-    nom.textContent = kasb;
-
-    const ochirish = document.createElement("button");
-    ochirish.textContent = "🗑 O‘chirish";
-    ochirish.className = "kasbBtn kasbDelete";
-
-    ochirish.onclick = function() {
-      if (confirm(kasb + " xizmatini o‘chirasizmi?")) {
-        adminKasblar.splice(index, 1);
-        kasblarniSaqlash();
-        kasblarniChiqar();
-      }
+(function () {
+    // Ism va Wikipedia sahifasi nomlari
+    const playerNames = {
+        "haaland": "Erling Haaland",
+        "mbappe": "Kylian Mbappe",
+        "messi": "Lionel Messi",
+        "ronaldo": "Cristiano Ronaldo",
+        "vinicius": "Vinicius Junior",
+        "bellingham": "Jude Bellingham",
+        "de bruyne": "Kevin De Bruyne",
+        "rodri": "Rodri",
+        "salah": "Mohamed Salah",
+        "kane": "Harry Kane",
+        "pedri": "Pedri",
+        "saka": "Bukayo Saka",
+        "musiala": "Jamal Musiala",
+        "courtois": "Thibaut Courtois",
+        "van dijk": "Virgil van Dijk",
+        "rudiger": "Antonio Rudiger",
+        "hakimi": "Achraf Hakimi",
+        "theo": "Theo Hernandez",
+        "yamal": "Lamine Yamal",
+        "lamine yamal": "Lamine Yamal",
+        "neymar": "Neymar",
+        "benzema": "Karim Benzema",
+        "lewandowski": "Robert Lewandowski",
+        "griezmann": "Antoine Griezmann",
+        "foden": "Phil Foden",
+        "odegaard": "Martin Odegaard",
+        "ruben dias": "Ruben Dias",
+        "alisson": "Alisson Becker",
+        "ederson": "Ederson",
+        "modric": "Luka Modric",
+        "kroos": "Toni Kroos",
+        "gavi": "Gavi",
+        "rashford": "Marcus Rashford",
+        "son": "Son Heung-min",
+        "kimmich": "Joshua Kimmich",
+        "bruno fernandes": "Bruno Fernandes",
+        "federico valverde": "Federico Valverde",
+        "valverde": "Federico Valverde",
+        "ronaldinho": "Ronaldinho",
+        "zidane": "Zinedine Zidane",
+        "pele": "Pelé",
+        "maradona": "Diego Maradona"
     };
 
-    qator.appendChild(nom);
-    qator.appendChild(ochirish);
-    royxat.appendChild(qator);
-  });
-}
+    const photoCache = {};
 
-/* Yangi kasb qo‘shish */
-function kasbQosh() {
-  const input = document.getElementById("yangiKasb");
-  const nom = input.value.trim();
+    async function getPlayerPhoto(name) {
+        const key = name.toLowerCase();
 
-  if (!nom) {
-    alert("Kasb nomini yozing!");
-    return;
-  }
+        if (photoCache[key]) return photoCache[key];
 
-  if (adminKasblar.includes(nom)) {
-    alert("Bu kasb ro‘yxatda bor!");
-    return;
-  }
+        const article = playerNames[key] || name;
 
-  adminKasblar.push(nom);
-  kasblarniSaqlash();
-  kasblarniChiqar();
+        try {
+            const response = await fetch(
+                "https://en.wikipedia.org/api/rest_v1/page/summary/" +
+                encodeURIComponent(article)
+            );
 
-  input.value = "";
-  alert("✅ Yangi xizmat qo‘shildi!");
-}
+            if (!response.ok) return null;
+
+            const data = await response.json();
+            const photo = data.thumbnail?.source || null;
+
+            photoCache[key] = photo;
+            return photo;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function findPlayerName(card) {
+        const text = card.innerText.toLowerCase();
+
+        const names = Object.keys(playerNames)
+            .sort((a,b) => b.length - a.length);
+
+        return names.find(name =>
+            new RegExp("(^|[^a-z])" +
+            name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+            "([^a-z]|$)", "i").test(text)
+        );
+    }
+
+    async function addPhoto(card) {
+        if (card.dataset.ufPhotoChecked) return;
+
+        const name = findPlayerName(card);
+        if (!name) return;
+
+        card.dataset.ufPhotoChecked = "yes";
+
+        const img = document.createElement("img");
+        img.className = "uf-player-photo uf-photo-loading";
+        img.alt = playerNames[name] || name;
+        img.loading = "lazy";
+
+        const existingImage = card.querySelector("img");
+        if (existingImage) return;
+
+        card.prepend(img);
+
+        const photo = await getPlayerPhoto(name);
+
+        if (photo && img.isConnected) {
+            img.src = photo;
+            img.classList.remove("uf-photo-loading");
+        } else {
+            img.remove();
+        }
+    }
+
+    function scanCards() {
+        const selectors = [
+            ".player-slot",
+            ".bench-card",
+            ".player-card",
+            ".market-card",
+            ".player-item",
+            ".player-market-card"
+        ];
+
+        document.querySelectorAll(selectors.join(",")).forEach(addPhoto);
+    }
+
+    // Sahifa ochilganda va kartalar yangilanganda rasmlarni topadi.
+    scanCards();
+
+    const observer = new MutationObserver(scanCards);
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    setInterval(scanCards, 2000);
+})();
 </script>
 
-<!-- KO'RINADIGAN ADMIN TUGMASI -->
 <style>
-#visibleAdminBtn {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  z-index: 999998;
-
-  padding: 16px 24px;
-  border-radius: 50px;
-  border: 2px solid #a3e635;
-
-  background: linear-gradient(135deg, #a3e635, #d4ff72);
-  color: #101820;
-
-  font-size: 15px;
-  font-weight: 900;
-  cursor: pointer;
-
-  box-shadow: 0 0 20px rgba(163, 230, 53, 0.5);
-  transition: 0.3s;
+/* 4-3-3: futbolchilarni maydonga joylashtirish */
+.myteam-page .player-slot {
+    position: absolute !important;
+    left: var(--player-x) !important;
+    top: var(--player-y) !important;
+    transform: translate(-50%, -50%) !important;
+    width: 76px !important;
+    min-height: 90px !important;
+    z-index: 5;
+    margin: 0 !important;
 }
 
-#visibleAdminBtn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 35px #a3e635;
+/* Maydon ichidagi kartalar */
+.myteam-page .player-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Maydon kartalarni joylashtirish uchun asos bo'ladi */
+.myteam-page .player-slot:first-child {
+    position: absolute !important;
+}
+</style>
+
+<script>
+(function () {
+    const positions433 = {
+        "mbappe":     ["20%", "18%"],
+        "haaland":    ["50%", "12%"],
+        "vinicius":   ["80%", "18%"],
+
+        "bellingham": ["25%", "43%"],
+        "de bruyne":  ["50%", "48%"],
+        "rodri":      ["75%", "43%"],
+
+        "theo":       ["12%", "70%"],
+        "van dijk":   ["37%", "76%"],
+        "rudiger":    ["63%", "76%"],
+        "hakimi":     ["88%", "70%"],
+
+        "courtois":   ["50%", "91%"]
+    };
+
+    function arrangePlayers() {
+        const cards = document.querySelectorAll(
+            ".myteam-page .player-slot"
+        );
+
+        if (!cards.length) return;
+
+        const pitch = cards[0].parentElement;
+        pitch.style.position = "relative";
+
+        cards.forEach(card => {
+            const name = card.innerText.toLowerCase();
+
+            for (const player in positions433) {
+                if (name.includes(player)) {
+                    card.style.setProperty(
+                        "--player-x", positions433[player][0]
+                    );
+                    card.style.setProperty(
+                        "--player-y", positions433[player][1]
+                    );
+                    break;
+                }
+            }
+        });
+    }
+
+    arrangePlayers();
+
+    const observer = new MutationObserver(arrangePlayers);
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+</script>
+
+<style>
+/* TRANSFER TANGALARI */
+.transfer-balance {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #ffe45c;
+    font-weight: 900;
+    margin-left: 12px;
+}
+
+/* TRANSFER MARKET */
+#transferMarket {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: linear-gradient(135deg,#07131c,#142b36);
+    color: white;
+    padding: 25px;
+    overflow-y: auto;
+    font-family: Arial,sans-serif;
+}
+
+.market-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.market-top h1 {
+    color: #caff42;
+    font-size: 30px;
+}
+
+.market-money {
+    color: #ffe45c;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.market-close {
+    background: #caff42;
+    border: none;
+    padding: 12px 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.transfer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(175px,1fr));
+    gap: 18px;
+}
+
+.transfer-card {
+    background: linear-gradient(145deg,#263d4a,#101d27);
+    border: 1px solid #526c65;
+    border-radius: 13px;
+    padding: 15px;
+    text-align: center;
+    transition: .2s;
+}
+
+.transfer-card:hover {
+    border-color: #caff42;
+    transform: translateY(-5px);
+}
+
+.transfer-card .player-rating {
+    color: #caff42;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.transfer-card h3 {
+    margin: 8px 0;
+}
+
+.transfer-card p {
+    color: #bdcbd0;
+    margin: 5px;
+}
+
+.transfer-card button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 11px;
+    border: none;
+    background: #caff42;
+    color: #101b10;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.transfer-card button:disabled {
+    background: #59645a;
+    color: white;
+    cursor: default;
+}
+
+#myTransfers {
+    margin-top: 30px;
+    padding: 18px;
+    background: #192d38;
+    border: 1px solid #526c65;
+    border-radius: 12px;
+}
+
+#myTransfers h2 {
+    color: #caff42;
+    margin-bottom: 12px;
 }
 
 @media(max-width:600px) {
-  #visibleAdminBtn {
-    bottom: 15px;
-    right: 15px;
-    padding: 12px 18px;
-    font-size: 13px;
-  }
+    #transferMarket { padding: 14px; }
 }
 </style>
 
-<button id="visibleAdminBtn" onclick="kasbAdminOch()">
-  ⚙️ ADMIN PANEL
-</button>
+<!-- TRANSFER MARKET SAHIFASI -->
+<section id="transferMarket">
+    <div class="market-top">
+        <div>
+            <h1>⚽ PLAYER MARKET</h1>
+            <p>Transfer futbolchilarni sotib ol</p>
+        </div>
 
-<script>
-/* USTA TOP AI — UY REMONTI VA QURILISH KASBLARI */
+        <div class="market-money">
+            🪙 <span id="marketCoins">50000</span>
+        </div>
 
-const kerakliKasblar = [
-  "Quruvchi",
-  "Santexnik",
-  "Elektrik",
-  "Malyar (bo‘yoqchi)",
-  "Shpaklyovkachi",
-  "Shtukaturkachi",
-  "Plitkachi",
-  "Kafel ustasi",
-  "G‘isht teruvchi",
-  "Betonchi",
-  "Fundament ustasi",
-  "Tom yopuvchi",
-  "Payvandchi",
-  "Mebel yig‘uvchi",
-  "Eshik o‘rnatuvchi",
-  "Deraza o‘rnatuvchi",
-  "Gipsokarton ustasi",
-  "Pol ustasi",
-  "Laminat yotqizuvchi",
-  "Parket ustasi",
-  "Oboy yopishtiruvchi",
-  "Konditsioner o‘rnatuvchi",
-  "Isitish tizimi ustasi",
-  "Ventilyatsiya ustasi",
-  "Usta brigada",
-  "Uy remonti ustasi",
-  "Kalit topshirish remonti",
-  "Interyer dizayner",
-  "Arxitektor",
-  "Landshaft dizayner"
-];
-
-/* Kerakli kasblarni saqlash */
-localStorage.setItem(
-  "ustaTopKerakliKasblar",
-  JSON.stringify(kerakliKasblar)
-);
-
-/* Kerakli kasblarni konsolda ko‘rish */
-console.log("🏠 Uy remonti va qurilish kasblari:");
-console.log(kerakliKasblar);
-
-/* Keraksiz kasblarni yashirish */
-const keraksizKasblar = [
-  "avto",
-  "mashina",
-  "manikyur",
-  "pedikyur",
-  "sartarosh",
-  "kosmetolog",
-  "massaj",
-  "kuryer",
-  "haydovchi",
-  "telefon",
-  "kompyuter",
-  "fotograf",
-  "videograf",
-  "tikuvchi",
-  "oshpaz",
-  "qandolatchi",
-  "bog‘bon"
-];
-
-function kasbKerakmi(matn) {
-  const nom = matn.toLowerCase();
-
-  return !keraksizKasblar.some(kasb =>
-    nom.includes(kasb)
-  );
-}
-
-/* Saytdagi keraksiz kasb kartalarini olib tashlash */
-document.querySelectorAll(
-  ".master-card, .service-card, .category-card"
-).forEach(karta => {
-  if (!kasbKerakmi(karta.innerText)) {
-    karta.remove();
-  }
-});
-
-console.log("✅ Uy remonti va qurilish yo‘nalishi tayyor!");
-</script>
-
-<style>
-#homeRepairSection {
-  padding: 50px 20px;
-  background: #101827;
-  color: white;
-}
-
-#homeRepairSection h2 {
-  text-align: center;
-  color: #a3e635;
-  font-size: 30px;
-  margin-bottom: 30px;
-}
-
-#repairJobsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.repairJobCard {
-  background: #1c2637;
-  border: 1px solid #a3e63555;
-  padding: 22px;
-  border-radius: 16px;
-  text-align: center;
-  transition: .3s;
-}
-
-.repairJobCard:hover {
-  transform: translateY(-7px);
-  border-color: #a3e635;
-  box-shadow: 0 0 20px #a3e63533;
-}
-
-.repairJobCard .repairIcon {
-  font-size: 35px;
-  margin-bottom: 12px;
-}
-
-.repairJobCard h3 {
-  color: #a3e635;
-  margin: 10px 0;
-}
-
-.repairJobCard p {
-  color: #cbd5e1;
-  font-size: 14px;
-}
-
-.repairJobCard button {
-  background: #a3e635;
-  color: #101827;
-  border: none;
-  padding: 11px 18px;
-  border-radius: 9px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 12px;
-}
-</style>
-
-<section id="homeRepairSection">
-  <h2>🏠 Qurilish va uy remonti xizmatlari</h2>
-
-  <div id="repairJobsGrid">
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🏗️</div>
-      <h3>Uy quruvchi</h3>
-      <p>Uy qurish, bino ko‘tarish va qurilish ishlari</p>
-      <button onclick="repairOrder('Uy quruvchi')">Usta chaqirish</button>
+        <button class="market-close" onclick="closeTransferMarket()">
+            ✕ CLOSE
+        </button>
     </div>
 
-    <div class="repairJobCard">
-      <div class="repairIcon">🔧</div>
-      <h3>Santexnik</h3>
-      <p>Suv quvurlari, kran, unitaz va kanalizatsiya</p>
-      <button onclick="repairOrder('Santexnik')">Usta chaqirish</button>
-    </div>
+    <div class="transfer-grid" id="transferGrid"></div>
 
-    <div class="repairJobCard">
-      <div class="repairIcon">⚡</div>
-      <h3>Elektrik</h3>
-      <p>Elektr simlari, rozetka, yoritish va montaj</p>
-      <button onclick="repairOrder('Elektrik')">Usta chaqirish</button>
+    <div id="myTransfers">
+        <h2>MY TRANSFERS</h2>
+        <div id="boughtPlayers">Hali futbolchi sotib olmading.</div>
     </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🧱</div>
-      <h3>G‘isht teruvchi</h3>
-      <p>Devor, poydevor va g‘isht terish ishlari</p>
-      <button onclick="repairOrder('G‘isht teruvchi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🎨</div>
-      <h3>Bo‘yoqchi</h3>
-      <p>Devor, shift va xonalarni bo‘yash</p>
-      <button onclick="repairOrder('Bo‘yoqchi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🪣</div>
-      <h3>Shpaklyovkachi</h3>
-      <p>Devorlarni tekislash va pardozlash</p>
-      <button onclick="repairOrder('Shpaklyovkachi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🪨</div>
-      <h3>Shtukaturkachi</h3>
-      <p>Devor va shiftni suvoq qilish</p>
-      <button onclick="repairOrder('Shtukaturkachi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🛁</div>
-      <h3>Plitkachi</h3>
-      <p>Vanna, oshxona va polga kafel yotqizish</p>
-      <button onclick="repairOrder('Plitkachi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🏠</div>
-      <h3>Tom ustasi</h3>
-      <p>Tom yopish, ta’mirlash va izolyatsiya</p>
-      <button onclick="repairOrder('Tom ustasi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🪚</div>
-      <h3>Pol ustasi</h3>
-      <p>Laminat, parket va pol yotqizish</p>
-      <button onclick="repairOrder('Pol ustasi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🚪</div>
-      <h3>Eshik va deraza ustasi</h3>
-      <p>Eshik, rom va derazalarni o‘rnatish</p>
-      <button onclick="repairOrder('Eshik va deraza ustasi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🪵</div>
-      <h3>Mebelchi</h3>
-      <p>Mebel yasash, yig‘ish va ta’mirlash</p>
-      <button onclick="repairOrder('Mebelchi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">❄️</div>
-      <h3>Konditsioner ustasi</h3>
-      <p>Konditsioner o‘rnatish va ta’mirlash</p>
-      <button onclick="repairOrder('Konditsioner ustasi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🔥</div>
-      <h3>Isitish tizimi ustasi</h3>
-      <p>Isitish, radiator va issiq pol tizimlari</p>
-      <button onclick="repairOrder('Isitish tizimi ustasi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🛠️</div>
-      <h3>Payvandchi</h3>
-      <p>Metall konstruksiya va payvandlash</p>
-      <button onclick="repairOrder('Payvandchi')">Usta chaqirish</button>
-    </div>
-
-    <div class="repairJobCard">
-      <div class="repairIcon">🏡</div>
-      <h3>Kompleks remont</h3>
-      <p>Uyni boshidan oxirigacha ta’mirlash</p>
-      <button onclick="repairOrder('Kompleks uy remonti')">Usta chaqirish</button>
-    </div>
-
-  </div>
 </section>
 
 <script>
-function repairOrder(service) {
-  const phone = "998995301178";
+(function () {
+    const players = [
+        {name:"Kylian Mbappe",pos:"ST",rating:94,price:12000},
+        {name:"Erling Haaland",pos:"ST",rating:93,price:11500},
+        {name:"Vinicius Junior",pos:"LW",rating:92,price:10000},
+        {name:"Jude Bellingham",pos:"CM",rating:92,price:10500},
+        {name:"Kevin De Bruyne",pos:"CAM",rating:91,price:8500},
+        {name:"Rodri",pos:"CDM",rating:91,price:8000},
+        {name:"Mohamed Salah",pos:"RW",rating:91,price:8500},
+        {name:"Harry Kane",pos:"ST",rating:91,price:8000},
+        {name:"Lamine Yamal",pos:"RW",rating:89,price:7500},
+        {name:"Pedri",pos:"CM",rating:89,price:7000},
+        {name:"Virgil van Dijk",pos:"CB",rating:90,price:8000},
+        {name:"Thibaut Courtois",pos:"GK",rating:90,price:7500}
+    ];
 
-  const message =
-    "Assalomu alaykum! USTA TOP AI orqali " +
-    service +
-    " xizmatiga buyurtma bermoqchiman.";
+    let coins = Number(localStorage.getItem("ufTransferCoins"));
+    if (!Number.isFinite(coins)) coins = 50000;
 
-  const url =
-    "https://wa.me/" + phone +
-    "?text=" + encodeURIComponent(message);
+    let bought = JSON.parse(
+        localStorage.getItem("ufBoughtPlayers") || "[]"
+    );
 
-  window.open(url, "_blank");
-}
+    const market = document.getElementById("transferMarket");
+    const grid = document.getElementById("transferGrid");
+
+    function save() {
+        localStorage.setItem("ufTransferCoins", coins);
+        localStorage.setItem("ufBoughtPlayers", JSON.stringify(bought));
+        updateMoney();
+        renderBought();
+    }
+
+    function updateMoney() {
+        document.getElementById("marketCoins").textContent =
+            coins.toLocaleString("en-US");
+
+        const balance = document.getElementById("transferBalance");
+        if (balance) {
+            balance.textContent = coins.toLocaleString("en-US");
+        }
+    }
+
+    function renderMarket() {
+        grid.innerHTML = "";
+
+        players.forEach((p, index) => {
+            const alreadyBought = bought.some(x => x.name === p.name);
+
+            const card = document.createElement("div");
+            card.className = "transfer-card";
+
+            card.innerHTML = `
+                <div class="player-rating">${p.rating}</div>
+                <h3>${p.name}</h3>
+                <p>POSITION: ${p.pos}</p>
+                <p>💰 ${p.price.toLocaleString("en-US")} TC</p>
+                <button ${alreadyBought ? "disabled" : ""}
+                    data-buy="${index}">
+                    ${alreadyBought ? "OWNED ✓" : "BUY PLAYER"}
+                </button>
+            `;
+
+            grid.appendChild(card);
+        });
+    }
+
+    function renderBought() {
+        const area = document.getElementById("boughtPlayers");
+
+        if (!bought.length) {
+            area.textContent = "Hali futbolchi sotib olmading.";
+            return;
+        }
+
+        area.innerHTML = bought.map(p =>
+            `<p>⚽ ${p.name} — ${p.pos} — ${p.rating} OVR</p>`
+        ).join("");
+    }
+
+    grid.addEventListener("click", function(e) {
+        const button = e.target.closest("[data-buy]");
+        if (!button) return;
+
+        const player = players[Number(button.dataset.buy)];
+
+        if (bought.some(x => x.name === player.name)) {
+            alert("Bu futbolchi jamoangda bor!");
+            return;
+        }
+
+        if (coins < player.price) {
+            alert("Transfer tangalaring yetarli emas!");
+            return;
+        }
+
+        if (!confirm(player.name + " futbolchisini sotib olasanmi?")) {
+            return;
+        }
+
+        coins -= player.price;
+        bought.push(player);
+
+        save();
+        renderMarket();
+
+        // Boshqa jamoa kodlariga transfer haqida xabar
+        window.dispatchEvent(new CustomEvent("uf-player-bought", {
+            detail: player
+        }));
+
+        alert(player.name + " transfer qilindi!");
+    });
+
+    function openMarket() {
+        market.style.display = "block";
+        renderMarket();
+        renderBought();
+        updateMoney();
+    }
+
+    window.closeTransferMarket = function() {
+        market.style.display = "none";
+    };
+
+    // PLAYER MARKET tugmasini bosganda ochiladi
+    document.addEventListener("click", function(e) {
+        const button = e.target.closest(
+            ".feature-card, [data-page], button"
+        );
+
+        if (!button) return;
+
+        const text = button.innerText.toLowerCase();
+
+        if (text.includes("player market")) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            openMarket();
+        }
+    }, true);
+
+    // Header valyutalari yoniga transfer tangasi qo'shish
+    function addTransferBalance() {
+        if (document.getElementById("transferBalance")) return;
+
+        const currency = document.querySelector(
+            ".coins, .currency, .top-coins"
+        );
+
+        if (!currency) return;
+
+        const balance = document.createElement("span");
+        balance.className = "transfer-balance";
+        balance.innerHTML =
+            '🪙 <span id="transferBalance">50,000</span> TC';
+
+        currency.appendChild(balance);
+        updateMoney();
+    }
+
+    addTransferBalance();
+    renderBought();
+    updateMoney();
+})();
 </script>
 
+
+
+
+
+<!-- CLUB SELECT WINDOW -->
+<div id="clubSelectWindow">
+  <div class="clubSelectContent">
+    <button id="clubSelectClose">✕</button>
+    <h1>SELECT LEAGUE</h1>
+    <div id="clubLeagueButtons"></div>
+    <div id="clubTeamButtons"></div>
+  </div>
+</div>
+
 <style>
-/* BARCHA TUGMALAR ANIMATSIYASI */
+#clubSelectWindow {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999999;
+  background:rgba(0,0,0,.94);
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+}
+
+.clubSelectContent {
+  background:#101827;
+  border:2px solid #00d9ff;
+  color:white;
+  border-radius:18px;
+  padding:25px;
+  width:95%;
+  max-width:800px;
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
+}
+
+#clubSelectClose {
+  position:absolute;
+  right:12px;
+  top:12px;
+  background:#ff3030;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#clubLeagueButtons,
+#clubTeamButtons {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin-top:20px;
+}
+
+.clubSelectBtn {
+  background:#1c304b;
+  color:white;
+  border:1px solid #345779;
+  border-radius:12px;
+  padding:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.clubSelectBtn:hover {
+  background:#00d9ff;
+  color:#07111b;
+}
+
+.clubLogoBadge {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#14253a;
+  padding:12px;
+  border-radius:12px;
+  margin:10px 0;
+  color:white;
+  font-weight:bold;
+}
+
+.clubLogoBadge img {
+  width:55px;
+  height:55px;
+  object-fit:contain;
+}
+</style>
+
+<script>
+(function(){
+
+const leagues = {
+ "PREMIER LEAGUE": {
+   "Arsenal":"https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
+   "Chelsea":"https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg",
+   "Liverpool":"https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
+   "Manchester City":"https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
+   "Manchester United":"https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
+   "Tottenham":"https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg"
+ },
+
+ "LA LIGA": {
+   "Real Madrid":"https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
+   "Barcelona":"https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
+   "Atletico Madrid":"https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2017_logo.svg",
+   "Sevilla":"https://upload.wikimedia.org/wikipedia/en/3/3b/Sevilla_FC_logo.svg"
+ },
+
+ "SERIE A": {
+   "Juventus":"https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_logo.svg",
+   "Inter Milan":"https://upload.wikimedia.org/wikipedia/en/0/05/FC_Internazionale_Milano_2021.svg",
+   "AC Milan":"https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg",
+   "Napoli":"https://upload.wikimedia.org/wikipedia/commons/2/2d/SSC_Neapel.svg"
+ },
+
+ "BUNDESLIGA": {
+   "Bayern Munich":"https://upload.wikimedia.org/wikipedia/en/1/1f/FC_Bayern_Munich_logo_%282017%29.svg",
+   "Borussia Dortmund":"https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg",
+   "Bayer Leverkusen":"https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg"
+ },
+
+ "LIGUE 1": {
+   "PSG":"https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg",
+   "Marseille":"https://upload.wikimedia.org/wikipedia/commons/d/d8/Olympique_Marseille_logo.svg",
+   "Monaco":"https://upload.wikimedia.org/wikipedia/en/b/ba/AS_Monaco_FC.svg"
+ }
+};
+
+const windowBox = document.getElementById("clubSelectWindow");
+const leagueBox = document.getElementById("clubLeagueButtons");
+const teamBox = document.getElementById("clubTeamButtons");
+
+function showClubLeagues(){
+  leagueBox.innerHTML="";
+  teamBox.innerHTML="";
+
+  Object.keys(leagues).forEach(league=>{
+    const btn=document.createElement("button");
+    btn.className="clubSelectBtn";
+    btn.textContent="🏆 "+league;
+
+    btn.onclick=()=>showLeagueClubs(league);
+
+    leagueBox.appendChild(btn);
+  });
+}
+
+function showLeagueClubs(league){
+  teamBox.innerHTML="<h2 style='grid-column:1/-1'>⚽ "+league+"</h2>";
+
+  Object.entries(leagues[league]).forEach(([club,logo])=>{
+    const btn=document.createElement("button");
+    btn.className="clubSelectBtn";
+    btn.innerHTML="⚽ "+club;
+
+    btn.onclick=()=>{
+      localStorage.setItem("uf_selected_club",club);
+      localStorage.setItem("uf_selected_logo",logo);
+      localStorage.setItem("uf_selected_league",league);
+
+      showMyTeamClub(club,logo,league);
+
+      windowBox.style.display="none";
+    };
+
+    teamBox.appendChild(btn);
+  });
+}
+
+function showMyTeamClub(club,logo,league){
+  let badge=document.getElementById("myTeamClubLogo");
+
+  if(!badge){
+    badge=document.createElement("div");
+    badge.id="myTeamClubLogo";
+
+    const myTeam=document.getElementById("myTeam");
+
+    if(myTeam){
+      myTeam.prepend(badge);
+    }else{
+      document.body.appendChild(badge);
+    }
+  }
+
+  badge.className="clubLogoBadge";
+  badge.innerHTML=`
+    <img src="${logo}" alt="${club} logo">
+    <div>
+      <div>${club}</div>
+      <small>${league}</small>
+    </div>
+  `;
+}
+
+// Pastdagi navigatsiya panelidagi CLUB tugmasi
+document.querySelectorAll("button,a,div").forEach(el=>{
+  if(el.children.length===0 &&
+     el.textContent.trim().toUpperCase()==="♜ CLUB"){
+
+    el.addEventListener("click",function(e){
+      e.preventDefault();
+      windowBox.style.display="flex";
+      showClubLeagues();
+    });
+  }
+});
+
+document.getElementById("clubSelectClose").onclick=()=>{
+  windowBox.style.display="none";
+};
+
+// Oldin tanlangan klubni qayta ko'rsatish
+const savedClub=localStorage.getItem("uf_selected_club");
+const savedLogo=localStorage.getItem("uf_selected_logo");
+const savedLeague=localStorage.getItem("uf_selected_league");
+
+if(savedClub && savedLogo){
+  showMyTeamClub(savedClub,savedLogo,savedLeague);
+}
+
+})();
+</script>
+
+<!-- ULTIMATE FOOTBALL - PREMIUM BACKGROUNDS -->
+
+<style>
+
+/* UMUMIY GAMING FON */
+body {
+  background: #050914;
+  color: white;
+}
+
+/* BARCHA SAHIFALAR */
+#home,
+#quests,
+#season,
+#club,
+#more,
+#myTeam,
+.page {
+  position: relative;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  transition: background 0.5s ease;
+}
+
+/* HOME - TUNGI FUTBOL STADIONI */
+#home {
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.8)),
+    url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1920&q=90") !important;
+}
+
+/* QUESTS - MISSIYALAR */
+#quests {
+  background-image:
+    linear-gradient(135deg,rgba(20,0,40,.65),rgba(0,0,0,.85)),
+    url("https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1920&q=90") !important;
+}
+
+/* SEASON - CHEMPIONLIK */
+#season {
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.4),rgba(15,8,0,.85)),
+    url("https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1920&q=90") !important;
+}
+
+/* CLUB - ARENA */
+#club {
+  background-image:
+    linear-gradient(180deg,rgba(0,10,25,.5),rgba(0,0,0,.85)),
+    url("https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1920&q=90") !important;
+}
+
+/* MY TEAM - FUTBOL MAYDONI */
+#myTeam {
+  background-image:
+    linear-gradient(180deg,rgba(0,30,10,.45),rgba(0,0,0,.75)),
+    url("https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1920&q=90") !important;
+}
+
+/* MORE - GAMING ATMOSFERASI */
+#more {
+  background-image:
+    linear-gradient(135deg,rgba(5,5,25,.6),rgba(0,0,0,.9)),
+    url("https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=1920&q=90") !important;
+}
+
+/* SAHIFADAGI KARTALAR */
+#home .card,
+#quests .card,
+#season .card,
+#club .card,
+#more .card {
+  backdrop-filter: blur(6px);
+  background-color: rgba(5,12,25,.78) !important;
+  border: 1px solid rgba(0,217,255,.25);
+  box-shadow: 0 8px 30px rgba(0,0,0,.4);
+  border-radius: 15px;
+}
+
+/* NEON HOVER */
 button {
-  cursor: pointer !important;
-  transition: all .3s ease !important;
+  transition: .25s ease;
 }
 
 button:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 5px 20px #a3e63555;
+  filter: brightness(1.2);
+  transform: translateY(-2px);
 }
 
-button:active {
-  transform: scale(.95);
-}
-
-/* BUYURTMA SAHIFASI */
-#ustaOrderPage {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999999;
-  background: #0b1120;
-  color: white;
-  overflow-y: auto;
-  padding: 25px;
-}
-
-.orderContainer {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 30px;
-  background: #151f30;
-  border: 1px solid #a3e635;
-  border-radius: 20px;
-  box-shadow: 0 0 30px #a3e63522;
-}
-
-.orderContainer h1 {
-  color: #a3e635;
-  text-align: center;
-}
-
-.orderContainer input,
-.orderContainer select,
-.orderContainer textarea {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  background: #0b1120;
-  color: white;
-  border: 1px solid #354258;
-  border-radius: 10px;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-.orderContainer textarea {
-  min-height: 100px;
-}
-
-.orderAction {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  background: #a3e635;
-  color: #101827;
-  font-weight: 900;
-  margin-top: 12px;
-  cursor: pointer;
-}
-
-.orderBack {
-  background: #344155;
-  color: white;
+/* TELEFON UCHUN */
+@media(max-width:768px) {
+  #home,
+  #quests,
+  #season,
+  #club,
+  #myTeam,
+  #more {
+    background-attachment: scroll !important;
+  }
 }
 
 </style>
 
-<!-- ALOHIDA BUYURTMA SAHIFASI -->
-<div id="ustaOrderPage">
-  <div class="orderContainer">
+<script>
+/* SAHIFA ALMASHTIRILGANDA FONNI YANGILASH */
+document.querySelectorAll(
+  "#home,#quests,#season,#club,#myTeam,#more"
+).forEach(section => {
+  section.style.backgroundSize = "cover";
+  section.style.backgroundPosition = "center";
+});
+</script>
 
-    <h1>🏠 USTA TOP AI</h1>
-    <h2>📋 Buyurtma berish</h2>
+<!-- PLAY VS BOT PAGE -->
 
-    <p>Kerakli ma’lumotlarni kiriting:</p>
+<div id="playGamePage">
 
-    <form id="ustaOrderForm">
+  <button id="backFromPlay">← BACK</button>
 
-      <input
-        type="text"
-        id="orderName"
-        placeholder="Ismingiz"
-        required
-      >
+  <div class="mbappe-background"></div>
 
-      <input
-        type="tel"
-        id="orderPhone"
-        placeholder="Telefon raqamingiz"
-        required
-      >
+  <div class="play-content">
+    <h1>ULTIMATE FOOTBALL</h1>
+    <h2>PLAY VS BOT</h2>
 
-      <input
-        type="text"
-        id="orderAddress"
-        placeholder="Manzilingiz (shahar, tuman)"
-        required
-      >
+    <div class="difficulty-box">
+      <button onclick="setDifficulty('EASY',1)">🟢 EASY</button>
+      <button onclick="setDifficulty('MEDIUM',2)">🟡 MEDIUM</button>
+      <button onclick="setDifficulty('HARD',3)">🔴 HARD</button>
+    </div>
 
-      <select id="orderService" required>
-        <option value="">Xizmat turini tanlang</option>
-        <option>Uy quruvchi</option>
-        <option>Santexnik</option>
-        <option>Elektrik</option>
-        <option>Bo‘yoqchi</option>
-        <option>Shpaklyovkachi</option>
-        <option>Shtukaturkachi</option>
-        <option>Plitkachi</option>
-        <option>G‘isht teruvchi</option>
-        <option>Betonchi</option>
-        <option>Tom ustasi</option>
-        <option>Pol ustasi</option>
-        <option>Mebelchi</option>
-        <option>Eshik va deraza ustasi</option>
-        <option>Konditsioner ustasi</option>
-        <option>Payvandchi</option>
-        <option>Kompleks uy remonti</option>
-      </select>
+    <div id="difficultyText">BOT LEVEL: MEDIUM</div>
 
-      <textarea
-        id="orderDetails"
-        placeholder="Buyurtma haqida qo‘shimcha ma’lumot..."
-      ></textarea>
+    <button id="startBotMatch">⚽ START MATCH</button>
+  </div>
 
-      <button type="submit" class="orderAction">
-        📲 BUYURTMA YUBORISH
-      </button>
+</div>
 
-    </form>
+<style>
+#playGamePage {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  overflow:auto;
+  background:#030711;
+  color:white;
+  font-family:Arial,sans-serif;
+}
 
-    <button class="orderAction orderBack" onclick="closeOrderPage()">
-      ← ORQAGA QAYTISH
-    </button>
+.mbappe-background {
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.9),rgba(0,0,0,.25)),
+    url("https://cdn.algomhor.com/UploadCache/libfiles/36/3/0x0o/477.webp");
+  background-size:cover;
+  background-position:center 25%;
+  transform:scale(1.02);
+}
 
+#backFromPlay {
+  position:absolute;
+  top:25px;
+  left:25px;
+  z-index:5;
+  padding:12px 22px;
+  border:none;
+  border-radius:8px;
+  background:#00d9ff;
+  color:#00111b;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.play-content {
+  position:relative;
+  z-index:2;
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  padding:60px 7%;
+  box-sizing:border-box;
+}
+
+.play-content h1 {
+  font-size:clamp(32px,6vw,75px);
+  font-weight:900;
+  font-style:italic;
+  text-shadow:0 0 20px #00d9ff;
+}
+
+.play-content h2 {
+  font-size:clamp(22px,4vw,42px);
+  color:#00d9ff;
+}
+
+.difficulty-box {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:25px 0;
+}
+
+.difficulty-box button {
+  padding:15px 25px;
+  border:1px solid #00d9ff;
+  background:#071728cc;
+  color:white;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.difficulty-box button:hover {
+  background:#00d9ff;
+  color:black;
+}
+
+#difficultyText {
+  font-size:18px;
+  margin-bottom:25px;
+  font-weight:bold;
+}
+
+#startBotMatch {
+  padding:18px 50px;
+  font-size:22px;
+  font-weight:900;
+  border:none;
+  border-radius:10px;
+  color:#06111b;
+  background:linear-gradient(90deg,#00d9ff,#00ff99);
+  cursor:pointer;
+  box-shadow:0 0 25px #00d9ff77;
+}
+
+@media(max-width:600px) {
+  .mbappe-background {
+    background-position:58% center;
+  }
+
+  .play-content {
+    justify-content:flex-end;
+    padding:35px 20px;
+    padding-bottom:80px;
+  }
+}
+</style>
+
+<script>
+let selectedBotDifficulty = "MEDIUM";
+let selectedBotLevel = 2;
+
+function setDifficulty(name,level) {
+  selectedBotDifficulty = name;
+  selectedBotLevel = level;
+
+  document.getElementById("difficultyText").textContent =
+    "BOT LEVEL: " + name;
+}
+
+function openPlayPage() {
+  document.getElementById("playGamePage").style.display="block";
+}
+
+function closePlayPage() {
+  document.getElementById("playGamePage").style.display="none";
+}
+
+document.getElementById("backFromPlay").onclick = closePlayPage;
+
+document.getElementById("startBotMatch").onclick = function() {
+  alert(
+    "⚽ MATCH STARTING!\n" +
+    "Opponent: BOT\n" +
+    "Difficulty: " + selectedBotDifficulty
+  );
+
+  // Keyingi bosqichda haqiqiy futbol o'yini kodini ulaymiz.
+};
+</script>
+
+<script type="module">
+import * as THREE from
+"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js";
+
+const root = document.getElementById("realFootball3D");
+const host = document.getElementById("stadium3D");
+
+let scene, camera, renderer, clock;
+let player, ball, players = [], bots = [];
+let running = false;
+let scoreA = 0, scoreB = 0;
+let elapsed = 0;
+let move = {x:0,z:0};
+let sprint = false;
+let ballVelocity = new THREE.Vector3();
+let ballOwner = null;
+let animationFrame = 0;
+
+const FIELD_W = 68;
+const FIELD_L = 105;
+const keys = {};
+
+function material(color, roughness=0.8) {
+  return new THREE.MeshStandardMaterial({
+    color,
+    roughness
+  });
+}
+
+function box(parent, w,h,d, color,x,y,z) {
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),
+    material(color)
+  );
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
+
+function sphere(parent, r, color,x,y,z) {
+  const mesh = new THREE.Mesh(
+    new THREE.SphereGeometry(r,20,16),
+    material(color)
+  );
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
+
+function cylinder(parent, r1,r2,h,color,x,y,z) {
+  const mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(r1,r2,h,16),
+    material(color)
+  );
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
+
+function makeHuman(team, number, name) {
+  const group = new THREE.Group();
+  const blue = team === "blue";
+  const shirt = blue ? 0x1269db : 0xd92732;
+  const shorts = blue ? 0x101b45 : 0xf4f4f4;
+  const skin = 0xb77b55;
+
+  // BODY
+  const torso = new THREE.Group();
+  torso.position.y = 1.28;
+  group.add(torso);
+
+  cylinder(torso,0.29,0.34,0.65,shirt,0,0,0);
+  sphere(torso,0.115,skin,0,0.45,0);
+
+  // HEAD
+  const head = sphere(torso,0.22,skin,0,0.88,0);
+  sphere(torso,0.225,0x211710,0,1.02,0);
+
+  // Hair cap
+  sphere(torso,0.20,0x241b16,0,1.06,0);
+
+  // Face details
+  sphere(torso,0.025,0x171717,-0.075,0.90,0.19);
+  sphere(torso,0.025,0x171717,0.075,0.90,0.19);
+
+  // Number badge
+  const numberBadge = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.25,0.25),
+    new THREE.MeshBasicMaterial({
+      color:0xffffff,
+      transparent:true,
+      opacity:0.9
+    })
+  );
+  numberBadge.position.set(0,1.30,0.345);
+  torso.add(numberBadge);
+
+  // ARMS
+  const arms = [];
+  for (const side of [-1,1]) {
+    const arm = new THREE.Group();
+    arm.position.set(side*0.36,1.58,0);
+    group.add(arm);
+
+    cylinder(arm,0.09,0.105,0.48,shirt,0,-0.22,0);
+    sphere(arm,0.085,skin,0,-0.48,0);
+    arms.push(arm);
+  }
+
+  // LEGS
+  const legs = [];
+  for (const side of [-1,1]) {
+    const leg = new THREE.Group();
+    leg.position.set(side*0.16,0.95,0);
+    group.add(leg);
+
+    cylinder(leg,0.13,0.12,0.46,shorts,0,-0.22,0);
+    cylinder(leg,0.085,0.10,0.43,skin,0,-0.65,0);
+    box(leg,0.18,0.11,0.34,0x111111,0,-0.89,0.09);
+    legs.push(leg);
+  }
+
+  group.userData = {
+    team,number,name,legs,arms,torso,
+    speed:blue ? 0.11 : 0.075,
+    home:new THREE.Vector3(),
+    direction:1
+  };
+
+  return group;
+}
+
+function addLine(x1,z1,x2,z2) {
+  const points = [
+    new THREE.Vector3(x1,0.035,z1),
+    new THREE.Vector3(x2,0.035,z2)
+  ];
+  const geometry = new THREE.BufferGeometry()
+    .setFromPoints(points);
+  const line = new THREE.Line(
+    geometry,
+    new THREE.LineBasicMaterial({color:0xffffff})
+  );
+  scene.add(line);
+}
+
+function makeStadium() {
+  // SKY
+  scene.background = new THREE.Color(0x83c5f0);
+
+  // Clouds
+  const cloudMat = new THREE.MeshStandardMaterial({
+    color:0xffffff,
+    roughness:1
+  });
+
+  for(let i=0;i<22;i++) {
+    const cloud = new THREE.Group();
+    for(let j=0;j<6;j++) {
+      const puff = new THREE.Mesh(
+        new THREE.SphereGeometry(
+          1.5+Math.random()*1.5,12,10
+        ),
+        cloudMat
+      );
+      puff.position.set(
+        j*1.4-3.5,
+        Math.random()*0.7,
+        Math.random()*1.5
+      );
+      cloud.add(puff);
+    }
+    cloud.position.set(
+      (Math.random()-.5)*180,
+      30+Math.random()*28,
+      (Math.random()-.5)*180
+    );
+    scene.add(cloud);
+  }
+
+  // SUN
+  const sun = new THREE.Mesh(
+    new THREE.SphereGeometry(5,24,16),
+    new THREE.MeshBasicMaterial({color:0xfff2bd})
+  );
+  sun.position.set(-50,60,-70);
+  scene.add(sun);
+
+  // GROUND
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(260,260),
+    material(0x24743b)
+  );
+  ground.rotation.x=-Math.PI/2;
+  ground.position.y=-0.08;
+  ground.receiveShadow=true;
+  scene.add(ground);
+
+  // PITCH
+  const grass = new THREE.Mesh(
+    new THREE.PlaneGeometry(FIELD_W,FIELD_L),
+    material(0x247d38)
+  );
+  grass.rotation.x=-Math.PI/2;
+  grass.receiveShadow=true;
+  scene.add(grass);
+
+  // Grass stripes
+  for(let i=0;i<10;i++) {
+    const stripe = new THREE.Mesh(
+      new THREE.PlaneGeometry(FIELD_W,FIELD_L/10),
+      new THREE.MeshBasicMaterial({
+        color:i%2 ? 0x278541 : 0x206d34
+      })
+    );
+    stripe.rotation.x=-Math.PI/2;
+    stripe.position.set(0,0.008,-FIELD_L/2+FIELD_L/20+i*FIELD_L/10);
+    scene.add(stripe);
+  }
+
+  // Field lines
+  addLine(-34,-52.5,34,-52.5);
+  addLine(-34,52.5,34,52.5);
+  addLine(-34,-52.5,-34,52.5);
+  addLine(34,-52.5,34,52.5);
+  addLine(-34,0,34,0);
+
+  const circle = new THREE.Mesh(
+    new THREE.RingGeometry(9.1,9.35,64),
+    new THREE.MeshBasicMaterial({
+      color:0xffffff,
+      side:THREE.DoubleSide
+    })
+  );
+  circle.rotation.x=-Math.PI/2;
+  circle.position.y=0.025;
+  scene.add(circle);
+
+  // Penalty boxes
+  for(const side of [-1,1]) {
+    const z=side*52.5;
+    const boxLine = new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(-20,0.04,z),
+        new THREE.Vector3(20,0.04,z),
+        new THREE.Vector3(20,0.04,z-side*16),
+        new THREE.Vector3(-20,0.04,z-side*16)
+      ]),
+      new THREE.LineBasicMaterial({color:0xffffff})
+    );
+    scene.add(boxLine);
+
+    // GOAL POSTS
+    const goal = new THREE.Group();
+    const postMat = material(0xffffff);
+
+    for(const x of [-3.66,3.66]) {
+      const post = new THREE.Mesh(
+        new THREE.CylinderGeometry(.13,.13,2.45,12),
+        postMat
+      );
+      post.position.set(x,1.22,0);
+      goal.add(post);
+    }
+
+    const cross = new THREE.Mesh(
+      new THREE.BoxGeometry(7.4,.15,.15),
+      postMat
+    );
+    cross.position.y=2.45;
+    goal.add(cross);
+    goal.position.z=side*52.5;
+    scene.add(goal);
+  }
+
+  // STANDS
+  for(const side of [-1,1]) {
+    const stand = new THREE.Mesh(
+      new THREE.BoxGeometry(90,12,8),
+      material(0x27344c)
+    );
+    stand.position.set(0,6,side*61);
+    scene.add(stand);
+
+    // Audience seats
+    for(let row=0;row<4;row++) {
+      const seat = new THREE.Mesh(
+        new THREE.BoxGeometry(88,1.2,1.2),
+        material([0x31435f,0x384e70,0x273e5c][row%3])
+      );
+      seat.position.set(0,2+row*2,side*(56+row*1.5));
+      scene.add(seat);
+    }
+
+    // Stadium roof
+    const roof = new THREE.Mesh(
+      new THREE.BoxGeometry(96,1,12),
+      material(0x17283d)
+    );
+    roof.position.set(0,13,side*63);
+    scene.add(roof);
+  }
+
+  // FLOODLIGHTS
+  for(const x of [-43,43]) {
+    for(const z of [-48,48]) {
+      cylinder(scene,.18,.25,22,0x687482,x,11,z);
+      const light = new THREE.PointLight(0xffffff,450,80);
+      light.position.set(x,22,z);
+      scene.add(light);
+    }
+  }
+}
+
+function addPlayer(team,index,x,z,name) {
+  const p=makeHuman(team,index+1,name);
+  p.position.set(x,0,z);
+  p.userData.home.set(x,0,z);
+  scene.add(p);
+
+  if(team==="blue") players.push(p);
+  else bots.push(p);
+
+  return p;
+}
+
+function createTeams() {
+  const names = [
+    "Mbappe","Player 2","Player 3","Player 4",
+    "Player 5","Player 6","Player 7","Player 8",
+    "Player 9","Player 10","Player 11"
+  ];
+
+  const bluePos=[
+    [0,42],[-20,30],[-7,30],[7,30],[20,30],
+    [-20,12],[-7,12],[7,12],[20,12],
+    [-9,-10],[9,-10]
+  ];
+
+  const redPos=[
+    [0,-42],[-20,-30],[-7,-30],[7,-30],[20,-30],
+    [-20,-12],[-7,-12],[7,-12],[20,-12],
+    [-9,10],[9,10]
+  ];
+
+  bluePos.forEach((p,i)=>{
+    addPlayer("blue",i,p[0],p[1],names[i]);
+  });
+
+  redPos.forEach((p,i)=>{
+    addPlayer("red",i,p[0],p[1],"BOT "+(i+1));
+  });
+
+  player=players[0];
+}
+
+function createBall() {
+  ball=new THREE.Mesh(
+    new THREE.SphereGeometry(.35,24,18),
+    new THREE.MeshStandardMaterial({
+      color:0xffffff,
+      roughness:.4
+    })
+  );
+  ball.position.set(0,.35,35);
+  ball.castShadow=true;
+  ball.receiveShadow=true;
+  scene.add(ball);
+
+  const black = new THREE.Mesh(
+    new THREE.SphereGeometry(.12,12,10),
+    material(0x111111)
+  );
+  black.position.set(0,.35,35);
+  scene.add(black);
+}
+
+function init() {
+  scene=new THREE.Scene();
+  scene.fog=new THREE.Fog(0x9bcdf1,100,220);
+
+  camera=new THREE.PerspectiveCamera(
+    65,host.clientWidth/host.clientHeight,.1,400
+  );
+
+  renderer=new THREE.WebGLRenderer({
+    antialias:true,
+    powerPreference:"high-performance"
+  });
+
+  renderer.setSize(host.clientWidth,host.clientHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));
+  renderer.shadowMap.enabled=true;
+  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  host.appendChild(renderer.domElement);
+
+  clock=new THREE.Clock();
+
+  scene.add(new THREE.HemisphereLight(0xcce8ff,0x31502b,2));
+
+  const sun=new THREE.DirectionalLight(0xfff1d0,3);
+  sun.position.set(-35,60,25);
+  sun.castShadow=true;
+  sun.shadow.mapSize.set(2048,2048);
+  sun.shadow.camera.left=-90;
+  sun.shadow.camera.right=90;
+  sun.shadow.camera.top=90;
+  sun.shadow.camera.bottom=-90;
+  scene.add(sun);
+
+  makeStadium();
+  createTeams();
+  createBall();
+
+  window.addEventListener("resize",resize);
+  animate();
+}
+
+function resize() {
+  if(!renderer)return;
+  camera.aspect=host.clientWidth/host.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(host.clientWidth,host.clientHeight);
+}
+
+function animate() {
+  animationFrame=requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),.04);
+
+  if(running) updateGame(dt);
+
+  renderer.render(scene,camera);
+}
+
+function updateGame(dt) {
+  elapsed+=dt;
+
+  const minutes=Math.floor(elapsed/60);
+  const seconds=Math.floor(elapsed%60);
+
+  document.getElementById("gameClock").textContent =
+    String(minutes).padStart(2,"0")+":"+
+    String(seconds).padStart(2,"0");
+
+  // Player movement
+  const direction=new THREE.Vector3(move.x,0,move.z);
+
+  if(direction.length()>0) {
+    direction.normalize();
+
+    const speed=sprint?.20:.115;
+    player.position.addScaledVector(direction,speed);
+    player.position.x=THREE.MathUtils.clamp(player.position.x,-32,32);
+    player.position.z=THREE.MathUtils.clamp(player.position.z,-51,51);
+
+    player.rotation.y=Math.atan2(direction.x,direction.z);
+
+    player.userData.legs[0].rotation.x=Math.sin(elapsed*14)*.65;
+    player.userData.legs[1].rotation.x=-Math.sin(elapsed*14)*.65;
+    player.userData.arms[0].rotation.x=-Math.sin(elapsed*14)*.35;
+    player.userData.arms[1].rotation.x=Math.sin(elapsed*14)*.35;
+  } else {
+    player.userData.legs.forEach(l=>l.rotation.x=0);
+    player.userData.arms.forEach(a=>a.rotation.x=0);
+  }
+
+  // Ball follows player's feet when close
+  if(ballOwner===player) {
+    const front=new THREE.Vector3(
+      Math.sin(player.rotation.y),0,
+      Math.cos(player.rotation.y)
+    );
+    ball.position.copy(player.position)
+      .add(front.multiplyScalar(1.0));
+    ball.position.y=.35+Math.abs(Math.sin(elapsed*9))*.05;
+  } else {
+    ball.position.addScaledVector(ballVelocity,dt);
+    ballVelocity.multiplyScalar(.985);
+    ball.position.y=.35+Math.abs(Math.sin(elapsed*8))*.08;
+
+    if(ball.position.length()>0) {
+      const dist=ball.position.distanceTo(
+        player.position.clone().add(new THREE.Vector3(0,0.5,0))
+      );
+      if(dist<1.7 && ballVelocity.length()<2) {
+        ballOwner=player;
+        ballVelocity.set(0,0,0);
+      }
+    }
+  }
+
+  // Bot players chase the ball
+  bots.forEach((bot,i)=>{
+    const target=ball.position;
+    const diff=new THREE.Vector3(
+      target.x-bot.position.x,0,
+      target.z-bot.position.z
+    );
+
+    if(diff.length()>1.5) {
+      diff.normalize();
+      bot.position.addScaledVector(diff,bot.userData.speed);
+      bot.rotation.y=Math.atan2(diff.x,diff.z);
+      bot.userData.legs[0].rotation.x=Math.sin(elapsed*9+i)*.35;
+      bot.userData.legs[1].rotation.x=-Math.sin(elapsed*9+i)*.35;
+    }
+  });
+
+  // Camera follows player from behind
+  const behind=new THREE.Vector3(
+    0,7,-11
+  ).applyAxisAngle(new THREE.Vector3(0,1,0),player.rotation.y);
+
+  const desired=player.position.clone().add(behind);
+  camera.position.lerp(desired,.08);
+  camera.lookAt(player.position.x,1.3,player.position.z+2);
+}
+
+function message(text) {
+  document.getElementById("gameMessage").textContent=text;
+}
+
+function shoot() {
+  if(!running)return;
+
+  const forward=new THREE.Vector3(
+    Math.sin(player.rotation.y),0,
+    Math.cos(player.rotation.y)
+  );
+
+  ballOwner=null;
+  ball.position.copy(player.position).addScaledVector(forward,1.2);
+  ball.position.y=.5;
+  ballVelocity.copy(forward.multiplyScalar(30));
+  ballVelocity.y=3;
+
+  message("SHOOT!");
+
+  setTimeout(()=>{
+    if(ball.position.z < -51) {
+      scoreA++;
+      document.getElementById("gameScore").textContent=
+        scoreA+" : "+scoreB;
+      message("GOAL!");
+    }
+    if(ball.position.z > 51) {
+      scoreB++;
+      document.getElementById("gameScore").textContent=
+        scoreA+" : "+scoreB;
+      message("BOT GOAL!");
+    }
+  },400);
+}
+
+function pass() {
+  if(!running)return;
+
+  const teammate=players.find(p=>p!==player &&
+    p.position.distanceTo(player.position)<25);
+
+  if(!teammate) {
+    shoot();
+    return;
+  }
+
+  ballOwner=null;
+  ball.position.copy(player.position);
+  ballVelocity.copy(
+    teammate.position.clone().sub(player.position)
+      .normalize().multiplyScalar(18)
+  );
+  message("PASS!");
+}
+
+function skill() {
+  if(!running)return;
+  player.rotation.y+=Math.PI*1.5;
+  player.userData.torso.rotation.z=.3;
+  message("SKILL MOVE!");
+  setTimeout(()=>{
+    if(player)player.userData.torso.rotation.z=0;
+  },350);
+}
+
+function startMatch() {
+  if(running)return;
+  if(!renderer)init();
+
+  running=true;
+  elapsed=0;
+  scoreA=0;
+  scoreB=0;
+
+  player=players[0];
+  ballOwner=player;
+  ballVelocity.set(0,0,0);
+  player.position.set(0,0,35);
+  ball.position.set(0,.35,34);
+  document.getElementById("gameScore").textContent="0 : 0";
+  message("MATCH STARTED");
+}
+
+window.openPlayPage=function() {
+  root.style.display="block";
+  if(!renderer)init();
+  startMatch();
+};
+
+window.closeRealFootball=function() {
+  running=false;
+  root.style.display="none";
+  move.x=0;
+  move.z=0;
+};
+
+document.querySelectorAll("[data-move]").forEach(button=>{
+  const dir=button.dataset.move;
+
+  const start=()=>{
+    if(dir==="up")move.z=-1;
+    if(dir==="down")move.z=1;
+    if(dir==="left")move.x=-1;
+    if(dir==="right")move.x=1;
+  };
+
+  const stop=()=>{
+    if(dir==="up"||dir==="down")move.z=0;
+    if(dir==="left"||dir==="right")move.x=0;
+  };
+
+  button.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    start();
+  });
+  button.addEventListener("pointerup",stop);
+  button.addEventListener("pointerleave",stop);
+  button.addEventListener("pointercancel",stop);
+});
+
+document.getElementById("passBtn").onclick=pass;
+document.getElementById("shootBtn").onclick=shoot;
+document.getElementById("skillBtn").onclick=skill;
+
+document.getElementById("sprintBtn").addEventListener(
+  "pointerdown",()=>sprint=true
+);
+document.getElementById("sprintBtn").addEventListener(
+  "pointerup",()=>sprint=false
+);
+document.getElementById("sprintBtn").addEventListener(
+  "pointerleave",()=>sprint=false
+);
+
+window.addEventListener("keydown",e=>{
+  keys[e.key.toLowerCase()]=true;
+  if(e.key===" ")shoot();
+  if(e.key.toLowerCase()==="e")pass();
+  if(e.key.toLowerCase()==="q")skill();
+
+  move.x=(keys["d"]||keys["arrowright"]?1:0)-
+         (keys["a"]||keys["arrowleft"]?1:0);
+  move.z=(keys["s"]||keys["arrowdown"]?1:0)-
+         (keys["w"]||keys["arrowup"]?1:0);
+  sprint=!!keys["shift"];
+});
+
+window.addEventListener("keyup",e=>{
+  keys[e.key.toLowerCase()]=false;
+  move.x=(keys["d"]||keys["arrowright"]?1:0)-
+         (keys["a"]||keys["arrowleft"]?1:0);
+  move.z=(keys["s"]||keys["arrowdown"]?1:0)-
+         (keys["w"]||keys["arrowup"]?1:0);
+  sprint=!!keys["shift"];
+});
+</script>
+<button onclick="window.openPlayPage()">⚽ PLAY</button>
+
+<div id="ufGame" style="display:none">
+  <div class="ufHeader">
+    <button onclick="ufClose()">✕</button>
+    <b>ULTIMATE FOOTBALL</b>
+    <b id="ufScore">0 : 0</b>
+  </div>
+
+  <div class="ufStatus">
+    <span id="ufClock">00:00</span>
+    <span id="ufMessage">MATCH READY</span>
+  </div>
+
+  <canvas id="ufCanvas"></canvas>
+
+  <div class="ufGameControls">
+    <div class="ufDirections">
+      <button data-dir="up">▲</button>
+      <button data-dir="left">◀</button>
+      <button data-dir="down">▼</button>
+      <button data-dir="right">▶</button>
+    </div>
+
+    <div class="ufActions">
+      <button onclick="ufPass()">PASS</button>
+      <button onclick="ufSkill()">SKILL</button>
+      <button onclick="ufShoot()">SHOOT</button>
+      <button id="ufSprint">SPRINT</button>
+    </div>
   </div>
 </div>
 
 <script>
-/* BUYURTMA SAHIFASINI OCHISH */
-function openOrderPage(serviceName = "") {
-  document.getElementById("ustaOrderPage").style.display = "block";
+(function(){
+  const canvas=document.getElementById("ufCanvas");
+  const ctx=canvas.getContext("2d");
+  const game=document.getElementById("ufGame");
 
-  if (serviceName) {
-    document.getElementById("orderService").value = serviceName;
+  let W=800,H=500;
+  let active=false;
+  let last=0,seconds=0;
+  let scoreA=0,scoreB=0;
+  let direction={x:0,y:0};
+  let sprint=false;
+  let players=[],bots=[];
+  let selected=null;
+
+  const ball={
+    x:400,y:250,vx:0,vy:0,r:8,
+    owner:null
+  };
+
+  function resize(){
+    const rect=canvas.getBoundingClientRect();
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    W=rect.width;
+    H=rect.height;
+    canvas.width=W*dpr;
+    canvas.height=H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
   }
 
-  window.scrollTo(0, 0);
-}
+  function makePlayer(x,y,team,n){
+    return {
+      x,y,homeX:x,homeY:y,
+      team,n,
+      speed:team==="blue"?190:130,
+      angle:team==="blue"?-Math.PI/2:Math.PI/2,
+      kick:0
+    };
+  }
 
-/* BUYURTMA SAHIFASINI YOPISH */
-function closeOrderPage() {
-  document.getElementById("ustaOrderPage").style.display = "none";
-}
+  function setup(){
+    players=[];
+    bots=[];
 
-/* BARCHA ZAKAZ TUGMALARINI ISHLATISH */
-document.addEventListener("click", function(event) {
-  const btn = event.target.closest("button");
+    const positions=[
+      [0.12,0.50],[0.28,0.20],[0.28,0.40],
+      [0.28,0.60],[0.28,0.80],[0.45,0.22],
+      [0.45,0.42],[0.45,0.58],[0.45,0.78],
+      [0.65,0.35],[0.65,0.65]
+    ];
 
-  if (!btn) return;
+    positions.forEach((p,i)=>{
+      players.push(makePlayer(
+        W*p[0],H*p[1],"blue",i+1
+      ));
+    });
 
-  const text = btn.innerText.toLowerCase();
+    positions.forEach((p,i)=>{
+      bots.push(makePlayer(
+        W*(1-p[0]),H*p[1],"red",i+1
+      ));
+    });
 
-  if (
-    text.includes("usta chaqirish") ||
-    text.includes("zakaz qilish") ||
-    text.includes("buyurtma berish") ||
-    text.includes("buyurtma") ||
-    text.includes("order now")
-  ) {
-    event.preventDefault();
+    selected=players[0];
+    ball.x=W*.5;
+    ball.y=H*.5;
+    ball.vx=0;
+    ball.vy=0;
+    ball.owner=selected;
+  }
 
-    const card = btn.closest(
-      ".repairJobCard, .master-card, .service-card, .category-card"
-    );
+  function drawField(){
+    ctx.fillStyle="#176d35";
+    ctx.fillRect(0,0,W,H);
 
-    let serviceName = "";
+    for(let i=0;i<10;i++){
+      ctx.fillStyle=i%2?"#1b793d":"#207f42";
+      ctx.fillRect(0,i*H/10,W,H/10);
+    }
 
-    if (card) {
-      const heading = card.querySelector("h3, h2, h4");
+    ctx.strokeStyle="white";
+    ctx.lineWidth=2;
+    ctx.strokeRect(5,5,W-10,H-10);
 
-      if (heading) {
-        serviceName = heading.innerText.trim();
+    ctx.beginPath();
+    ctx.moveTo(W/2,5);
+    ctx.lineTo(W/2,H-5);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(W/2,H/2,H*.14,0,Math.PI*2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(W/2,H/2,3,0,Math.PI*2);
+    ctx.fillStyle="white";
+    ctx.fill();
+
+    ctx.strokeRect(5,H*.27,W*.14,H*.46);
+    ctx.strokeRect(W*.86,H*.27,W*.135,H*.46);
+
+    ctx.strokeRect(5,H*.39,W*.055,H*.22);
+    ctx.strokeRect(W*.945,H*.39,W*.05,H*.22);
+
+    ctx.fillStyle="#eeeeee";
+    ctx.fillRect(0,H*.40,7,H*.20);
+    ctx.fillRect(W-7,H*.40,7,H*.20);
+  }
+
+  function drawPlayer(p){
+    const isBlue=p.team==="blue";
+    const r=Math.max(8,Math.min(14,W*.018));
+
+    // Player shadow
+    ctx.beginPath();
+    ctx.ellipse(p.x+2,p.y+r*.7,r*1.1,r*.45,0,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,0,0,.3)";
+    ctx.fill();
+
+    // Shirt
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=isBlue?"#1678ed":"#df303d";
+    ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeStyle="white";
+    ctx.stroke();
+
+    // Number
+    ctx.fillStyle="white";
+    ctx.font="bold "+Math.max(9,r*.9)+"px Arial";
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+    ctx.fillText(p.n,p.x,p.y);
+
+    // Direction
+    ctx.beginPath();
+    ctx.moveTo(p.x+Math.cos(p.angle)*r,
+               p.y+Math.sin(p.angle)*r);
+    ctx.lineTo(p.x+Math.cos(p.angle)*(r+7),
+               p.y+Math.sin(p.angle)*(r+7));
+    ctx.strokeStyle="white";
+    ctx.stroke();
+
+    if(p===selected){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,r+5,0,Math.PI*2);
+      ctx.strokeStyle="#ffe36a";
+      ctx.lineWidth=2;
+      ctx.stroke();
+    }
+  }
+
+  function drawBall(){
+    ctx.beginPath();
+    ctx.ellipse(ball.x+2,ball.y+7,8,4,0,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,0,0,.35)";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(ball.x,ball.y,8,0,Math.PI*2);
+    ctx.fillStyle="white";
+    ctx.fill();
+    ctx.strokeStyle="#222";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(ball.x,ball.y,3,0,Math.PI*2);
+    ctx.fillStyle="#222";
+    ctx.fill();
+  }
+
+  function nearestBot(){
+    let best=null,dist=Infinity;
+    bots.forEach(p=>{
+      const d=Math.hypot(p.x-ball.x,p.y-ball.y);
+      if(d<dist){dist=d;best=p;}
+    });
+    return best;
+  }
+
+  function update(dt){
+    if(!active)return;
+
+    seconds+=dt;
+    document.getElementById("ufClock").textContent=
+      String(Math.floor(seconds/60)).padStart(2,"0")+":"+
+      String(Math.floor(seconds%60)).padStart(2,"0");
+
+    // User movement
+    if(direction.x||direction.y){
+      const len=Math.hypot(direction.x,direction.y)||1;
+      const speed=selected.speed*(sprint?1.65:1);
+      selected.x+=direction.x/len*speed*dt;
+      selected.y+=direction.y/len*speed*dt;
+      selected.angle=Math.atan2(direction.y,direction.x);
+    }
+
+    selected.x=Math.max(15,Math.min(W-15,selected.x));
+    selected.y=Math.max(15,Math.min(H-15,selected.y));
+
+    // Other teammates move into positions
+    players.forEach(p=>{
+      if(p===selected)return;
+      const targetX=p.homeX;
+      const targetY=p.homeY;
+      p.x+=(targetX-p.x)*dt*.6;
+      p.y+=(targetY-p.y)*dt*.6;
+    });
+
+    // Bot AI
+    bots.forEach((p,i)=>{
+      let targetX=ball.x;
+      let targetY=ball.y;
+
+      if(i!==0 && ball.owner && ball.owner.team==="red"){
+        targetX=p.homeX;
+        targetY=p.homeY;
+      }
+
+      const dx=targetX-p.x;
+      const dy=targetY-p.y;
+      const dist=Math.hypot(dx,dy);
+
+      if(dist>3){
+        p.x+=dx/dist*p.speed*dt;
+        p.y+=dy/dist*p.speed*dt;
+        p.angle=Math.atan2(dy,dx);
+      }
+    });
+
+    // Possession
+    if(ball.owner){
+      const p=ball.owner;
+      ball.x=p.x+Math.cos(p.angle)*17;
+      ball.y=p.y+Math.sin(p.angle)*17;
+      ball.vx=0;
+      ball.vy=0;
+    }else{
+      ball.x+=ball.vx*dt;
+      ball.y+=ball.vy*dt;
+      ball.vx*=Math.pow(.985,dt*60);
+      ball.vy*=Math.pow(.985,dt*60);
+
+      // Pick up loose ball
+      const all=[...players,...bots];
+      for(const p of all){
+        if(Math.hypot(p.x-ball.x,p.y-ball.y)<18){
+          ball.owner=p;
+          break;
+        }
       }
     }
 
-    openOrderPage(serviceName);
-  }
-});
-
-/* BUYURTMA WHATSAPP ORQALI YUBORILADI */
-document.getElementById("ustaOrderForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const name = document.getElementById("orderName").value.trim();
-  const phone = document.getElementById("orderPhone").value.trim();
-  const address = document.getElementById("orderAddress").value.trim();
-  const service = document.getElementById("orderService").value;
-  const details = document.getElementById("orderDetails").value.trim();
-
-  const adminPhone = "998995301178";
-
-  const message =
-    "🏠 USTA TOP AI — YANGI BUYURTMA\n\n" +
-    "👤 Ism: " + name + "\n" +
-    "📞 Telefon: " + phone + "\n" +
-    "📍 Manzil: " + address + "\n" +
-    "🔧 Xizmat: " + service + "\n" +
-    "📝 Izoh: " + (details || "Izoh yo‘q");
-
-  const whatsapp =
-    "https://wa.me/" + adminPhone +
-    "?text=" + encodeURIComponent(message);
-
-  window.open(whatsapp, "_blank");
-});
-</script>
-
-<style>
-#ustaAdminButton {
-  position: fixed;
-  right: 22px;
-  bottom: 90px;
-  z-index: 999990;
-  background: #a3e635;
-  color: #101827;
-  border: 0;
-  border-radius: 30px;
-  padding: 15px 22px;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 0 20px #a3e63577;
-}
-
-#ustaAdminPage {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  overflow-y: auto;
-  background: #0b1120;
-  color: white;
-  padding: 25px;
-  box-sizing: border-box;
-}
-
-.adminContent {
-  max-width: 950px;
-  margin: 35px auto;
-}
-
-.adminHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.adminHeader h1 {
-  color: #a3e635;
-}
-
-.adminCard {
-  background: #172338;
-  border: 1px solid #35445b;
-  border-radius: 15px;
-  padding: 20px;
-  margin: 15px 0;
-}
-
-.adminCard input,
-.adminCard select {
-  width: 100%;
-  padding: 13px;
-  margin: 8px 0;
-  border-radius: 9px;
-  border: 1px solid #52627a;
-  background: #0b1120;
-  color: white;
-  box-sizing: border-box;
-}
-
-.adminAction {
-  border: 0;
-  border-radius: 9px;
-  padding: 12px 18px;
-  margin: 5px;
-  background: #a3e635;
-  color: #101827;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.adminClose {
-  background: #e54848;
-  color: white;
-}
-
-.adminAction:hover,
-#ustaAdminButton:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-</style>
-
-
-<style>
-#ustaRegisterPage {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999999;
-  background: #08111f;
-  color: white;
-  overflow-y: auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.ustaRegisterBox {
-  max-width: 550px;
-  margin: 30px auto;
-  padding: 28px;
-  background: #152238;
-  border: 2px solid #a3e635;
-  border-radius: 20px;
-  box-shadow: 0 0 30px #a3e63522;
-}
-
-.ustaRegisterBox h1 {
-  color: #a3e635;
-  text-align: center;
-}
-
-.ustaRegisterBox input,
-.ustaRegisterBox select,
-.ustaRegisterBox textarea {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border-radius: 10px;
-  border: 1px solid #52627a;
-  background: #0b1120;
-  color: white;
-  font-size: 15px;
-  box-sizing: border-box;
-}
-
-.ustaRegisterBox textarea {
-  min-height: 100px;
-}
-
-.ustaRegisterBtn {
-  width: 100%;
-  padding: 15px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #a3e635;
-  color: #101827;
-  font-weight: 900;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.ustaRegisterBack {
-  background: #344155;
-  color: white;
-}
-</style>
-
-<!-- USTA BO'LISH ARIZA SAHIFASI -->
-<div id="ustaRegisterPage">
-  <div class="ustaRegisterBox">
-
-    <h1>🔧 USTA TOP AI</h1>
-    <h2>Usta bo‘lish uchun ariza</h2>
-    <p>Ma’lumotlaringizni to‘ldiring.</p>
-
-    <form id="ustaRegisterForm">
-
-      <input
-        id="regName"
-        type="text"
-        placeholder="Ism va familiyangiz"
-        required
-      >
-
-      <input
-        id="regPhone"
-        type="tel"
-        placeholder="Telefon raqamingiz"
-        required
-      >
-
-      <input
-        id="regCity"
-        type="text"
-        placeholder="Shahar yoki tuman"
-        required
-      >
-
-      <select id="regJob" required>
-        <option value="">Qaysi sohada ishlaysiz?</option>
-        <option>Uy quruvchi</option>
-        <option>Santexnik</option>
-        <option>Elektrik</option>
-        <option>Bo‘yoqchi</option>
-        <option>Shpaklyovkachi</option>
-        <option>Shtukaturkachi</option>
-        <option>Plitkachi</option>
-        <option>G‘isht teruvchi</option>
-        <option>Betonchi</option>
-        <option>Tom ustasi</option>
-        <option>Pol ustasi</option>
-        <option>Mebelchi</option>
-        <option>Eshik va deraza ustasi</option>
-        <option>Konditsioner ustasi</option>
-        <option>Payvandchi</option>
-        <option>Kompleks uy remonti</option>
-        <option>Boshqa qurilish xizmati</option>
-      </select>
-
-      <input
-        id="regExperience"
-        type="number"
-        min="0"
-        placeholder="Ish tajribangiz (yil)"
-        required
-      >
-
-      <textarea
-        id="regAbout"
-        placeholder="O‘zingiz va ishingiz haqida ma’lumot..."
-      ></textarea>
-
-      <button class="ustaRegisterBtn" type="submit">
-        📲 ARIZANI YUBORISH
-      </button>
-
-    </form>
-
-    <button class="ustaRegisterBtn ustaRegisterBack"
-      type="button" onclick="closeUstaRegister()">
-      ← ORQAGA QAYTISH
-    </button>
-
-  </div>
-</div>
-
-<script>
-/* USTA BO'LISH SAHIFASINI OCHISH */
-function openUstaRegister() {
-  document.getElementById("ustaRegisterPage").style.display = "block";
-}
-
-/* SAHIFANI YOPISH */
-function closeUstaRegister() {
-  document.getElementById("ustaRegisterPage").style.display = "none";
-}
-
-/* USTA BO'LISH TUGMASINI TOPISH VA ISHLATISH */
-document.addEventListener("click", function(event) {
-  const button = event.target.closest("button, a");
-
-  if (!button) return;
-
-  const buttonText = (
-    button.innerText ||
-    button.textContent ||
-    button.value ||
-    ""
-  ).toLowerCase().replace(/ʻ|’|‘|`/g, "'").trim();
-
-  if (
-    buttonText.includes("usta bo'lish") ||
-    buttonText.includes("usta bolish") ||
-    buttonText.includes("usta bo'ling") ||
-    buttonText.includes("master bo'lish")
-  ) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    openUstaRegister();
-  }
-}, true);
-
-/* ARIZANI WHATSAPPGA YUBORISH */
-document.getElementById("ustaRegisterForm")
-.addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  const name = document.getElementById("regName").value.trim();
-  const phone = document.getElementById("regPhone").value.trim();
-  const city = document.getElementById("regCity").value.trim();
-  const job = document.getElementById("regJob").value;
-  const experience = document.getElementById("regExperience").value;
-  const about = document.getElementById("regAbout").value.trim();
-
-  const adminPhone = "998995301178";
-
-  const message =
-    "🔧 USTA TOP AI — YANGI USTA ARIZASI\n\n" +
-    "👤 Ism: " + name + "\n" +
-    "📞 Telefon: " + phone + "\n" +
-    "📍 Shahar/tuman: " + city + "\n" +
-    "🛠 Kasbi: " + job + "\n" +
-    "📅 Tajribasi: " + experience + " yil\n" +
-    "📝 Ma'lumot: " + (about || "Ko‘rsatilmagan");
-
-  const whatsappUrl =
-    "https://wa.me/" + adminPhone +
-    "?text=" + encodeURIComponent(message);
-
-  window.location.href = whatsappUrl;
-});
-</script>
-
-<style>
-/* USTA TOP AI — MASHHUR USTALAR */
-#alisherMasters {
-  padding: 55px 20px;
-  background: #0b1120;
-  color: white;
-}
-
-#alisherMasters .alisherHeading {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-#alisherMasters .alisherHeading h2 {
-  color: #a3e635;
-  font-size: 32px;
-}
-
-#alisherMasters .alisherHeading p {
-  color: #cbd5e1;
-}
-
-#alisherMastersGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-  gap: 22px;
-  max-width: 1250px;
-  margin: auto;
-}
-
-.alisherMasterCard {
-  overflow: hidden;
-  background: #172338;
-  border: 1px solid #35445b;
-  border-radius: 18px;
-  transition: .3s;
-}
-
-.alisherMasterCard:hover {
-  transform: translateY(-8px);
-  border-color: #a3e635;
-  box-shadow: 0 10px 30px #a3e63522;
-}
-
-.alisherMasterCard img {
-  width: 100%;
-  height: 185px;
-  object-fit: cover;
-  display: block;
-}
-
-.alisherMasterInfo {
-  padding: 18px;
-}
-
-.alisherMasterInfo h3 {
-  color: #a3e635;
-  font-size: 20px;
-  margin: 5px 0 10px;
-}
-
-.alisherMasterInfo p {
-  color: #cbd5e1;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-.alisherMasterName {
-  color: white;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.alisherMasterTag {
-  display: inline-block;
-  background: #a3e63522;
-  color: #a3e635;
-  padding: 6px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.alisherMasterInfo button {
-  width: 100%;
-  padding: 13px;
-  border: none;
-  border-radius: 10px;
-  background: #a3e635;
-  color: #101827;
-  font-weight: 900;
-  cursor: pointer;
-  margin-top: 12px;
-  transition: .3s;
-}
-
-.alisherMasterInfo button:hover {
-  background: white;
-  transform: scale(1.03);
-}
-</style>
-
-<section id="alisherMasters">
-
-  <div class="alisherHeading">
-    <h2>🏆 Mashhur ustalar va xizmatlar</h2>
-    <p>Uy qurilishi va remonti uchun kerakli barcha xizmatlar</p>
-  </div>
-
-  <div id="alisherMastersGrid"></div>
-
-</section>
-
-<script>
-const alisherServices = [
-
-  {
-    job: "Uy quruvchi",
-    image: "photo-1504307651254-35680f356dfd",
-    description: "Uy qurish, bino ko‘tarish va qurilish ishlari."
-  },
-  {
-    job: "Santexnik",
-    image: "photo-1607472586893-edb57bdc0e39",
-    description: "Suv quvurlari, kran, unitaz va kanalizatsiya."
-  },
-  {
-    job: "Elektrik",
-    image: "photo-1621905251918-48416bd8575a",
-    description: "Elektr simlari, rozetka va yoritish tizimlari."
-  },
-  {
-    job: "Bo‘yoqchi",
-    image: "photo-1562259949-e8e7689d7828",
-    description: "Devor va shiftlarni sifatli bo‘yash."
-  },
-  {
-    job: "Plitkachi",
-    image: "photo-1620626011761-996317b8d101",
-    description: "Pol va devorlarga kafel hamda plitka yotqizish."
-  },
-  {
-    job: "G‘isht teruvchi",
-    image: "photo-1590725121839-892b458a74fe",
-    description: "G‘isht terish, devor qurish va pardevor ishlari."
-  },
-  {
-    job: "Tom ustasi",
-    image: "photo-1635424710928-8a7d6f4b2c7c",
-    description: "Tom yopish, ta’mirlash va suv o‘tkazmaslik."
-  },
-  {
-    job: "Pol ustasi",
-    image: "photo- flooring",
-    description: "Laminat, parket va boshqa pol qoplamalarini yotqizish."
-  },
-  {
-    job: "Gipsokarton ustasi",
-    image: "photo-1600607687939-ce8a6c25118c",
-    description: "Gipsokarton devor, shift va dekorativ dizayn."
-  },
-  {
-    job: "Mebelchi",
-    image: "photo-1600210492486-724fe5c67fb0",
-    description: "Mebel yasash, yig‘ish va o‘rnatish."
-  },
-  {
-    job: "Eshik va deraza ustasi",
-    image: "photo-1501183638710-841dd1904471",
-    description: "Eshik, rom va derazalarni o‘rnatish."
-  },
-  {
-    job: "Payvandchi",
-    image: "photo-1504917595217-d4dc5ebe6122",
-    description: "Metall konstruksiya, panjara va payvandlash."
-  },
-  {
-    job: "Konditsioner ustasi",
-    image: "photo-1631545806609-2d6e3f3c4b0d",
-    description: "Konditsioner o‘rnatish va texnik xizmat."
-  },
-  {
-    job: "Betonchi",
-    image: "photo-1517089596392-fb9a9033e05b",
-    description: "Beton quyish, poydevor va pol ishlari."
-  },
-  {
-    job: "Interyer dizayner",
-    image: "photo-1600210492486-724fe5c67fb0",
-    description: "Uy va xonalar uchun zamonaviy interyer loyihasi."
-  },
-  {
-    job: "Kompleks uy remonti",
-    image: "photo-1600607687920-4e2a09cf159d",
-    description: "Uyni boshidan oxirigacha ta’mirlash."
-  }
-];
-
-const alisherGrid =
-  document.getElementById("alisherMastersGrid");
-
-alisherServices.forEach(service => {
-
-  const card = document.createElement("div");
-  card.className = "alisherMasterCard";
-
-  const image = document.createElement("img");
-  image.src = "https://images.unsplash.com/" +
-    service.image +
-    "?auto=format&fit=crop&w=700&q=80";
-  image.alt = service.job;
-  image.loading = "lazy";
-
-  const info = document.createElement("div");
-  info.className = "alisherMasterInfo";
-
-  const tag = document.createElement("span");
-  tag.className = "alisherMasterTag";
-  tag.textContent = "🏆 Usta xizmati";
-
-  const heading = document.createElement("h3");
-  heading.textContent = service.job;
-
-  const name = document.createElement("div");
-  name.className = "alisherMasterName";
-  name.textContent = "👤 Axmetov Alisher";
-
-  const description = document.createElement("p");
-  description.textContent = service.description;
-
-  const button = document.createElement("button");
-  button.textContent = "📲 USTA CHAQIRISH";
-
-  button.addEventListener("click", function() {
-    const message =
-      "Assalomu alaykum! USTA TOP AI orqali buyurtma.\n\n" +
-      "Usta: Axmetov Alisher\n" +
-      "Xizmat: " + service.job + "\n" +
-      "Xizmat haqida: " + service.description;
-
-    const url =
-      "https://wa.me/998995301178?text=" +
-      encodeURIComponent(message);
-
-    window.open(url, "_blank");
-  });
-
-  info.appendChild(tag);
-  info.appendChild(heading);
-  info.appendChild(name);
-  info.appendChild(description);
-  info.appendChild(button);
-
-  card.appendChild(image);
-  card.appendChild(info);
-
-  alisherGrid.appendChild(card);
-
-});
-
-/* MASHHUR USTALAR BO'LIMIGA JOYLASHTIRISH */
-const allHeadings = document.querySelectorAll("h1, h2, h3");
-
-allHeadings.forEach(heading => {
-  if (
-    heading.textContent.toLowerCase().includes("mashhur ustalar") &&
-    !heading.closest("#alisherMasters")
-  ) {
-    const oldSection = heading.closest("section");
-
-    if (oldSection && oldSection !== document.getElementById("alisherMasters")) {
-      oldSection.after(document.getElementById("alisherMasters"));
-    }
-  }
-});
-</script>
-
-<!-- BUYURTMA SAHIFASI -->
-<style>
-#alisherOrderPage {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  background: #07111f;
-  color: white;
-  padding: 25px 15px;
-  overflow-y: auto;
-  font-family: Arial, sans-serif;
-}
-
-.alisher-order-box {
-  max-width: 480px;
-  margin: 35px auto;
-  padding: 28px;
-  border-radius: 20px;
-  background: #111f32;
-  border: 1px solid #31445e;
-  box-shadow: 0 0 30px #00e5a033;
-}
-
-.alisher-order-box h2 {
-  text-align: center;
-  color: #00e5a0;
-  margin-bottom: 10px;
-}
-
-.alisher-order-box p {
-  text-align: center;
-  color: #b9c7d8;
-  margin-bottom: 22px;
-}
-
-.alisher-order-box label {
-  display: block;
-  margin: 14px 0 7px;
-  color: #dce8f5;
-}
-
-.alisher-order-box input,
-.alisher-order-box textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 14px;
-  border: 1px solid #40536c;
-  border-radius: 10px;
-  background: #07111f;
-  color: white;
-  outline: none;
-  font-size: 15px;
-}
-
-.alisher-order-box input:focus,
-.alisher-order-box textarea:focus {
-  border-color: #00e5a0;
-}
-
-.alisher-order-box textarea {
-  min-height: 90px;
-  resize: vertical;
-}
-
-.alisher-order-box button {
-  width: 100%;
-  padding: 15px;
-  margin-top: 18px;
-  border: none;
-  border-radius: 10px;
-  background: #00e5a0;
-  color: #07111f;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.alisher-order-box .back-btn {
-  background: #29394e;
-  color: white;
-  margin-top: 10px;
-}
-</style>
-
-<div id="alisherOrderPage">
-  <div class="alisher-order-box">
-    <h2>🛠 USTAGA BUYURTMA</h2>
-    <p>Ma’lumotlaringizni kiriting</p>
-
-    <form id="alisherOrderForm">
-
-      <label>Usta ismi</label>
-      <input type="text" value="Axmetov Alisher" readonly>
-
-      <label>Ismingiz</label>
-      <input id="customerName" type="text"
-        placeholder="Ismingizni yozing" required>
-
-      <label>Telefon raqamingiz</label>
-      <input id="customerPhone" type="tel"
-        placeholder="+998 90 123 45 67" required>
-
-      <label>Qayerda turasiz? (Manzil)</label>
-      <input id="customerAddress" type="text"
-        placeholder="Masalan: Toshkent, Chilonzor" required>
-
-      <label>Qanday xizmat kerak?</label>
-      <input id="customerService" type="text"
-        placeholder="Masalan: Santexnik" required>
-
-      <label>Buyurtma haqida qo‘shimcha ma’lumot</label>
-      <textarea id="customerDetails"
-        placeholder="Qanday ish bajarilishi kerak?"></textarea>
-
-      <button type="submit">📲 BUYURTMANI YUBORISH</button>
-      <button type="button" class="back-btn"
-        onclick="closeAlisherOrder()">⬅ ORQAGA QAYTISH</button>
-    </form>
-  </div>
-</div>
-
-<script>
-// Buyurtma sahifasini ochish
-function openAlisherOrder(serviceName) {
-  document.getElementById("customerService").value =
-    serviceName || "Usta xizmati";
-
-  document.getElementById("alisherOrderPage").style.display = "block";
-}
-
-// Orqaga qaytish
-function closeAlisherOrder() {
-  document.getElementById("alisherOrderPage").style.display = "none";
-}
-
-// Zakaz tugmalarini ushlash
-document.addEventListener("click", function(e) {
-  const button = e.target.closest("button, a");
-  if (!button) return;
-
-  const buttonText = (button.innerText || button.textContent || "")
-    .toLowerCase();
-
-  if (
-    buttonText.includes("zakaz") ||
-    buttonText.includes("buyurtma") ||
-    buttonText.includes("usta chaqirish")
-  ) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-
-    openAlisherOrder("Usta xizmati");
-  }
-}, true);
-
-// Buyurtmani WhatsAppga yuborish
-document.getElementById("alisherOrderForm")
-  .addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById("customerName").value;
-    const phone = document.getElementById("customerPhone").value;
-    const address = document.getElementById("customerAddress").value;
-    const service = document.getElementById("customerService").value;
-    const details = document.getElementById("customerDetails").value;
-
-    const message =
-      "YANGI BUYURTMA%0A%0A" +
-      "Usta: Axmetov Alisher%0A" +
-      "Mijoz: " + encodeURIComponent(name) + "%0A" +
-      "Telefon: " + encodeURIComponent(phone) + "%0A" +
-      "Manzil: " + encodeURIComponent(address) + "%0A" +
-      "Xizmat: " + encodeURIComponent(service) + "%0A" +
-      "Izoh: " + encodeURIComponent(details);
-
-    const whatsappURL =
-      "https://wa.me/998995301178?text=" + message;
-
-    window.open(whatsappURL, "_blank");
-  });
-</script>
-
-<!-- USTA TOP AI QIDIRUVINI ISHLATISH -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  // AI qidiruv maydonini topish
-  const searchInputs = [
-    ...document.querySelectorAll("input, textarea")
-  ];
-
-  const aiInput = searchInputs.find(el => {
-    const text = (
-      (el.placeholder || "") + " " +
-      (el.id || "") + " " +
-      (el.name || "")
-    ).toLowerCase();
-
-    return text.includes("ai") ||
-           text.includes("qidir") ||
-           text.includes("usta") ||
-           text.includes("xizmat");
-  });
-
-  // AI qidiruv tugmasini topish
-  const aiButton = [...document.querySelectorAll("button")]
-    .find(btn => {
-      const t = btn.innerText.toLowerCase();
-      return t.includes("ai bilan qidir") ||
-             t.includes("ai qidir") ||
-             t.includes("qidirish");
-    });
-
-  if (!aiInput || !aiButton) {
-    console.warn("AI qidiruv maydoni yoki tugmasi topilmadi.");
-    return;
-  }
-
-  function searchMasters() {
-    const query = aiInput.value.trim().toLowerCase();
-
-    if (!query) {
-      alert("Qanday usta kerakligini yozing!");
-      aiInput.focus();
-      return;
+    // Keep ball in field
+    if(ball.x<7 || ball.x>W-7){
+      if(ball.y>H*.39&&ball.y<H*.61){
+        if(ball.x<7)scoreB++;
+        else scoreA++;
+        updateScore();
+        resetBall();
+      }else{
+        ball.vx*=-.7;
+        ball.x=Math.max(10,Math.min(W-10,ball.x));
+      }
     }
 
-    // Qidiruv so'zlarini ajratish
-    const words = query
-      .replace(/[.,!?]/g, " ")
-      .split(/\s+/)
-      .filter(word => word.length > 1);
-
-    // Usta kartalarini topish
-    const cards = [
-      ...document.querySelectorAll(
-        ".master-card, .service-card, .category-card, .usta-card"
-      )
-    ];
-
-    if (cards.length === 0) {
-      alert("Ustalar ro‘yxati topilmadi. Sayt kodini tekshirish kerak.");
-      return;
-    }
-
-    let found = 0;
-
-    cards.forEach(card => {
-      const cardText = card.innerText.toLowerCase();
-
-      const matched = words.some(word =>
-        cardText.includes(word)
-      );
-
-      card.style.display = matched ? "" : "none";
-
-      if (matched) found++;
-    });
-
-    // Natijalar joyiga o'tish
-    const firstCard = cards.find(card => card.style.display !== "none");
-
-    if (firstCard) {
-      firstCard.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-    }
-
-    if (found === 0) {
-      alert("Bu xizmat bo‘yicha usta topilmadi. Boshqa so‘z bilan qidiring.");
+    if(ball.y<7||ball.y>H-7){
+      ball.vy*=-.7;
+      ball.y=Math.max(10,Math.min(H-10,ball.y));
     }
   }
 
-  aiButton.addEventListener("click", function(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    searchMasters();
-  }, true);
+  function updateScore(){
+    document.getElementById("ufScore").textContent=
+      scoreA+" : "+scoreB;
+    document.getElementById("ufMessage").textContent="GOAL!";
+  }
 
-  aiInput.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
+  function resetBall(){
+    ball.x=W/2;
+    ball.y=H/2;
+    ball.vx=0;
+    ball.vy=0;
+    ball.owner=selected;
+  }
+
+  function draw(){
+    if(!active)return;
+    ctx.clearRect(0,0,W,H);
+    drawField();
+    players.forEach(drawPlayer);
+    bots.forEach(drawPlayer);
+    drawBall();
+  }
+
+  function loop(time){
+    if(!active)return;
+    const dt=Math.min((time-last)/1000,.04);
+    last=time;
+    update(dt);
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  function start(){
+    resize();
+    setup();
+    scoreA=0;
+    scoreB=0;
+    seconds=0;
+    document.getElementById("ufScore").textContent="0 : 0";
+    document.getElementById("ufMessage").textContent="MATCH STARTED";
+    active=true;
+    last=performance.now();
+    requestAnimationFrame(loop);
+  }
+
+  window.openPlayPage=function(){
+    game.style.display="block";
+    start();
+  };
+
+  window.ufClose=function(){
+    active=false;
+    game.style.display="none";
+    direction={x:0,y:0};
+    sprint=false;
+  };
+
+  window.ufShoot=function(){
+    if(!active)return;
+    const angle=selected.angle;
+    ball.owner=null;
+    ball.x=selected.x+Math.cos(angle)*18;
+    ball.y=selected.y+Math.sin(angle)*18;
+    ball.vx=Math.cos(angle)*650;
+    ball.vy=Math.sin(angle)*650;
+    document.getElementById("ufMessage").textContent="SHOOT!";
+  };
+
+  window.ufPass=function(){
+    if(!active)return;
+    const mate=players
+      .filter(p=>p!==selected)
+      .sort((a,b)=>
+        Math.hypot(a.x-selected.x,a.y-selected.y)-
+        Math.hypot(b.x-selected.x,b.y-selected.y)
+      )[0];
+
+    if(mate){
+      ball.owner=null;
+      ball.vx=(mate.x-ball.x)*4;
+      ball.vy=(mate.y-ball.y)*4;
+      document.getElementById("ufMessage").textContent="PASS!";
+    }
+  };
+
+  window.ufSkill=function(){
+    if(!active)return;
+    selected.angle+=Math.PI*2;
+    const nearby=nearestBot();
+    if(nearby){
+      nearby.x+=Math.cos(selected.angle)*35;
+      nearby.y+=Math.sin(selected.angle)*35;
+    }
+    document.getElementById("ufMessage").textContent="SKILL!";
+  };
+
+  document.querySelectorAll("#ufGame [data-dir]").forEach(btn=>{
+    const d=btn.dataset.dir;
+    const on=()=>{
+      direction.x=d==="left"?-1:d==="right"?1:0;
+      direction.y=d==="up"?-1:d==="down"?1:0;
+    };
+    const off=()=>direction={x:0,y:0};
+    btn.addEventListener("pointerdown",e=>{
       e.preventDefault();
-      searchMasters();
-    }
-  });
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const headings = [...document.querySelectorAll("h1, h2, h3, h4")];
-
-  const famousHeading = headings.find(h =>
-    h.textContent.toLowerCase().includes("mashhur ustalar")
-  );
-
-  if (!famousHeading) {
-    console.log("Mashhur ustalar bo‘limi topilmadi.");
-    return;
-  }
-
-  const section = famousHeading.closest("section") ||
-                  famousHeading.parentElement;
-
-  const cards = section.querySelectorAll(
-    ".master-card, .usta-card, .alisher-master-card"
-  );
-
-  cards.forEach(card => {
-    const name = card.textContent.toLowerCase();
-
-    if (
-      !name.includes("axmetov alisher") &&
-      !name.includes("ahmetov alisher")
-    ) {
-      card.remove();
-    }
-  });
-
-});
-</script>
-
-<style>
-.usta-comments {
-  margin-top: 15px;
-  padding: 15px;
-  background: #102238;
-  border: 1px solid #29445f;
-  border-radius: 12px;
-  color: white;
-}
-
-.usta-comments h3 {
-  color: #00e5a0;
-  font-size: 17px;
-  margin-bottom: 12px;
-}
-
-.usta-comments input,
-.usta-comments textarea,
-.usta-comments select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 11px;
-  margin: 6px 0;
-  border-radius: 8px;
-  border: 1px solid #40536c;
-  background: #07111f;
-  color: white;
-}
-
-.usta-comments textarea {
-  min-height: 65px;
-}
-
-.usta-comments button {
-  width: 100%;
-  padding: 11px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 8px;
-  background: #00e5a0;
-  color: #07111f;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.comment-item {
-  background: #1b3048;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 9px;
-  overflow-wrap: anywhere;
-}
-
-.comment-item strong {
-  color: #00e5a0;
-}
-
-.comment-item p {
-  margin: 6px 0 0;
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const masterCards = document.querySelectorAll(
-    ".master-card, .usta-card, .alisher-master-card"
-  );
-
-  masterCards.forEach((card, index) => {
-
-    if (card.querySelector(".usta-comments")) return;
-
-    const commentBox = document.createElement("div");
-    commentBox.className = "usta-comments";
-
-    commentBox.innerHTML = `
-      <h3>💬 Mijozlar izohlari</h3>
-
-      <div class="comments-list"></div>
-
-      <form class="comment-form">
-        <input class="comment-name"
-          type="text" placeholder="Ismingiz" required>
-
-        <select class="comment-rating">
-          <option value="5">⭐⭐⭐⭐⭐ 5 baho</option>
-          <option value="4">⭐⭐⭐⭐ 4 baho</option>
-          <option value="3">⭐⭐⭐ 3 baho</option>
-          <option value="2">⭐⭐ 2 baho</option>
-          <option value="1">⭐ 1 baho</option>
-        </select>
-
-        <textarea class="comment-text"
-          placeholder="Usta haqida fikringizni yozing..."
-          required></textarea>
-
-        <button type="submit">Izoh qoldirish</button>
-      </form>
-    `;
-
-    card.appendChild(commentBox);
-
-    const storageKey = "usta_comments_" + index;
-    const list = commentBox.querySelector(".comments-list");
-    const form = commentBox.querySelector(".comment-form");
-
-    function showComments() {
-      const comments = JSON.parse(
-        localStorage.getItem(storageKey) || "[]"
-      );
-
-      list.innerHTML = "";
-
-      comments.forEach(comment => {
-        const item = document.createElement("div");
-        item.className = "comment-item";
-
-        const title = document.createElement("strong");
-        title.textContent =
-          comment.name + " — " + "⭐".repeat(comment.rating);
-
-        const message = document.createElement("p");
-        message.textContent = comment.text;
-
-        item.appendChild(title);
-        item.appendChild(message);
-        list.appendChild(item);
-      });
-    }
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const name = form.querySelector(".comment-name").value.trim();
-      const rating = form.querySelector(".comment-rating").value;
-      const message = form.querySelector(".comment-text").value.trim();
-
-      if (!name || !message) return;
-
-      const comments = JSON.parse(
-        localStorage.getItem(storageKey) || "[]"
-      );
-
-      comments.push({
-        name: name,
-        rating: Number(rating),
-        text: message
-      });
-
-      localStorage.setItem(storageKey, JSON.stringify(comments));
-
-      form.reset();
-      showComments();
-
-      alert("Izohingiz qo‘shildi! Rahmat 😊");
+      on();
     });
-
-    showComments();
+    btn.addEventListener("pointerup",off);
+    btn.addEventListener("pointercancel",off);
+    btn.addEventListener("pointerleave",off);
   });
 
-});
+  document.getElementById("ufSprint").addEventListener(
+    "pointerdown",()=>sprint=true
+  );
+  ["pointerup","pointerleave","pointercancel"].forEach(event=>{
+    document.getElementById("ufSprint").addEventListener(
+      event,()=>sprint=false
+    );
+  });
+
+  window.addEventListener("keydown",e=>{
+    if(!active)return;
+    const k=e.key.toLowerCase();
+    if(k==="w"||k==="arrowup")direction.y=-1;
+    if(k==="s"||k==="arrowdown")direction.y=1;
+    if(k==="a"||k==="arrowleft")direction.x=-1;
+    if(k==="d"||k==="arrowright")direction.x=1;
+    if(k==="shift")sprint=true;
+    if(k===" ")window.ufShoot();
+    if(k==="e")window.ufPass();
+    if(k==="q")window.ufSkill();
+  });
+
+  window.addEventListener("keyup",e=>{
+    const k=e.key.toLowerCase();
+    if(k==="w"||k==="arrowup"||k==="s"||k==="arrowdown")direction.y=0;
+    if(k==="a"||k==="arrowleft"||k==="d"||k==="arrowright")direction.x=0;
+    if(k==="shift")sprint=false;
+  });
+
+  window.addEventListener("resize",()=>{
+    if(active){
+      resize();
+      setup();
+    }
+  });
+})();
 </script>
